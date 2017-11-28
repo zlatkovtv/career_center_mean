@@ -1,0 +1,42 @@
+<section class="container">
+  <div>
+    <h1>Your profile</h1>
+    <div id="student-alert"
+         class="alert alert-warning alert-dismissible fade in"
+         role="alert"
+         ng-show="showAlert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeWizardAlert()"><span aria-hidden="true">&times;</span></button>
+      <strong>!</strong>
+      Completing your profile page will result in a higher chance of employees locating you
+      <strong>!</strong>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{progressPercent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressPercent}}%">
+      {{progressPercent}}%
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{progressLabel}}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="col-xs-3">
+        <div class="form-group">
+          <div>First name</div>
+          <input type="text" class="form-control" name="first-name" ng-model="user.firstName">
+        </div>
+        <div class="form-group">
+          <div>Last name</div>
+          <input type="text" class="form-control" name="last-name" ng-model="user.lastName">
+        </div>
+      </div>
+      <div class="col-xs-6">
+
+      </div>
+    </div>
+  </div>
+
+</section>

@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('core')
-    .controller('HeaderController', HeaderController);
+  .module('core')
+  .controller('HeaderController', HeaderController);
 
   HeaderController.$inject = ['$scope', '$state', 'Authentication', 'menuService'];
 
@@ -12,6 +12,7 @@
 
     vm.accountMenu = menuService.getMenu('account').items[0];
     vm.authentication = Authentication;
+    console.log(Authentication);
     vm.isCollapsed = false;
     vm.menu = menuService.getMenu('topbar');
 

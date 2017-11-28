@@ -2,16 +2,18 @@
   'use strict';
 
   angular
-    .module('chat')
+    .module('employer')
     .run(menuConfig);
 
   menuConfig.$inject = ['menuService'];
 
   function menuConfig(menuService) {
     // Set top bar menu items
-    // menuService.addMenuItem('topbar', {
-    //   title: 'Chat',
-    //   state: 'chat'
-    // });
+    menuService.addMenuItem('topbar', {
+      title: 'Employer',
+      state: 'employer',
+      roles: ['employer'],
+      position: 1
+    });
   }
 }());
