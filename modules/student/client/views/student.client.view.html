@@ -1,59 +1,244 @@
 <section class="container">
-  <div>
-    <h1>Your profile</h1>
+  <div class="page-header">
+    <h1>Your personal profile</h1>
     <div id="student-alert"
-         class="alert alert-warning alert-dismissible fade in"
-         role="alert"
-         ng-show="showAlert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeWizardAlert()"><span aria-hidden="true">&times;</span></button>
-      <strong>!</strong>
-      Completing your profile page will result in a higher chance of employees locating you
-      <strong>!</strong>
-    </div>
+    class="alert alert-warning alert-dismissible fade in"
+    role="alert"
+    ng-show="showAlert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeWizardAlert()"><span aria-hidden="true">&times;</span></button>
+    <strong>!</strong>
+    Completing your profile page will result in a higher chance of employees locating you
+    <strong>!</strong>
   </div>
+</div>
 
-  <div class="progress">
-    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{progressPercent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressPercent}}%">
-      {{progressPercent}}%
-    </div>
+<div class="progress">
+  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{progressPercent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressPercent}}%">
+    {{progressPercent}}%
   </div>
+</div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{progressLabel}}</h3>
+<div id="student-wizard-navigation">
+  <button class="btn btn-lg btn-primary" ng-click="goBack()">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    Back
+  </button>
+  <div class="alert alert-info" style="margin-bottom: 0px;">
+    Fields with
+    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+    are required in order to continue.
+  </div>
+  <button class="btn btn-lg btn-primary" ng-click="continue()" ng-disabled="!isContinueEnabled">
+    Continue
+    <span class="glyphicon glyphicon-arrow-right"></span>
+  </button>
+</div>
+
+<div class="panel panel-default" ng-show="wizardProgress === 1">
+  <div class="panel-heading">
+    <h3 class="panel-title">Profile information</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>First name</label>
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="first-name" ng-model="user.firstName" required>
+      </div>
+      <div class="form-group">
+        <label>Last name</label>
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="last-name" ng-model="user.lastName" required>
+      </div>
+      <div class="form-group">
+        <label>Username</label>
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="username" ng-model="user.username" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="email" ng-model="user.email" required>
+      </div>
     </div>
-    <div class="panel-body">
-      <div class="col-xs-3">
-        <div class="form-group">
-          <label>First name</label>
-          <input type="text" class="form-control" name="first-name" ng-model="user.firstName">
-        </div>
-        <div class="form-group">
-          <label>Last name</label>
-          <input type="text" class="form-control" name="last-name" ng-model="user.lastName">
-        </div>
-        <div class="form-group">
-          <label>Username</label>
-          <input type="text" class="form-control" name="username" ng-model="user.username">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="text" class="form-control" name="email" ng-model="user.email">
-        </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label for="personality">How do I describe my personality?</label>
+        <span class="glyphicon glyphicon-asterisk text-danger" style="float:right;"></span>
+        <textarea ng-change="validateCurrentForm(user.personality)" class="form-control" rows="5" name="personality" id="personality" ng-model="user.personality" required></textarea>
       </div>
-      <div class="col-xs-3">
-        <div class="form-group">
-          <label for="personality">How do I describe my personality?</label>
-          <textarea class="form-control" rows="5" id="personality" ng-model="user.personality"></textarea>
-        </div>
-      </div>
-      <div class="col-xs-3">
-        <div class="form-group">
-          <label for="picture">Profile picture</label>
-          <div></div>
+    </div>
+    <div class="col-xs-6">
+      <div class="form-group">
+        <label for="picture" style="margin-left:25%;">Profile picture</label>
+        <div>
+          <div class="form-group text-center">
+            <img ngf-src="vm.fileSelected ? picFile : vm.user.profileImageURL" alt="{{vm.user.displayName}}" class="img-thumbnail user-profile-picture" ngf-drop>
+          </div>
+          <div ng-show="vm.loading" class="form-group text-center">
+            <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading image...">
+          </div>
+          <div class="text-center form-group">
+            <button class="btn btn-default btn-file" ngf-select="(vm.fileSelected = true) && (vm.loading = false)" ng-model="picFile" accept="image/*" ngf-before-model-change="vm.loading = true" ngf-resize="{width: 400}" ngf-resize-if="$width > 400 || $height > 400">Select Picture</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="panel panel-default" ng-show="wizardProgress === 2">
+  <div class="panel-heading">
+    <h3 class="panel-title">Skills to pay the bills</h3>
+  </div>
+  <div class="panel-body" id="student-skills-container">
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Which programming languages are you comfortable using?</label>
+        <select ng-model="user.programmingLanguages" multiple class="form-control">
+          <option ng-repeat="language in programmingLanguages track by $index" value="{{language}}">{{language}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Which other technical skills do you possess?</label>
+        <select ng-model="user.technicalSkills" multiple class="form-control">
+          <option ng-repeat="techSkill in technicalSkills track by $index" value="{{techSkill}}">{{techSkill}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Which soft skills do you have?</label>
+        <select ng-model="user.softSkills" multiple class="form-control">
+          <option ng-repeat="softSkill in softSkills track by $index" value="{{softSkill}}">{{softSkill}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label for="other-skills">Would you like to share anything else that might potentially qualify you for a job/internship?</label>
+        <textarea ng-model="user.otherSkills" class="form-control" rows="5" name="other-skills" id="other-skills"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default" ng-show="wizardProgress === 3">
+  <div class="panel-heading">
+    <h3 class="panel-title">Upload documents</h3>
+  </div>
+  <div class="panel-body" id="student-documents-container">
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Resume/CV</label>
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+        <div>
+          <div class="form-group text-center">
+            <label>{{user.cv.name}}</label>
+          </div>
+          <div ng-show="loading" class="form-group text-center">
+            <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
+          </div>
+          <div class="text-center form-group">
+            <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="user.cv" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Statement of purpose/motivation</label>
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+        <div>
+          <div class="form-group text-center">
+            <label>{{user.motivation.name}}</label>
+          </div>
+          <div ng-show="loading" class="form-group text-center">
+            <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
+          </div>
+          <div class="text-center form-group">
+            <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="user.motivation" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Letters of recommendation</label>
+        <span class="glyphicon glyphicon-asterisk text-danger"></span>
+        <div>
+          <div class="form-group text-center">
+            <label>{{user.recommendation.name}}</label>
+          </div>
+          <div ng-show="loading" class="form-group text-center">
+            <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
+          </div>
+          <div class="text-center form-group">
+            <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="user.recommendation" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Additional document</label>
+        <div>
+          <div class="form-group text-center">
+            <label>{{user.additionalDocument.name}}</label>
+          </div>
+          <div ng-show="loading" class="form-group text-center">
+            <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
+          </div>
+          <div class="text-center form-group">
+            <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="user.additionalDocument" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default" ng-show="wizardProgress === 4">
+  <div class="panel-heading">
+    <h3 class="panel-title">Job preferences</h3>
+  </div>
+  <div class="panel-body" id="student-skills-container">
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Option 1</label>
+        <input type="checkbox" value="false" >
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Option 1</label>
+        <input type="checkbox" value="false" >
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Option 1</label>
+        <input type="checkbox" value="false" >
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="form-group">
+        <label>Option 1</label>
+        <input type="checkbox" value="false" >
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-success" ng-show="wizardProgress === 5">
+  <div class="panel-heading">
+    <h3 class="panel-title">Completed!</h3>
+  </div>
+  <div class="panel-body">
+    Congratulations! You have successfully completed your personal profile.
+  </div>
+</div>
 
 </section>

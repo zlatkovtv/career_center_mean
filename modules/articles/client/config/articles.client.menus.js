@@ -9,7 +9,7 @@
 
   function menuConfig(menuService) {
     menuService.addMenuItem('topbar', {
-      title: 'Articles',
+      title: 'Job market',
       state: 'articles',
       type: 'dropdown',
       roles: ['*'],
@@ -18,7 +18,13 @@
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'articles', {
-      title: 'List Articles',
+      title: 'Jobs',
+      state: 'articles.list',
+      roles: ['*']
+    });
+
+    menuService.addSubMenuItem('topbar', 'articles', {
+      title: 'Internships',
       state: 'articles.list',
       roles: ['*']
     });

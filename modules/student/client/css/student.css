@@ -1,0 +1,15 @@
+#student-wizard-navigation {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+select[multiple] {
+  height: 150px;
+  width: 220px;
+}
+
+#student-skills-container {
+  display: flex;
+  align-items: flex-end;
+}
