@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('student')
-    .controller('StudentController', StudentController);
+  .module('student')
+  .controller('StudentController', StudentController);
 
   StudentController.$inject = ['$scope', '$state', 'Authentication', 'Socket'];
 
@@ -15,11 +15,11 @@
     console.log($scope.user);
 
     $scope.closeWizardAlert = () => {
-
-    }
+      return "";
+    };
 
     $scope.closeWizardAlert = () => {
-        $scope.showAlert = false;
-    }
+      $scope.showAlert = false;
+    };
   }
 }());

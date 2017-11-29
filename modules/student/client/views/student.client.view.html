@@ -25,16 +25,33 @@
     <div class="panel-body">
       <div class="col-xs-3">
         <div class="form-group">
-          <div>First name</div>
+          <label>First name</label>
           <input type="text" class="form-control" name="first-name" ng-model="user.firstName">
         </div>
         <div class="form-group">
-          <div>Last name</div>
+          <label>Last name</label>
           <input type="text" class="form-control" name="last-name" ng-model="user.lastName">
         </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" class="form-control" name="username" ng-model="user.username">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" class="form-control" name="email" ng-model="user.email">
+        </div>
       </div>
-      <div class="col-xs-6">
-
+      <div class="col-xs-3">
+        <div class="form-group">
+          <label for="personality">How do I describe my personality?</label>
+          <textarea class="form-control" rows="5" id="personality" ng-model="user.personality"></textarea>
+        </div>
+      </div>
+      <div class="col-xs-3">
+        <div class="form-group">
+          <label for="picture">Profile picture</label>
+          <div></div>
+        </div>
       </div>
     </div>
   </div>
