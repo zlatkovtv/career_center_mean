@@ -44,7 +44,7 @@
 
     $scope.continue = () => {
       if ($scope.wizardProgress === 5) {
-        $location.url('articles');
+        $location.url('jobs');
         return;
       }
 

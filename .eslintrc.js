@@ -12,7 +12,7 @@ module.exports = {
     eqeqeq: [2, 'smart'],
     'func-names': 0,
     'guard-for-in': 2,
-    indent: [2, 2, { SwitchCase: 1 }],
+    indent: 0,
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
     'keyword-spacing': [2, { before: true, after: true }],
     'max-len': 0,
@@ -49,7 +49,7 @@ module.exports = {
     'spaced-comment': [2, 'always'],
     strict: 0,
     'quote-props': 0,
-    quotes: [1, 'single'],
+    quotes: 0,
     'wrap-iife': [2, 'outside'],
     'vars-on-top': 0
   },

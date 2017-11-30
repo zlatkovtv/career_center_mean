@@ -1,0 +1,85 @@
+<section>
+    <div class="page-header">
+        <h1 >Creating new job...</h1>
+    </div>
+
+    <div id="job-create-navigation">
+        <div class="alert alert-info" style="margin-bottom: 0px;" ng-hide="wizardProgress === 5">
+            Fields with
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            are required in order to continue.
+        </div>
+        <button class="btn btn-lg btn-primary" ng-click="postJob()">
+            Post job ad
+            <span class="glyphicon glyphicon-ok"></span>
+        </button>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Panel heading without title</div>
+        <div class="panel-body">
+            <div class="col-xs-4 col-md-4">
+                <div class="form-group">
+                    <label>Company name</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <input type="text" ng-model="job.companyName" class="form-control" required placeholder="Microsoft" />
+                </div>
+                <div class="form-group">
+                    <label>Company website</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <input type="text" ng-model="job.companyWebsite" class="form-control" required placeholder="www.microsoft.com" />
+                </div>
+                <div class="form-group">
+                    <label>Company email</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <input type="text" ng-model="job.companyEmail" class="form-control" required placeholder="helpdesk@microsoft.com" />
+                </div>
+                <div class="form-group">
+                    <label>Company phone</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <input type="text" ng-model="job.companyPhone" class="form-control" required placeholder="+359 888 888 888" />
+                </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+                <div class="form-group">
+                    <label>Job type</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <select ng-change="validateCurrentForm()" ng-model="job.type" required class="form-control">
+                        <option ng-repeat="(key, value) in jobTypes track by $index" value="{{key}}">{{value}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Job category</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <select ng-change="validateCurrentForm()" ng-model="job.category" required class="form-control">
+                        <option ng-repeat="(key, value) in jobCategories track by $index" value="{{key}}">{{value}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Job level</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <select ng-change="validateCurrentForm()" ng-model="job.level" required class="form-control">
+                        <option ng-repeat="(key, value) in jobLevels track by $index" value="{{key}}">{{value}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Requirements</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <textarea  ng-model="job.requirements" class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+                <div class="form-group">
+                    <label>Job description</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <textarea  ng-model="job.description" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Job responsibilities</label>
+                    <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                    <textarea  ng-model="job.responsibilities" class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

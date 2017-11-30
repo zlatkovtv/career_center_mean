@@ -5,23 +5,23 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
-  Article = mongoose.model('Article'),
+  Job = mongoose.model('Job'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
  * Create an article
  */
 exports.create = function (req, res) {
-  var article = new Article(req.body);
-  article.user = req.user;
+  var job = new Job(req.body);
+  job.user = req.user;
 
-  article.save(function (err) {
+  job.save(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(job);
     }
   });
 };
@@ -31,31 +31,31 @@ exports.create = function (req, res) {
  */
 exports.read = function (req, res) {
   // convert mongoose document to JSON
-  var article = req.article ? req.article.toJSON() : {};
+  var job = req.job ? req.job.toJSON() : {};
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  article.isCurrentUserOwner = !!(req.user && article.user && article.user._id.toString() === req.user._id.toString());
+  job.isCurrentUserOwner = !!(req.user && job.user && job.user._id.toString() === req.user._id.toString());
 
-  res.json(article);
+  res.json(job);
 };
 
 /**
  * Update an article
  */
 exports.update = function (req, res) {
-  var article = req.article;
+  var job = req.job;
 
-  article.title = req.body.title;
-  article.content = req.body.content;
+  job.title = req.body.title;
+  job.content = req.body.content;
 
-  article.save(function (err) {
+  job.save(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(job);
     }
   });
 };
@@ -64,15 +64,15 @@ exports.update = function (req, res) {
  * Delete an article
  */
 exports.delete = function (req, res) {
-  var article = req.article;
+  var job = req.job;
 
-  article.remove(function (err) {
+  job.remove(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(job);
     }
   });
 };
@@ -81,13 +81,13 @@ exports.delete = function (req, res) {
  * List of Articles
  */
 exports.list = function (req, res) {
-  Article.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
+  Job.find().sort('-created').populate('user', 'displayName').exec(function (err, jobs) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(articles);
+      res.json(jobs);
     }
   });
 };
@@ -95,23 +95,23 @@ exports.list = function (req, res) {
 /**
  * Article middleware
  */
-exports.articleByID = function (req, res, next, id) {
+exports.jobByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Article is invalid'
+      message: 'Job is invalid'
     });
   }
 
-  Article.findById(id).populate('user', 'displayName').exec(function (err, article) {
+  Job.findById(id).populate('user', 'displayName').exec(function (err, job) {
     if (err) {
       return next(err);
-    } else if (!article) {
+    } else if (!job) {
       return res.status(404).send({
         message: 'No article with that identifier has been found'
       });
     }
-    req.article = article;
+    req.job = job;
     next();
   });
 };
