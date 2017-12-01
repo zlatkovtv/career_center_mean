@@ -3,3 +3,25 @@
   display: flex;
   justify-content: space-between;
 }
+
+.accordion-body {
+    display: flex;
+    justify-content: space-between;
+}
+
+.break-word {
+    word-wrap: break-word
+}
+
+.align-center {
+    text-align: center;
+}
+
+.job-metadata {
+    display: flex;
+    align-content: space-between;
+}
+
+.accordion-footer {
+    margin-top: 10px;
+}

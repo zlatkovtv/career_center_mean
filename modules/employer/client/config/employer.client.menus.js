@@ -10,7 +10,7 @@
   function menuConfig(menuService) {
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
-      title: 'Employer',
+      title: 'Company profile',
       state: 'employer',
       roles: ['employer'],
       position: 1

@@ -9,9 +9,9 @@
 
     function JobsCreateController($scope, JobsService, Notification) {
         $scope.job = {
-            type: "fulltime",
-            category: "it",
-            level: "specialist",
+            type: "Full-time",
+            category: "IT",
+            level: "Specialist level",
             companyName: null,
             companyWebsite: null,
             companyEmail: null,
@@ -67,7 +67,7 @@
             }
 
             console.log(JobsService);
-            JobsService.createOrUpdate($scope.job);
+            JobsService.post($scope.job);
 
         };
     }

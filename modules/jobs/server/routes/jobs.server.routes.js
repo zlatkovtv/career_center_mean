@@ -14,6 +14,9 @@ module.exports = function (app) {
     app.route('/api/jobs/update').all(jobsPolicy.isAllowed)
     .put(jobs.update);
 
+    app.route('/api/jobs/all').all(jobsPolicy.isAllowed)
+    .get(jobs.getAll);
+
     // Single article routes
     app.route('/api/jobs/:jobId').all(jobsPolicy.isAllowed)
     .get(jobs.read)

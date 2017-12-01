@@ -30,3 +30,11 @@
 .text-align-center {
     text-align: center;
 }
+
+.margin-right-5 {
+    margin-right:5px;
+}
+
+.fdiba-login-background {
+    background-image: url('../../../core/client/img/brand/tu-sofia-background.jpg');
+}

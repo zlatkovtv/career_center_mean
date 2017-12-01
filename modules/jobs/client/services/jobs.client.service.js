@@ -13,48 +13,21 @@
             jobId: '@_id'
         },
         {
+            getJobs: {
+                method: 'GET',
+                url: '/api/jobs/all',
+                isArray: true
+            },
             updateJob: {
                 method: 'PUT',
                 url: '/api/jobs/update'
             },
-            createJob: {
+            post: {
                 method: 'POST',
                 url: '/api/jobs/create'
             }
         });
 
-        angular.extend(Job, {
-            createOrUpdate: function () {
-                var job = this;
-                return createOrUpdate(job);
-            }
-        });
-
         return Job;
-
-        function createOrUpdate(job) {
-            if (job._id) {
-                return job.updateJob(onSuccess, onError);
-            } else {
-                return job.createJob(onSuccess, onError);
-            }
-
-            // Handle successful response
-            function onSuccess(job) {
-                // Any required internal processing from inside the service, goes here.
-            }
-
-            // Handle error response
-            function onError(errorResponse) {
-                var error = errorResponse.data;
-                // Handle error internally
-                handleError(error);
-            }
-        }
-
-        function handleError(error) {
-            // Log error
-            $log.error(error);
-        }
     }
 }());

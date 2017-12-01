@@ -5,13 +5,16 @@
     .module('jobs')
     .controller('JobsFindController', JobsFindController);
 
-  JobsFindController.$inject = ['$scope', 'Authentication'];
+  JobsFindController.$inject = ['$scope', 'Authentication', 'JobsService'];
 
-  function JobsFindController($scope, Authentication) {
-    var vm = this;
+  function JobsFindController($scope, Authentication, JobsService) {
+    $scope.authentication = Authentication;
+    $scope.oneAtATime = true;
 
-    // vm.job = jobsResolve;
-    vm.authentication = Authentication;
+    $scope.$on('$viewContentLoaded', function () {
+        $scope.jobs = JobsService.getJobs();
+        console.log($scope.jobs);
+    });
 
   }
 }());

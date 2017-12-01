@@ -1,0 +1,53 @@
+<h3 class="page-header text-align-center">Sign up as a faculty member of FDIBA</h3>
+<form name="vm.facultyForm" ng-submit="vm.signup(vm.facultyForm)" class="signin" novalidate autocomplete="off">
+    <fieldset>
+        <div class="form-group" show-errors>
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" class="form-control" ng-model="vm.credentials.firstName" placeholder="First Name" required autofocus>
+            <div ng-messages="vm.facultyForm.firstName.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">First name is required.</p>
+            </div>
+        </div>
+        <div class="form-group" show-errors>
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" class="form-control" ng-model="vm.credentials.lastName" placeholder="Last Name" required>
+            <div ng-messages="vm.facultyForm.lastName.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Last name is required.</p>
+            </div>
+        </div>
+        <div class="form-group" show-errors>
+            <label for="faculty-position">Position/Title</label>
+            <input type="text" id="faculty-position" name="facultyPosition" class="form-control" ng-model="vm.credentials.facultyPosition" placeholder="Position/Title" required>
+            <div ng-messages="vm.facultyForm.facultyPosition.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Position/Title is required.</p>
+            </div>
+        </div>
+        <div class="form-group" show-errors>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" ng-model="vm.credentials.email" placeholder="Email" required>
+            <div ng-messages="vm.facultyForm.email.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Email address is required.</p>
+                <p class="help-block error-text" ng-message="email">Email address is invalid.</p>
+            </div>
+        </div>
+        <div class="form-group" show-errors>
+            <label for="password">Password</label>
+            <input type="password" id="password" ng-change="vm.print()" name="password" class="form-control" ng-model="vm.credentials.password" placeholder="Password" uib-popover="{{vm.getPopoverMsg()}}" popover-trigger="outsideClick" password-validator required>
+            <div ng-messages="vm.facultyForm.password.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Password is required.</p>
+                <div ng-repeat="passwordError in passwordErrors">
+                    <p class="help-block error-text" ng-show="vm.facultyForm.password.$error.requirements">{{passwordError}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-show="!vm.facultyForm.password.$error.required">
+            <label>Password Requirements</label>
+            <uib-progressbar value="requirementsProgress" type="{{requirementsColor}}"><span style="color:white; white-space:nowrap;">{{requirementsProgress}}%</span></uib-progressbar>
+        </div>
+        <div class="text-center form-group">
+            <button type="submit" class="btn btn-primary">Sign up</button>
+            &nbsp; or&nbsp;
+            <a ui-sref="authentication.signin" class="show-signup">Sign in</a>
+        </div>
+    </fieldset>
+</form>

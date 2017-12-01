@@ -1,0 +1,39 @@
+<h3 class="page-header text-align-center">Sign up as an external employer</h3>
+<form name="vm.employerForm" ng-submit="vm.signup(vm.employerForm)" class="signin" novalidate autocomplete="off">
+    <fieldset>
+        <div class="form-group" show-errors>
+            <label for="firstName">Company Name</label>
+            <input type="text" id="companyName" name="companyName" class="form-control" ng-model="vm.credentials.companyName" placeholder="Company Name" required autofocus>
+            <div ng-messages="vm.employerForm.companyName.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Company name is required.</p>
+            </div>
+        </div>
+        <div class="form-group" show-errors>
+            <label for="email">Company Email</label>
+            <input type="email" id="email" name="email" class="form-control" ng-model="vm.credentials.email" placeholder="Company Email" required>
+            <div ng-messages="vm.employerForm.email.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Company Email address is required.</p>
+                <p class="help-block error-text" ng-message="email">Company Email address is invalid.</p>
+            </div>
+        </div>
+        <div class="form-group" show-errors>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" ng-model="vm.credentials.password" placeholder="Password" uib-popover="{{vm.getPopoverMsg()}}" popover-trigger="outsideClick" password-validator required>
+            <div ng-messages="vm.employerForm.password.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Password is required.</p>
+                <div ng-repeat="passwordError in passwordErrors">
+                    <p class="help-block error-text" ng-show="vm.employerForm.password.$error.requirements">{{passwordError}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-show="!vm.employerForm.password.$error.required">
+            <label>Password Requirements</label>
+            <uib-progressbar value="requirementsProgress" type="{{requirementsColor}}"><span style="color:white; white-space:nowrap;">{{requirementsProgress}}%</span></uib-progressbar>
+        </div>
+        <div class="text-center form-group">
+            <button type="submit" class="btn btn-primary">Sign up</button>
+            &nbsp; or&nbsp;
+            <a ui-sref="authentication.signin" class="show-signup">Sign in</a>
+        </div>
+    </fieldset>
+</form>

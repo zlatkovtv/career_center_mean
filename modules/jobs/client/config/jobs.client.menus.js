@@ -12,21 +12,22 @@
       title: 'Job market',
       state: 'jobs',
       type: 'dropdown',
-      roles: ['*'],
+      roles: ['student', 'alumni', 'employer', 'admin'],
       position: 0
-    });
-
-    // Add the dropdown list item
-    menuService.addSubMenuItem('topbar', 'jobs', {
-      title: 'Find jobs',
-      state: 'jobs.find',
-      roles: ['*']
     });
 
     menuService.addSubMenuItem('topbar', 'jobs', {
       title: 'Create a job ad',
       state: 'jobs.create',
-      roles: ['employer', 'admin']
+      roles: ['employer', 'admin'],
+      position: 0
+    });
+
+    menuService.addSubMenuItem('topbar', 'jobs', {
+      title: 'Find jobs',
+      state: 'jobs.find',
+      roles: ['*'],
+      position: 1
     });
   }
 }());

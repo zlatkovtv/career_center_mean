@@ -1,15 +1,35 @@
 <section>
-  <div class="page-header">
-    <h1 ng-bind="vm.job.title"> Jobs find</h1>
-  </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.job.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.job.user" ng-bind="vm.job.user.displayName"></span>
-      <span ng-if="!vm.job.user">Deleted User</span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="vm.job.content"></p>
+    <div class="page-header">
+        <h1>All jobs and internships</h1>
+    </div>
+    <uib-accordion close-others="oneAtATime">
+        <div ng-repeat="job in jobs"
+            uib-accordion-group
+            class="panel-default"
+            heading="{{job.title}} @ {{job.companyName}}"
+            is-open="status.isFirstOpen">
+          <div class="accordion-body">
+              <div class="job-texts col-md-6">
+                  <div class="job-description break-word">{{job.description}}</div>
+                  <div class="job-responsibilities break-word">{{job.responsibilities}}</div>
+                  <div class="job-requirements break-word">{{job.requirements}}</div>
+              </div>
+              <div class="job-metadata col-md-6">
+                 <div class="job-attributes align-center">
+                     <div class="job-category">{{job.category}}</div>
+                     <div class="job-level">{{job.level}}</div>
+                     <div class="job-type">{{job.type}}</div>
+                 </div>
+                  <div class="job-contacts align-center">
+                      <div class="job-company-website">{{job.companyWebsite}}</div>
+                      <div class="job-company-email">{{job.companyEmail}}</div>
+                      <div class="job-company-phone">{{job.companyPhone}}</div>
+                  </div>
+              </div>
+          </div>
+          <div class="accordion-footer">
+              <a href="http://{{job.companyWebsite}}" target="_blank" class="btn btn-primary">Apply</a>
+          </div>
+        </div>
+    </uib-accordion>
 </section>

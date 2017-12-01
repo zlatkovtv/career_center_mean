@@ -23,6 +23,35 @@ var JobSchema = new Schema({
         trim: true,
         required: 'Job title is required'
     },
+    companyId: {
+        type: String,
+        default: '',
+        trim: true
+    },
+    companyName: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Company name is required'
+    },
+    companyWebsite: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Company website is required'
+    },
+    companyEmail: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Company email is required'
+    },
+    companyPhone: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Company phone is required'
+    },
     type: {
         type: String,
         default: '',
@@ -41,13 +70,38 @@ var JobSchema = new Schema({
         trim: true,
         required: 'Job level is required'
     },
-    companyName: {
+    requirements: {
         type: String,
         default: '',
         trim: true,
-        required: 'Company name is required'
+        required: 'Requirements are required'
+    },
+    description: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Description is required'
+    },
+    responsibilities: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Responsibilities are required'
     }
 });
+
+// JobSchema.pre('save', function (next) {
+//     var User = mongoose.model('User');
+//     User.findOne({ companyName: this.companyName }, '_id', function (err, user) {
+//         if (err) {
+//             next();
+//             return null;
+//         }
+//
+//         this.companyId = user._id;
+//         next();
+//     });
+// });
 
 JobSchema.statics.seed = seed;
 

@@ -7,7 +7,8 @@ var path = require('path'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   mongoose = require('mongoose'),
   passport = require('passport'),
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  _ = require('lodash');
 
 // URLs for which user can't be redirected on signin
 var noReturnUrls = [
@@ -26,7 +27,12 @@ exports.signup = function (req, res) {
   var user = new User(req.body);
   console.log(user);
   user.provider = 'local';
-  user.displayName = user.firstName + ' ' + user.lastName;
+
+  if (user.roles[0] === 'employer') {
+      user.displayName = user.companyName;
+  } else {
+      user.displayName = user.firstName + ' ' + user.lastName;
+  }
 
   // Then save the user
   user.save(function (err) {
