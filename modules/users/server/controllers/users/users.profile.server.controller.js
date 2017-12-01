@@ -37,12 +37,17 @@ exports.update = function (req, res) {
   // Init Variables
   var user = req.user;
 
+  if (user.roles[0] === 'employer') {
+      user.displayName = user.companyName;
+  } else {
+      user.displayName = user.firstName + ' ' + user.lastName;
+  }
+
   if (user) {
     // Update whitelisted fields only
     user = _.extend(user, _.pick(req.body, whitelistedFields));
 
     user.updated = Date.now();
-    user.displayName = user.firstName + ' ' + user.lastName;
 
     user.save(function (err) {
       if (err) {

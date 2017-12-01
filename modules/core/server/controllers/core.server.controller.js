@@ -20,7 +20,8 @@ exports.renderIndex = function (req, res) {
       email: req.user.email,
       lastName: req.user.lastName,
       firstName: req.user.firstName,
-      additionalProvidersData: req.user.additionalProvidersData
+      additionalProvidersData: req.user.additionalProvidersData,
+      isPersonalProfileCompleted: req.user.isPersonalProfileCompleted
     };
   }
 

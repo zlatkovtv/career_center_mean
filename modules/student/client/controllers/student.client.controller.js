@@ -12,6 +12,7 @@
     $scope.showAlert = true;
     $scope.user = Authentication.user;
     $scope.isContinueEnabled = true;
+    console.log($scope.user);
     $scope.wizardProgress = $scope.user.isPersonalProfileCompleted ? 5 : 1;
     $scope.progressPercent = $scope.wizardProgress * 20;
     $scope.programmingLanguages = [
@@ -23,7 +24,6 @@
     $scope.softSkills = [
       'Communication', 'Leadership', 'Time management', 'Voluntary', 'Other'
     ];
-    console.log($scope.user);
 
     $scope.closeWizardAlert = () => {
       return "";
@@ -34,7 +34,7 @@
     };
 
     $scope.validateCurrentForm = () => {
-      if (!$scope.user.firstName || !$scope.user.lastName || !$scope.user.username || !$scope.user.email || !$scope.user.personality) {
+      if (!$scope.user.firstName || !$scope.user.lastName || !$scope.user.email || !$scope.user.personality) {
         $scope.isContinueEnabled = false;
         return;
       }
@@ -44,13 +44,14 @@
 
     $scope.continue = () => {
       if ($scope.wizardProgress === 5) {
-        $location.url('jobs');
+        $location.url('jobs/all');
         return;
       }
 
       if ($scope.wizardProgress === 4) {
         // save user personal info progress
         $scope.user.isPersonalProfileCompleted = true;
+        console.log($scope.user);
         var userService = new UsersService($scope.user);
         userService.$update(function (response) {
           Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> You have successfully completed your profile!', delay: 3000 });
@@ -69,6 +70,7 @@
         return;
       }
 
+      $scope.user.isPersonalProfileCompleted = false;
       $scope.wizardProgress--;
       $scope.progressPercent = $scope.wizardProgress * 20;
     };

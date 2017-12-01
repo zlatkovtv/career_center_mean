@@ -127,6 +127,14 @@ var UserSchema = new Schema({
     },
     resetPasswordExpires: {
         type: Date
+    },
+    isPersonalProfileCompleted: {
+        type: Boolean,
+        default: false
+    },
+    personality: {
+        type: String,
+        default: null
     }
 });
 
