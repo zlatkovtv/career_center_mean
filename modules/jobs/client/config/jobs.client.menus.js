@@ -12,7 +12,7 @@
       title: 'Job market',
       state: 'jobs',
       type: 'dropdown',
-      roles: ['student', 'alumni', 'employer', 'admin'],
+      roles: ['student', 'faculty', 'employer', 'admin'],
       position: 0
     });
 

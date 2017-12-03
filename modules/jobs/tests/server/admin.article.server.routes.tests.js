@@ -42,7 +42,7 @@ describe('Article Admin CRUD tests', function () {
       lastName: 'Name',
       displayName: 'Full Name',
       email: 'test@test.com',
-      roles: ['user', 'student', 'alumni', 'employer'],
+      roles: ['user', 'student', 'faculty', 'employer'],
       username: credentials.usernameOrEmail,
       password: credentials.password,
       provider: 'local'

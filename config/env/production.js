@@ -101,7 +101,7 @@ module.exports = {
           email: 'admin@localhost.com',
           firstName: 'Admin',
           lastName: 'Local',
-          roles: ['admin', 'student', 'alumni', 'employer']
+          roles: ['admin', 'student', 'faculty', 'employer']
         }
       }]
     }]

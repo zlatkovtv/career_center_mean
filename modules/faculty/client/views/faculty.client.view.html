@@ -1,0 +1,11 @@
+<!-- The chat view -->
+<section class="container">
+  <div class="page-header">
+    <h1><small>Here you can manage your class</small></h1>
+  </div>
+
+  <div ng-show="classes.length === 0">
+      <div class="alert alert-info">You do not appear to have any classes linked to your account. Lets create one now! </div>
+      <button class="btn btn-primary" ng-click="launchClassCreateWizard()">Create class</button>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <div class="modal-title">Creating new class</div>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label>What is the name of the subject?</label>
+        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="subject-name" ng-model="class.subjectName" required>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="createClass()" style="float:left;">Create</button>
+    <button class="btn btn-primary" type="button" ng-click="close()">Cancel</button>
+</div>

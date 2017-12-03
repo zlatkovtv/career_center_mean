@@ -2,20 +2,20 @@
   'use strict';
 
   angular
-    .module('alumni.routes')
+    .module('faculty.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider'];
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('alumni', {
-        url: '/alumni',
-        templateUrl: '/modules/alumni/client/views/alumni.client.view.html',
-        controller: 'AlumniController',
+      .state('faculty', {
+        url: '/faculty',
+        templateUrl: '/modules/faculty/client/views/faculty.client.view.html',
+        controller: 'FacultyController',
         controllerAs: 'vm',
         data: {
-          roles: ['alumni', 'admin']
+          roles: ['faculty', 'admin']
         }
       });
   }

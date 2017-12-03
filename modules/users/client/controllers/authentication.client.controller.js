@@ -20,7 +20,7 @@
             },
             {
                 title: 'Faculty member',
-                value: 'alumni',
+                value: 'faculty',
                 templateUrl: '/modules/users/client/views/authentication/faculty-signup.client.template.html',
                 icon: 'glyphicon-education'
             },

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('alumni')
+    .module('faculty')
     .run(menuConfig);
 
   menuConfig.$inject = ['menuService'];
@@ -11,8 +11,8 @@
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
       title: 'View and edit student profiles',
-      state: 'alumni',
-      roles: ['alumni'],
+      state: 'faculty',
+      roles: ['faculty'],
       position: 1
     });
   }

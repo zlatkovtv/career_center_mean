@@ -11,7 +11,7 @@
       addMenu: addMenu,
       addMenuItem: addMenuItem,
       addSubMenuItem: addSubMenuItem,
-      defaultRoles: ['student', 'alumni', 'employer', 'admin'],
+      defaultRoles: ['student', 'faculty', 'employer', 'admin'],
       getMenu: getMenu,
       menus: {},
       removeMenu: removeMenu,

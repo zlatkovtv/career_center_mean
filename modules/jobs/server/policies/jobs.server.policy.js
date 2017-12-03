@@ -22,7 +22,7 @@ exports.invokeRolesPolicies = function () {
             permissions: '*'
         }]
     }, {
-        roles: ['student', 'alumni', 'employer'],
+        roles: ['student', 'faculty', 'employer'],
         allows: [{
             resources: '/api/jobs/all',
             permissions: ['get']
