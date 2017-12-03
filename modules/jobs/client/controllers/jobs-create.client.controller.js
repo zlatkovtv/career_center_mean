@@ -5,9 +5,9 @@
     .module('jobs')
     .controller('JobsCreateController', JobsCreateController);
 
-    JobsCreateController.$inject = ['$scope', 'JobsService', 'Notification', 'Authentication', '$uibModal'];
+    JobsCreateController.$inject = ['$scope', 'JobsService', 'Notification', 'Authentication', '$uibModal', '$location'];
 
-    function JobsCreateController($scope, JobsService, Notification, Authentication, $uibModal) {
+    function JobsCreateController($scope, JobsService, Notification, Authentication, $uibModal, $location) {
         $scope.employer = Authentication.user;
         $scope.canEditCompanyFields = false;
         $scope.job = {
@@ -53,7 +53,7 @@
         $scope.verifyEmployerProfileCompleted = () => {
             if (!$scope.employer.companyName || !$scope.employer.companyWebsite || !$scope.employer.companyEmail || !$scope.employer.companyPhone) {
                 var modalInstance = $uibModal.open({
-                    templateUrl: '/modules/templates/client/views/confirm.client.template.html',
+                    templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
                     controller: 'ConfirmController',
                     resolve: {
                         options: {
@@ -65,7 +65,12 @@
                     }
                 });
 
-                modalInstance.result.then(function (selectedItem) {
+                modalInstance.result.then(function (yes) {
+                    if (!yes) {
+                        return;
+                    }
+
+                    $location.url('/employer/profile');
                 }, function () {
                 });
             }

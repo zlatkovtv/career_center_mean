@@ -13,7 +13,7 @@
         $scope.deleteJob = (job) => {
             var modalInstance = $uibModal.open({
                 templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
-                controller: 'ConfirmModalController',
+                controller: 'ConfirmController',
                 resolve: {
                     options: {
                         title: 'Are you sure you want to delete this ad?',
