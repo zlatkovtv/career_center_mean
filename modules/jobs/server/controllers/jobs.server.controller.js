@@ -12,7 +12,6 @@ errorHandler = require(path.resolve('./modules/core/server/controllers/errors.se
 * Create an article
 */
 exports.create = function (req, res) {
-    console.log(req.body);
     var job = new Job(req.body);
     job.user = req.user;
 
@@ -23,6 +22,19 @@ exports.create = function (req, res) {
             });
         } else {
             res.json(job);
+        }
+    });
+};
+
+exports.getJobsByUserId = function (req, res) {
+    var companyName = req.body.companyName;
+    Job.find({ 'companyName': companyName }).exec(function (err, jobs) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(jobs);
         }
     });
 };

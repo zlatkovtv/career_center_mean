@@ -1,22 +1,30 @@
 (function () {
-  'use strict';
+    'use strict';
 
-  angular
+    angular
     .module('employer.routes')
     .config(routeConfig);
 
-  routeConfig.$inject = ['$stateProvider'];
+    routeConfig.$inject = ['$stateProvider'];
 
-  function routeConfig($stateProvider) {
-    $stateProvider
-      .state('employer', {
-        url: '/employer',
-        templateUrl: '/modules/employer/client/views/employer.client.view.html',
-        controller: 'EmployerController',
-        controllerAs: 'vm',
-        data: {
-          roles: ['employer', 'admin']
-        }
-      });
-  }
+    function routeConfig($stateProvider) {
+        $stateProvider
+        .state('employer', {
+            url: '/employer',
+            abstract: true,
+            template: '<ui-view/>'
+        })
+        .state('employer.profile', {
+            url: '/profile',
+            templateUrl: '/modules/employer/client/views/employer-profile.client.view.html',
+            controller: 'EmployerProfileController',
+            controllerAs: 'vm'
+        })
+        .state('employer.created', {
+            url: '/created',
+            templateUrl: '/modules/employer/client/views/employer-created.client.view.html',
+            controller: 'EmployerCreatedController',
+            controllerAs: 'vm'
+        });
+    }
 }());

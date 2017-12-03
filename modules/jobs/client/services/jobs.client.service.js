@@ -18,6 +18,12 @@
                 url: '/api/jobs/all',
                 isArray: true
             },
+            getJobsByUserId: {
+                method: 'POST',
+                url: '/api/jobs/getJobsByUserId',
+                isArray: true,
+                hasBody: true
+            },
             updateJob: {
                 method: 'PUT',
                 url: '/api/jobs/update'

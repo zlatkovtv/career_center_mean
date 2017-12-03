@@ -4,7 +4,7 @@
         <div id="student-alert"
         class="alert alert-warning alert-dismissible fade in"
         role="alert"
-        ng-show="showAlert">
+        ng-show="showAlert && !user.isPersonalProfileCompleted">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="closeWizardAlert()"><span aria-hidden="true">&times;</span></button>
         <strong>!</strong>
         Completing your profile page will result in a higher chance of employees locating you
@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div id="student-wizard-navigation">
+<div class="student-wizard-navigation" ng-show="!user.isPersonalProfileCompleted">
     <button class="btn btn-lg btn-primary" ng-click="goBack()">
         <span class="glyphicon glyphicon-arrow-left"></span>
         Back
@@ -31,6 +31,15 @@
     <button class="btn btn-lg btn-primary" ng-click="continue()" ng-disabled="!isContinueEnabled && !user.isPersonalProfileCompleted">
         Continue
         <span class="glyphicon glyphicon-arrow-right"></span>
+    </button>
+</div>
+<div class="student-wizard-navigation" ng-show="user.isPersonalProfileCompleted">
+    <button class="btn btn-lg btn-primary" ng-click="startOver()">
+        <span class="glyphicon glyphicon-repeat"></span>
+        Start over
+    </button>
+    <button class="btn btn-lg btn-primary" ng-click="goToJobsPage()">
+        Browse jobs
     </button>
 </div>
 
@@ -232,7 +241,7 @@
         <h3 class="panel-title">Completed!</h3>
     </div>
     <div class="panel-body">
-        Congratulations! You have successfully completed your personal profile.
+        Congratulations! You have successfully completed your personal profile. Start browsing the job page to discover your dream career!
     </div>
 </div>
 

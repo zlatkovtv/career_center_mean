@@ -25,12 +25,6 @@
         templateUrl: '/modules/jobs/client/views/jobs-create.client.view.html',
         controller: 'JobsCreateController',
         controllerAs: 'vm'
-      })
-      .state('jobs.detail', {
-        url: '/:jobId',
-        templateUrl: '/modules/jobs/client/views/jobs-detail.client.view.html',
-        controller: 'JobsDetailController',
-        controllerAs: 'vm'
       });
   }
 

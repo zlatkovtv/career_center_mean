@@ -25,3 +25,30 @@
 .accordion-footer {
     margin-top: 10px;
 }
+
+#featured-job-carousel {
+}
+
+.carousel-caption {
+    background: rgb(34,34,34); /* for IE */
+    background: rgba(34,34,34,0.75);
+}
+
+.panel-default > .panel-heading {
+    background-image: none;
+    background-color: white;
+}
+
+.inline {
+    display: inline;
+}
+
+#jobs-find-header {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.job-detail-modal-title {
+    margin-top: 10px;
+}

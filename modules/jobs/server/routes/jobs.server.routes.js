@@ -8,17 +8,20 @@ jobs = require('../controllers/jobs.server.controller');
 
 module.exports = function (app) {
     // Articles collection routes
-    app.route('/api/jobs/create').all(jobsPolicy.isAllowed)
+    app.route('/api/jobs/create')
     .post(jobs.create);
 
-    app.route('/api/jobs/update').all(jobsPolicy.isAllowed)
+    app.route('/api/jobs/update')
     .put(jobs.update);
 
-    app.route('/api/jobs/all').all(jobsPolicy.isAllowed)
+    app.route('/api/jobs/all')
     .get(jobs.getAll);
 
+    app.route('/api/jobs/getJobsByUserId')
+    .post(jobs.getJobsByUserId);
+
     // Single article routes
-    app.route('/api/jobs/:jobId').all(jobsPolicy.isAllowed)
+    app.route('/api/jobs/:jobId')
     .get(jobs.read)
     .put(jobs.update)
     .delete(jobs.delete);

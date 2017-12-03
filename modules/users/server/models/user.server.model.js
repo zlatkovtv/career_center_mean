@@ -59,8 +59,23 @@ var UserSchema = new Schema({
     },
     companyName: {
         type: String,
-        trim: true,
-        default: null
+        default: null,
+        trim: true
+    },
+    companyWebsite: {
+        type: String,
+        default: null,
+        trim: true
+    },
+    companyEmail: {
+        type: String,
+        default: null,
+        trim: true
+    },
+    companyPhone: {
+        type: String,
+        default: null,
+        trim: true
     },
     firstName: {
         type: String,

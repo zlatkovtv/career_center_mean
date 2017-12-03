@@ -1,75 +1,78 @@
 'use strict';
 
 /**
- * Module dependencies
- */
+* Module dependencies
+*/
 var acl = require('acl');
 
 // Using the memory backend
 acl = new acl(new acl.memoryBackend());
 
 /**
- * Invoke Articles Permissions
- */
+* Invoke Articles Permissions
+*/
 exports.invokeRolesPolicies = function () {
-  acl.allow([{
-    roles: ['admin'],
-    allows: [{
-      resources: '/api/jobs',
-      permissions: '*'
+    acl.allow([{
+        roles: ['admin'],
+        allows: [{
+            resources: '/api/jobs',
+            permissions: '*'
+        }, {
+            resources: '/api/jobs/:jobId',
+            permissions: '*'
+        }]
     }, {
-      resources: '/api/jobs/:jobId',
-      permissions: '*'
-    }]
-  }, {
-    roles: ['student', 'alumni', 'employer'],
-    allows: [{
-      resources: '/api/jobs/all',
-      permissions: ['get']
+        roles: ['student', 'alumni', 'employer'],
+        allows: [{
+            resources: '/api/jobs/all',
+            permissions: ['get']
+        }, {
+            resources: '/api/jobs/:jobId',
+            permissions: ['get']
+        }]
     }, {
-      resources: '/api/jobs/:jobId',
-      permissions: ['get']
-    }]
-  }, {
-    roles: ['employer', 'admin'],
-    allows: [{
-      resources: '/api/jobs',
-      permissions: ['get']
-    }, {
-      resources: '/api/jobs/:jobId',
-      permissions: ['get']
-  }, {
-    resources: '/api/jobs/create',
-    permissions: ['*']
-  }]
-  }]);
+        roles: ['employer', 'admin'],
+        allows: [{
+            resources: '/api/jobs',
+            permissions: ['get']
+        }, {
+            resources: '/api/jobs/:jobId',
+            permissions: ['get']
+        }, {
+            resources: '/api/jobs/create',
+            permissions: ['*']
+        }, {
+            resources: '/api/jobs/getJobsCreatedBy',
+            permissions: ['*']
+        }]
+    }]);
 };
 
 /**
- * Check If Articles Policy Allows
- */
+* Check If Articles Policy Allows
+*/
 exports.isAllowed = function (req, res, next) {
-  var roles = (req.user) ? req.user.roles : ['*'];
+    var roles = (req.user) ? req.user.roles : ['*'];
 
-  // If an article is being processed and the current user created it then allow any manipulation
-  if (req.job && req.user && req.job.user && req.job.user.id === req.user.id) {
-    return next();
-  }
-
-  // Check for user roles
-  acl.areAnyRolesAllowed(roles, req.route.path, req.method.toLowerCase(), function (err, isAllowed) {
-    if (err) {
-      // An authorization error occurred
-      return res.status(500).send('Unexpected authorization error');
-    } else {
-      if (isAllowed) {
-        // Access granted! Invoke next middleware
+    // If an article is being processed and the current user created it then allow any manipulation
+    if (req.job && req.user && req.job.user && req.job.user.id === req.user.id) {
         return next();
-      } else {
-        return res.status(403).json({
-          message: 'User is not authorized'
-        });
-      }
     }
-  });
+
+    // Check for user roles
+    acl.areAnyRolesAllowed(roles, req.route.path, req.method.toLowerCase(), function (err, isAllowed) {
+        if (err) {
+            // An authorization error occurred
+            return res.status(500).send('Unexpected authorization error');
+        } else {
+            if (isAllowed) {
+                // Access granted! Invoke next middleware
+                return next();
+            } else {
+                return res.status(403).json({
+                    message: 'User is not authorized'
+                });
+            }
+        }
+    });
 };

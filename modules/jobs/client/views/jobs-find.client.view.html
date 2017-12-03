@@ -1,35 +1,71 @@
 <section>
-    <div class="page-header">
-        <h1>All jobs and internships</h1>
+    <div id="jobs-find-header" class="page-header">
+        <h1 class="inline"><small>All jobs and internships</small></h1>
+        <span class="badge inline" style="margin-left:5px;">{{jobs.length}}</span>
     </div>
-    <uib-accordion close-others="oneAtATime">
-        <div ng-repeat="job in jobs"
-            uib-accordion-group
-            class="panel-default"
-            heading="{{job.title}} @ {{job.companyName}}"
-            is-open="status.isFirstOpen">
-          <div class="accordion-body">
-              <div class="job-texts col-md-6">
-                  <div class="job-description break-word">{{job.description}}</div>
-                  <div class="job-responsibilities break-word">{{job.responsibilities}}</div>
-                  <div class="job-requirements break-word">{{job.requirements}}</div>
-              </div>
-              <div class="job-metadata col-md-6">
-                 <div class="job-attributes align-center">
-                     <div class="job-category">{{job.category}}</div>
-                     <div class="job-level">{{job.level}}</div>
-                     <div class="job-type">{{job.type}}</div>
-                 </div>
-                  <div class="job-contacts align-center">
-                      <div class="job-company-website">{{job.companyWebsite}}</div>
-                      <div class="job-company-email">{{job.companyEmail}}</div>
-                      <div class="job-company-phone">{{job.companyPhone}}</div>
-                  </div>
-              </div>
-          </div>
-          <div class="accordion-footer">
-              <a href="http://{{job.companyWebsite}}" target="_blank" class="btn btn-primary">Apply</a>
-          </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Featured</h3>
         </div>
-    </uib-accordion>
+        <div id="featured-job-carousel">
+            <div uib-carousel active="active" interval="5000" no-wrap="false">
+                <div uib-slide ng-repeat="featuredJob in jobs track by $index" index="$index">
+                    <img ng-src="/modules/core/client/img/brand/tu-sofia-background.jpg" style="margin:auto;">
+                    <div class="carousel-blur">
+                    </div>
+                    <div class="carousel-caption">
+                        <h4>{{featuredJob.title}}</h4>
+                        <p>{{featuredJob.companyName}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+      <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Position
+                </th>
+                <th>
+                    Company
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Type
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="job in jobs">
+                <th>
+                    <a href="http://{{job.companyWebsite}}" target="_blank" class="btn btn-primary">Apply</a>
+                    <button class="btn btn-primary" ng-click="popJobDetail(job)">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </th>
+                <th>
+                    {{job.title}}
+                </th>
+                <th>
+                    {{job.companyName}}
+                </th>
+                <th>
+                    {{job.category}}
+                </th>
+                <th>
+                    {{job.type}}
+                </th>
+            </tr>
+        </tbody>
+      </table>
+    </div>
 </section>

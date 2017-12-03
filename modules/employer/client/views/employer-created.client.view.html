@@ -1,0 +1,60 @@
+<section class="container">
+  <div class="page-header">
+    <h1><small>Jobs created by {{user.companyName}} (You)</small></h1>
+  </div>
+
+  <div ng-show="jobs.length === 0">
+      <div class="alert alert-info" >Your company has not published any job ads yet. You can create the first one!</div>
+      <button class="btn btn-primary" ng-click="goToCreateJobsPage()">
+          Create a new ad
+      </button>
+  </div>
+
+  <div class="panel panel-default" ng-show="jobs.length > 0">
+    <table class="table">
+      <thead>
+          <tr>
+              <th>
+
+              </th>
+              <th>
+                  Position
+              </th>
+              <th>
+                  Company
+              </th>
+              <th>
+                  Category
+              </th>
+              <th>
+                  Type
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="job in jobs">
+              <th>
+                  <button class="btn btn-primary" ng-click="editJob(job)">
+                      <span class="glyphicon glyphicon-edit"></span>
+                  </button>
+                  <button class="btn btn-danger" ng-click="deleteJob(job)">
+                      <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+              </th>
+              <th>
+                  {{job.title}}
+              </th>
+              <th>
+                  {{job.companyName}}
+              </th>
+              <th>
+                  {{job.category}}
+              </th>
+              <th>
+                  {{job.type}}
+              </th>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

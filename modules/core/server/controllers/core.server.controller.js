@@ -21,12 +21,14 @@ exports.renderIndex = function (req, res) {
       lastName: req.user.lastName,
       firstName: req.user.firstName,
       additionalProvidersData: req.user.additionalProvidersData,
-      isPersonalProfileCompleted: req.user.isPersonalProfileCompleted
+      isPersonalProfileCompleted: req.user.isPersonalProfileCompleted,
+      companyName: req.user.companyName
     };
   }
 
+  // Konstantin req.user was safeUserObject (changed because sever doesn't return full object and I need it for Authentication service ($window))
   res.render('modules/core/server/views/index', {
-    user: JSON.stringify(safeUserObject),
+    user: JSON.stringify(req.user),
     sharedConfig: JSON.stringify(config.shared)
   });
 };

@@ -5,11 +5,16 @@
     .module('jobs')
     .controller('JobsDetailController', JobsDetailController);
 
-  JobsDetailController.$inject = ['JobsService'];
+  JobsDetailController.$inject = ['$scope', 'JobsService', 'job', '$uibModalInstance'];
 
-  function JobsDetailController(JobsService) {
-    var vm = this;
+  function JobsDetailController($scope, JobsService, job, $uibModalInstance) {
+    $scope.job = job;
 
-    vm.jobs = JobsService.query();
+    $scope.closeJobDetailModal = () => {
+        $uibModalInstance.close();
+    };
+
+    $scope.apply = () => {
+    };
   }
 }());

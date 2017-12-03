@@ -45,7 +45,7 @@ exports.update = function (req, res) {
 
   if (user) {
     // Update whitelisted fields only
-    user = _.extend(user, _.pick(req.body, whitelistedFields));
+    user = _.extend(user, req.body);
 
     user.updated = Date.now();
 

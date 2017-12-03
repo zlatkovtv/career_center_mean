@@ -5,17 +5,19 @@
     .module('jobs')
     .controller('JobsCreateController', JobsCreateController);
 
-    JobsCreateController.$inject = ['$scope', 'JobsService', 'Notification'];
+    JobsCreateController.$inject = ['$scope', 'JobsService', 'Notification', 'Authentication', '$uibModal'];
 
-    function JobsCreateController($scope, JobsService, Notification) {
+    function JobsCreateController($scope, JobsService, Notification, Authentication, $uibModal) {
+        $scope.employer = Authentication.user;
+        $scope.canEditCompanyFields = false;
         $scope.job = {
             type: "Full-time",
             category: "IT",
             level: "Specialist level",
-            companyName: null,
-            companyWebsite: null,
-            companyEmail: null,
-            companyPhone: null,
+            companyName: $scope.employer.companyName,
+            companyWebsite: $scope.employer.companyWebsite,
+            companyEmail: $scope.employer.companyEmail,
+            companyPhone: $scope.employer.companyPhone,
             requirements: null,
             responsibilities: null
         };
@@ -48,6 +50,27 @@
             'worker': 'Worker level'
         };
 
+        $scope.verifyEmployerProfileCompleted = () => {
+            if (!$scope.employer.companyName || !$scope.employer.companyWebsite || !$scope.employer.companyEmail || !$scope.employer.companyPhone) {
+                var modalInstance = $uibModal.open({
+                    templateUrl: '/modules/templates/client/views/confirm.client.template.html',
+                    controller: 'ConfirmController',
+                    resolve: {
+                        options: {
+                            title: 'You need to complete your company profile before you can create job ads.',
+                            yes: 'OK, go there now',
+                            no: 'Cancel',
+                            yesColor: 'primary'
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                }, function () {
+                });
+            }
+        };
+
         $scope.isObjectValid = (inputObj) => {
             for (var property in inputObj) {
                 if (inputObj.hasOwnProperty(property)) {
@@ -65,10 +88,16 @@
                 Notification.error({ title: 'Empty fields', message: '<i class="glyphicon glyphicon-remove"></i> Please fill out all fields before proceeding!', delay: 3000 });
                 return;
             }
+            var jobsService = new JobsService($scope.job);
 
-            console.log(JobsService);
-            JobsService.post($scope.job);
+            jobsService.$post(function (response) {
+                Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> You have successfully created a job ad!', delay: 3000 });
+            }, function (response) {
+                Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Job creation failed for some reason!' });
+            });
 
         };
+
+        $scope.verifyEmployerProfileCompleted();
     }
 }());

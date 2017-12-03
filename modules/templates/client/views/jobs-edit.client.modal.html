@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="jobs-detail-title">{{job.title}}</h3>
+</div>
+<div class="modal-body" style="overflow-y: auto;max-height:500px;">
+    <div>
+        <div class="form-group">
+            <label>Position title</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <input type="text" ng-model="job.title" class="form-control" required placeholder="Software developer" />
+        </div>
+        <div class="form-group">
+            <label>Company name</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyName" class="form-control" required placeholder="Microsoft" />
+        </div>
+        <div class="form-group">
+            <label>Company website</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyWebsite" class="form-control" required placeholder="www.microsoft.com" />
+        </div>
+        <div class="form-group">
+            <label>Company email</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyEmail" class="form-control" required placeholder="helpdesk@microsoft.com" />
+        </div>
+        <div class="form-group">
+            <label>Company phone</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyPhone" class="form-control" required placeholder="+359 888 888 888" />
+        </div>
+    </div>
+    <div>
+        <div class="form-group">
+            <label>Job type</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <select ng-change="validateCurrentForm()" ng-model="job.type" required class="form-control">
+                <option ng-repeat="(key, value) in jobTypes track by $index" value="{{value}}">{{value}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Job category</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <select ng-change="validateCurrentForm()" ng-model="job.category" required class="form-control">
+                <option ng-repeat="(key, value) in jobCategories track by $index" value="{{value}}">{{value}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Job level</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <select ng-change="validateCurrentForm()" ng-model="job.level" required class="form-control">
+                <option ng-repeat="(key, value) in jobLevels track by $index" value="{{value}}">{{value}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Requirements</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <textarea  ng-model="job.requirements" class="form-control" rows="5"></textarea>
+        </div>
+    </div>
+    <div>
+        <div class="form-group">
+            <label>Job description</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <textarea  ng-model="job.description" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Job responsibilities</label>
+            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+            <textarea  ng-model="job.responsibilities" class="form-control" rows="5"></textarea>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="update()" style="float:left;">Update</button>
+    <button class="btn btn-primary" type="button" ng-click="close()">Close</button>
+</div>
