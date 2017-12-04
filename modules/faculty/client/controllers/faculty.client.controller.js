@@ -8,6 +8,7 @@
   FacultyController.$inject = ['$scope', '$state', 'Authentication', '$uibModal', 'FacultyService', 'Notification'];
 
   function FacultyController($scope, $state, Authentication, $uibModal, FacultyService, Notification) {
+      $scope.classes = [];
       $scope.getClassesForUser = () => {
           $scope.classes = FacultyService.getClassesForUser(function (response) {
               $scope.classes = response;

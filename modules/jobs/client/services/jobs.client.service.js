@@ -31,6 +31,15 @@
             post: {
                 method: 'POST',
                 url: '/api/jobs/create'
+            },
+            applyForJob: {
+                method: 'POST',
+                url: '/api/jobs/applications/:jobId'
+            },
+            getAllApplications: {
+                method: 'GET',
+                url: '/api/jobs/applications:jobId',
+                isArray: true
             }
         });
 

@@ -6,6 +6,7 @@
 var path = require('path'),
 mongoose = require('mongoose'),
 Job = mongoose.model('Job'),
+JobApplication = mongoose.model('JobApplication'),
 errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -125,5 +126,33 @@ exports.jobByID = function (req, res, next, id) {
         }
         req.job = job;
         next();
+    });
+};
+
+exports.getAllApplications = function (req, res) {
+    var userId = req.param.
+    application.save(function (err, appl) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(appl);
+        }
+    });
+};
+
+exports.applyForJob = function (req, res) {
+    var application = new JobApplication();
+    application._jobId = req.params.jobId;
+    application._userId = req.user._id;
+    application.save(function (err, appl) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(appl);
+        }
     });
 };

@@ -47,7 +47,7 @@
         <tbody>
             <tr ng-repeat="job in jobs">
                 <th>
-                    <a href="http://{{job.companyWebsite}}" target="_blank" class="btn btn-primary">Apply</a>
+                    <button class="btn btn-primary" ng-click="applyForJob(job)">Apply</button>
                     <button class="btn btn-primary" ng-click="popJobDetail(job)">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>

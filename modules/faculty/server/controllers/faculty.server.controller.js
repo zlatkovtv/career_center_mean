@@ -75,7 +75,7 @@ exports.deleteClass = function (req, res) {
 
 exports.getEnrolments = function (req, res) {
     var classId = req.params.classId;
-    
+
     ClassEnrolment.find({ '_classId': classId }).exec(function (err, enrolments) {
         if (err) {
             return res.status(422).send({

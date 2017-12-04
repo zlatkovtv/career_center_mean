@@ -20,6 +20,10 @@ module.exports = function (app) {
     app.route('/api/jobs/getJobsByUserId')
     .post(jobs.getJobsByUserId);
 
+    app.route('/api/jobs/applications/:jobId')
+    .get(jobs.getAllApplications)
+    .post(jobs.applyForJob);
+
     // Single article routes
     app.route('/api/jobs/:jobId')
     .get(jobs.read)
