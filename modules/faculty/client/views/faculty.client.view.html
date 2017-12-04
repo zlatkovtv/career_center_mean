@@ -4,8 +4,45 @@
     <h1><small>Here you can manage your class</small></h1>
   </div>
 
-  <div ng-show="classes.length === 0">
-      <div class="alert alert-info">You do not appear to have any classes linked to your account. Lets create one now! </div>
+  <div>
+      <div class="alert alert-info" ng-show="classes.length === 0">You do not appear to have any classes linked to your account. Lets create one now! </div>
       <button class="btn btn-primary" ng-click="launchClassCreateWizard()">Create class</button>
+  </div>
+
+  <div ng-show="classes.length > 0">
+      <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Department
+                </th>
+                <th>
+                    Subject name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="facultyClass in classes">
+                <th>
+                    <button class="btn btn-primary" ng-click="addStudentToClass(facultyClass)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add students
+                    </button>
+                    <button class="btn btn-danger" ng-click="deleteClass(facultyClass)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </th>
+                <th>
+                    {{facultyClass.department}}
+                </th>
+                <th>
+                    {{facultyClass.subjectName}}
+                </th>
+            </tr>
+        </tbody>
+      </table>
   </div>
 </section>

@@ -12,107 +12,39 @@ chalk = require('chalk');
 /**
 * Article Schema
 */
-var JobSchema = new Schema({
+var FacultyClassSchema = new Schema({
     created: {
         type: Date,
         default: Date.now
     },
-    title: {
+    subjectName: {
         type: String,
-        default: '',
+        default: null,
         trim: true,
-        required: 'Job title is required'
+        required: 'Subject name is required'
     },
-    companyId: {
+    department: {
         type: String,
-        default: '',
-        trim: true
-    },
-    companyName: {
-        type: String,
-        default: '',
+        default: null,
         trim: true,
-        required: 'Company name is required'
+        required: 'Department is required'
     },
-    companyWebsite: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Company website is required'
-    },
-    companyEmail: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Company email is required'
-    },
-    companyPhone: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Company phone is required'
-    },
-    type: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Job type is required'
-    },
-    category: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Job category is required'
-    },
-    level: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Job level is required'
-    },
-    requirements: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Requirements are required'
-    },
-    description: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Description is required'
-    },
-    responsibilities: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Responsibilities are required'
+    _creatorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 
-// JobSchema.pre('save', function (next) {
-//     var User = mongoose.model('User');
-//     User.findOne({ companyName: this.companyName }, '_id', function (err, user) {
-//         if (err) {
-//             next();
-//             return null;
-//         }
-//
-//         this.companyId = user._id;
-//         next();
-//     });
-// });
+FacultyClassSchema.statics.seed = seed;
 
-JobSchema.statics.seed = seed;
-
-mongoose.model('Job', JobSchema);
+mongoose.model('FacultyClass', FacultyClassSchema);
 
 /**
 * Seeds the User collection with document (Article)
 * and provided options.
 */
 function seed(doc, options) {
-    var Job = mongoose.model('Job');
+    var FacultyClass = mongoose.model('FacultyClass');
 
     return new Promise(function (resolve, reject) {
 
@@ -152,7 +84,7 @@ function seed(doc, options) {
 
         function skipDocument() {
             return new Promise(function (resolve, reject) {
-                Job
+                FacultyClass
                 .findOne({
                     title: doc.title
                 })
@@ -190,15 +122,15 @@ function seed(doc, options) {
                     });
                 }
 
-                var job = new Job(doc);
+                var facultyClass = new FacultyClass(doc);
 
-                job.save(function (err) {
+                facultyClass.save(function (err) {
                     if (err) {
                         return reject(err);
                     }
 
                     return resolve({
-                        message: 'Database Seeding: Article\t' + job.title + ' added'
+                        message: 'Database Seeding: Article\t' + facultyClass.title + ' added'
                     });
                 });
             });

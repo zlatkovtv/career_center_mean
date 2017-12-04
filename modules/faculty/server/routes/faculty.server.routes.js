@@ -3,29 +3,19 @@
 /**
 * Module dependencies
 */
-var jobsPolicy = require('../policies/jobs.server.policy'),
-jobs = require('../controllers/jobs.server.controller');
+var facultyController = require('../controllers/faculty.server.controller');
 
 module.exports = function (app) {
-    // Articles collection routes
-    app.route('/api/jobs/create')
-    .post(jobs.create);
+    app.route('/api/faculty/class/all')
+    .get(facultyController.getClassesForUser);
 
-    app.route('/api/jobs/update')
-    .put(jobs.update);
+    app.route('/api/faculty/class')
+    .post(facultyController.createClass);
 
-    app.route('/api/jobs/all')
-    .get(jobs.getAll);
+    app.route('/api/faculty/class/:classId')
+    .get(facultyController.getEnrolments)
+    .post(facultyController.addUserToClass)
+    .delete(facultyController.deleteClass);
 
-    app.route('/api/jobs/getJobsByUserId')
-    .post(jobs.getJobsByUserId);
-
-    // Single article routes
-    app.route('/api/jobs/:jobId')
-    .get(jobs.read)
-    .put(jobs.update)
-    .delete(jobs.delete);
-
-    // Finish by binding the article middleware
-    app.param('jobId', jobs.jobByID);
+    // app.param('jobId', facultyController.jobByID);
 };

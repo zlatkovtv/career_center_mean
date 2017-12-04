@@ -8,13 +8,34 @@
     FacultyService.$inject = ['$resource'];
 
     function FacultyService($resource) {
-        var Users = $resource('/api/faculty', {}, {
+        var Users = $resource('/api/faculty', {
+            classId: '@classId'
+        },
+        {
             update: {
                 method: 'PUT'
             },
             createClass: {
                 method: 'POST',
                 url: '/api/faculty/class'
+            },
+            getClassesForUser: {
+                method: 'GET',
+                url: '/api/faculty/class/all',
+                isArray: true
+            },
+            deleteClass: {
+                method: 'DELETE',
+                url: '/api/faculty/class/:classId'
+            },
+            addUserToClass: {
+                method: 'POST',
+                url: '/api/faculty/class/:classId'
+            },
+            getEnrolments: {
+                method: 'GET',
+                url: '/api/faculty/class/:classId',
+                isArray: true
             }
         });
 

@@ -5,125 +5,84 @@
 */
 var path = require('path'),
 mongoose = require('mongoose'),
-Class = mongoose.model('Class'),
+FacultyClass = mongoose.model('FacultyClass'),
+ClassEnrolment = mongoose.model('ClassEnrolment'),
+User = mongoose.model('User'),
 errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
 * Create an article
 */
-exports.create = function (req, res) {
-    var job = new Job(req.body);
-    job.user = req.user;
+exports.createClass = function (req, res) {
+    var facultyClass = new FacultyClass(req.body);
+    facultyClass._creatorId = req.user._id;
 
-    job.save(function (err) {
+    facultyClass.save(function (err) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(job);
+            res.json(facultyClass);
         }
     });
 };
 
-exports.getJobsByUserId = function (req, res) {
-    var companyName = req.body.companyName;
-    Job.find({ 'companyName': companyName }).exec(function (err, jobs) {
+exports.addUserToClass = function (req, res) {
+    var user = new User(req.body);
+    var classId = req.params.classId;
+
+    var enrolmentEntry = new ClassEnrolment();
+    enrolmentEntry._classId = classId;
+    enrolmentEntry._studentId = user._id;
+
+    enrolmentEntry.save(function (err, enrolment) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(jobs);
+            res.json(enrolment);
         }
     });
 };
 
-/**
-* Show the current article
-*/
-exports.read = function (req, res) {
-    // convert mongoose document to JSON
-    var job = req.job ? req.job.toJSON() : {};
+exports.getClassesForUser = function (req, res) {
+    var user = req.user;
 
-    // Add a custom field to the Article, for determining if the current User is the "owner".
-    // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-    job.isCurrentUserOwner = !!(req.user && job.user && job.user._id.toString() === req.user._id.toString());
-
-    res.json(job);
-};
-
-/**
-* Update an article
-*/
-exports.update = function (req, res) {
-    var job = req.job;
-
-    job.title = req.body.title;
-    job.content = req.body.content;
-
-    job.save(function (err) {
+    FacultyClass.find({ '_creatorId': user._id }).exec(function (err, classes) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(job);
+            res.json(classes);
         }
     });
 };
 
-/**
-* Delete an article
-*/
-exports.delete = function (req, res) {
-    var job = req.job;
-
-    job.remove(function (err) {
+exports.deleteClass = function (req, res) {
+    FacultyClass.findByIdAndRemove(req.params.classId).exec(function (err, classes) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(job);
+            res.json(classes);
         }
     });
 };
 
-/**
-* List of Articles
-*/
-exports.getAll = function (req, res) {
-    Job.find().sort('-created').exec(function (err, jobs) {
+exports.getEnrolments = function (req, res) {
+    var classId = req.params.classId;
+    
+    ClassEnrolment.find({ '_classId': classId }).exec(function (err, enrolments) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(jobs);
+            res.json(enrolments);
         }
-    });
-};
-
-/**
-* Article middleware
-*/
-exports.jobByID = function (req, res, next, id) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).send({
-            message: 'Job is invalid'
-        });
-    }
-
-    Job.findById(id).populate('user', 'displayName').exec(function (err, job) {
-        if (err) {
-            return next(err);
-        } else if (!job) {
-            return res.status(404).send({
-                message: 'No article with that identifier has been found'
-            });
-        }
-        req.job = job;
-        next();
     });
 };
