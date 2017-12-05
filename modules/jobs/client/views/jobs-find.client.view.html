@@ -47,9 +47,19 @@
         <tbody>
             <tr ng-repeat="job in jobs">
                 <th>
-                    <button class="btn btn-primary" ng-click="applyForJob(job)">Apply</button>
                     <button class="btn btn-primary" ng-click="popJobDetail(job)">
                         <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    <button class="btn btn-primary"
+                    ng-click="applyForJob(job)"
+                    ng-hide="hasUserAppliedForJob(job)">
+                        Apply
+                    </button>
+                    <button class="btn btn-success"
+                    ng-disabled="true"
+                    ng-show="hasUserAppliedForJob(job)">
+                    <span class="glyphicon glyphicon-ok"></span>
+                        Applied
                     </button>
                 </th>
                 <th>

@@ -36,6 +36,10 @@
                 method: 'GET',
                 url: '/api/faculty/class/:classId',
                 isArray: true
+            },
+            saveStudentTranscript: {
+                method: 'POST',
+                url: '/api/faculty/transcript'
             }
         });
 

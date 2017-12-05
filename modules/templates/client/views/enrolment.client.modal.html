@@ -4,8 +4,8 @@
 <div class="modal-body">
     <ul class="list-group">
       <li class="list-group-item" ng-repeat="student in allStudents | filter:enrolled">
-          <button class="btn btn-success btn-sm" ng-disabled="true">
-              <span class="glyphicon glyphicon-ok"></span>
+          <button class="btn btn-success btn-sm" ng-click="showTranscriptContainer(student)">
+              <span class="glyphicon glyphicon-paste"></span>
           </button>
           {{student.displayName}}
       </li>

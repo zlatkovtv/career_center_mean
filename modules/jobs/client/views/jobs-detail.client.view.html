@@ -7,7 +7,7 @@
             Job description
         </small>
     </h3>
-    <div>
+    <div class="no-overflow">
         {{job.description}}
     </div>
     <h3 class="page-header no-margin-top">
@@ -15,7 +15,7 @@
             Job responsibilities
         </small>
     </h3>
-    <div>
+    <div class="no-overflow">
         {{job.responsibilities}}
     </div>
     <h3 class="page-header no-margin-top">
@@ -23,11 +23,21 @@
             Job requirements
         </small>
     </h3>
-    <div>
+    <div class="no-overflow">
         {{job.requirements}}
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="apply()" style="float:left;">Apply</button>
+    <button class="btn btn-primary"
+    ng-click="applyForJob(job)"
+    ng-hide="hasUserApplied" style="float: left;">
+    Apply
+    </button>
+    <button class="btn btn-success"
+    ng-disabled="true"
+    ng-show="hasUserApplied" style="float: left;">
+    <span class="glyphicon glyphicon-ok"></span>
+    Applied
+    </button>
     <button class="btn btn-primary" type="button" ng-click="closeJobDetailModal()">Close</button>
 </div>

@@ -130,8 +130,8 @@ exports.jobByID = function (req, res, next, id) {
 };
 
 exports.getAllApplications = function (req, res) {
-    var userId = req.param.
-    application.save(function (err, appl) {
+    var userId = req.user._id;
+    JobApplication.find({ '_userId': userId }).exec(function (err, appl) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
@@ -144,7 +144,7 @@ exports.getAllApplications = function (req, res) {
 
 exports.applyForJob = function (req, res) {
     var application = new JobApplication();
-    application._jobId = req.params.jobId;
+    application._jobId = req.body._id;
     application._userId = req.user._id;
     application.save(function (err, appl) {
         if (err) {

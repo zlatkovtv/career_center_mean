@@ -5,47 +5,64 @@
     .module('jobs')
     .controller('JobsFindController', JobsFindController);
 
-    JobsFindController.$inject = ['$scope', 'Authentication', 'JobsService', '$uibModal'];
+    JobsFindController.$inject = ['$scope', 'Authentication', 'JobsService', '$uibModal', 'Notification'];
 
-    function JobsFindController($scope, Authentication, JobsService, $uibModal) {
+    function JobsFindController($scope, Authentication, JobsService, $uibModal, Notification) {
         $scope.jobs = [];
         $scope.applicationsForUser = [];
+        $scope.applicationJobIds = [];
         $scope.authentication = Authentication;
         $scope.oneAtATime = true;
 
-        $scope.$on('$viewContentLoaded', function () {
-            $scope.jobs = JobsService.getJobs();
-
-            $scope.applicationsForUser = JobsService.getAllApplications({ jobId: Authentication.user._id }, {}, function (response) {
-                Notification.success({ message: 'Could not retrieve classes for some reason!', title: '<i class="glyphicon glyphicon-remove"></i> Success' });
+        $scope.getApplications = () => {
+            $scope.applicationsForUser = JobsService.getAllApplications(function (response) {
+                $scope.applicationsForUser = response;
+                $scope.applicationJobIds = response.map(appl => appl._jobId);
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve classes for some reason!' });
             });
-        });
+        };
 
         $scope.popJobDetail = (job) => {
             var modalInstance = $uibModal.open({
                 templateUrl: '/modules/jobs/client/views/jobs-detail.client.view.html',
                 controller: 'JobsDetailController',
                 resolve: {
-                    job: function () {
-                        return job;
+                    data: {
+                        job: job,
+                        hasUserApplied: $scope.hasUserAppliedForJob(job)
                     }
                 }
             });
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
+            modalInstance.result.then(function (result) {
+                if (result) {
+                    $scope.getApplications();
+                }
             }, function () {
             });
         };
 
         $scope.applyForJob = (job) => {
-            JobsService.applyForJob({ jobId: job._id }, {}, function (response) {
-                Notification.success({ message: 'Could not retrieve classes for some reason!', title: '<i class="glyphicon glyphicon-remove"></i> Success' });
+            JobsService.applyForJob({}, job, function (response) {
+                $scope.getApplications();
+                Notification.success({ message: 'You have applied for this position! Please check your inbox email regularly.', title: '<i class="glyphicon glyphicon-ok"></i> Success' });
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve classes for some reason!' });
             });
         };
+
+        $scope.hasUserAppliedForJob = (job) => {
+            if ($scope.applicationJobIds.indexOf(job._id) !== -1) {
+                return true;
+            }
+
+            return false;
+        };
+
+        $scope.$on('$viewContentLoaded', function () {
+            $scope.jobs = JobsService.getJobs();
+            $scope.getApplications();
+        });
     }
 }());

@@ -5,14 +5,17 @@
     .module('templates')
     .controller('EnrolmentController', EnrolmentController);
 
-    EnrolmentController.$inject = ['$scope', '$uibModalInstance', 'UsersService', 'FacultyService', 'Notification', 'facultyClass'];
+    EnrolmentController.$inject = ['$scope', '$uibModal', '$uibModalInstance', 'UsersService', 'FacultyService', 'Notification', 'facultyClass'];
 
-    function EnrolmentController($scope, $uibModalInstance, UsersService, FacultyService, Notification, facultyClass) {
+    function EnrolmentController($scope, $uibModal, $uibModalInstance, UsersService, FacultyService, Notification, facultyClass) {
         $scope.facultyClass = facultyClass;
         $scope.studentNameFilter = "";
         $scope.allStudents = [];
         $scope.enrolments = [];
         $scope.enroledStudentIds = [];
+        $scope.isTranscriptContainerShown = false;
+        $scope.selectedStudentTranscript = {};
+        $scope.transcriptModalInstance = {};
 
         $scope.getAllStudents = () => {
             $scope.allStudents = UsersService.getAllStudents(function (response) {
@@ -60,6 +63,32 @@
             }
 
             return false;
+        };
+
+        $scope.showTranscriptContainer = (student) => {
+            $scope.isTranscriptContainerShown = true;
+            $scope.selectedStudentTranscript._enrolmentId = $scope.enrolments.filter(function (enrolment) {
+                return enrolment._studentId === student._id;
+            })[0]._id;
+
+            $scope.transcriptModalInstance = $uibModal.open({
+                templateUrl: '/modules/templates/client/views/transcript-input.client.modal.html',
+                controller: 'TranscriptInputController'
+            });
+
+            $scope.transcriptModalInstance.result.then(function (result) {
+                if (!result) {
+                    return;
+                }
+
+                $scope.selectedStudentTranscript.grade = result;
+                FacultyService.saveStudentTranscript({}, $scope.selectedStudentTranscript, function (response) {
+                    Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i>Success', message: 'Saved grade for ' + student.displayName + '!' });
+                }, function (response) {
+                    Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not save grade for some reason!' });
+                });
+            }, function () {
+            });
         };
 
         $scope.getAllStudents();

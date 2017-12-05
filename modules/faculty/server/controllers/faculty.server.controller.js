@@ -7,7 +7,9 @@ var path = require('path'),
 mongoose = require('mongoose'),
 FacultyClass = mongoose.model('FacultyClass'),
 ClassEnrolment = mongoose.model('ClassEnrolment'),
+Transcript = mongoose.model('Transcript'),
 User = mongoose.model('User'),
+PDFDocument = require('pdfkit'),
 errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -86,3 +88,38 @@ exports.getEnrolments = function (req, res) {
         }
     });
 };
+
+exports.saveStudentTranscript = function (req, res) {
+    var transcript = new Transcript(req.body);
+
+    transcript.save(function (err, tr) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(tr);
+        }
+    });
+};
+
+// exports.generatePdfReportForStudent = function(req, res) {
+    // var studentId = req.user._id;
+    // ClassEnrolment.find({ '_studentId': studentIdId }).exec(function (err, enrolments) {
+    //     if (err) {
+    //         return res.status(422).send({
+    //             message: errorHandler.getErrorMessage(err)
+    //         });
+    //     }
+    //
+    //     var enrolmentIds = enrolments.map(enr => enr._id);
+    //     Transcript.find({ '_classId': classId }).exec(function (err, transcripts) {
+    //         if (err) {
+    //             return res.status(422).send({
+    //                 message: errorHandler.getErrorMessage(err)
+    //             });
+    //         } else {
+    //         }
+    //     });
+    // });
+// };

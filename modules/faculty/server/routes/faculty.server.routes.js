@@ -17,5 +17,8 @@ module.exports = function (app) {
     .post(facultyController.addUserToClass)
     .delete(facultyController.deleteClass);
 
+    app.route('/api/faculty/transcript')
+    .post(facultyController.saveStudentTranscript);
+
     // app.param('jobId', facultyController.jobByID);
 };

@@ -11,7 +11,7 @@
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
       title: 'Student profile',
-      state: 'student',
+      state: 'student.profile',
       roles: ['student', 'admin'],
       position: 1
     });

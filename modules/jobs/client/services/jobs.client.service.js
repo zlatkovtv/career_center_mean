@@ -10,7 +10,7 @@
     function JobsService($resource, $log) {
         var Job = $resource('/api/jobs/:jobId',
         {
-            jobId: '@_id'
+            jobId: '@_jobId'
         },
         {
             getJobs: {
@@ -34,11 +34,11 @@
             },
             applyForJob: {
                 method: 'POST',
-                url: '/api/jobs/applications/:jobId'
+                url: '/api/jobs/applications/'
             },
             getAllApplications: {
                 method: 'GET',
-                url: '/api/jobs/applications:jobId',
+                url: '/api/jobs/applications/',
                 isArray: true
             }
         });
