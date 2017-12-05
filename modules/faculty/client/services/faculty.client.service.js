@@ -40,6 +40,15 @@
             saveStudentTranscript: {
                 method: 'POST',
                 url: '/api/faculty/transcript'
+            },
+            generateTranscriptPdf: {
+                method: 'GET',
+                url: '/api/faculty/report',
+                headers: {
+                    accept: 'application/pdf'
+                },
+                responseType: 'arraybuffer',
+                cache: true
             }
         });
 

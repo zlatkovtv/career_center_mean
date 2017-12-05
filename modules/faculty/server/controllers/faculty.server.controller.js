@@ -4,6 +4,8 @@
 * Module dependencies
 */
 var path = require('path'),
+_ = require('lodash'),
+fs = require('fs'),
 mongoose = require('mongoose'),
 FacultyClass = mongoose.model('FacultyClass'),
 ClassEnrolment = mongoose.model('ClassEnrolment'),
@@ -103,23 +105,39 @@ exports.saveStudentTranscript = function (req, res) {
     });
 };
 
-// exports.generatePdfReportForStudent = function(req, res) {
-    // var studentId = req.user._id;
-    // ClassEnrolment.find({ '_studentId': studentIdId }).exec(function (err, enrolments) {
-    //     if (err) {
-    //         return res.status(422).send({
-    //             message: errorHandler.getErrorMessage(err)
-    //         });
-    //     }
-    //
-    //     var enrolmentIds = enrolments.map(enr => enr._id);
-    //     Transcript.find({ '_classId': classId }).exec(function (err, transcripts) {
-    //         if (err) {
-    //             return res.status(422).send({
-    //                 message: errorHandler.getErrorMessage(err)
-    //             });
-    //         } else {
-    //         }
-    //     });
-    // });
-// };
+exports.generatePdfReportForStudent = function (req, res) {
+    var studentId = req.user._id;
+    Transcript.find().populate({
+        path: '_enrolmentId',
+        populate: {
+            path: '_classId'
+        }
+    }).exec(function (err, mongoRes) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+
+        mongoRes = mongoRes.filter(function (obj) {
+            return obj._enrolmentId._studentId.equals(studentId);
+        });
+
+        var pdf = new PDFDocument({
+            size: 'A4',
+            info: {
+                Title: 'FDIBA Official Transcripts for' + req.user.displayName
+            }
+        });
+
+        _.forEach(mongoRes, function (value) {
+            pdf.text(value._enrolmentId._classId.subjectName + ' - ' + value.grade);
+        });
+
+        pdf.pipe(res).on('finish', function () {
+            console.log('PDF closed');
+        });
+
+        pdf.end();
+    });
+};
