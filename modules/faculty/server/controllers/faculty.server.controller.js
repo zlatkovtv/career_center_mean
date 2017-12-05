@@ -130,12 +130,10 @@ exports.generatePdfReportForStudent = function (req, res) {
             }
         });
 
+        pdf.pipe(res);
+
         _.forEach(mongoRes, function (value) {
             pdf.text(value._enrolmentId._classId.subjectName + ' - ' + value.grade);
-        });
-
-        pdf.pipe(res).on('finish', function () {
-            console.log('PDF closed');
         });
 
         pdf.end();
