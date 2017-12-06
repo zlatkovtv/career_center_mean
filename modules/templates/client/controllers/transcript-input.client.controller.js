@@ -5,10 +5,10 @@
     .module('templates')
     .controller('TranscriptInputController', TranscriptInputController);
 
-    TranscriptInputController.$inject = ['$scope', '$uibModalInstance'];
+    TranscriptInputController.$inject = ['$scope', '$uibModalInstance', 'grade'];
 
-    function TranscriptInputController($scope, $uibModalInstance) {
-        $scope.grade = null;
+    function TranscriptInputController($scope, $uibModalInstance, grade) {
+        $scope.grade = grade;
 
         $scope.closeTranscriptModal = () => {
             $uibModalInstance.close($scope.grade);

@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('chat')
-    .controller('ChatController', ChatController);
+    .module('inbox')
+    .controller('InboxController', InboxController);
 
-  ChatController.$inject = ['$scope', '$state', 'Authentication', 'Socket'];
+  InboxController.$inject = ['$scope', '$state', 'Authentication', 'Socket'];
 
-  function ChatController($scope, $state, Authentication, Socket) {
+  function InboxController($scope, $state, Authentication, Socket) {
     var vm = this;
 
     vm.messages = [];
@@ -17,12 +17,10 @@
     init();
 
     function init() {
-      // If user is not signed in then redirect back home
       if (!Authentication.user) {
         $state.go('home');
       }
 
-      // Make sure the Socket is connected
       if (!Socket.socket) {
         Socket.connect();
       }

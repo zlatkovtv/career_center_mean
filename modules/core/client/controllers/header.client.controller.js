@@ -11,8 +11,9 @@
     var vm = this;
 
     vm.accountMenu = menuService.getMenu('account').items[0];
+    vm.inboxMenu = menuService.getMenu('inbox');
+    console.log(vm.inboxMenu);
     vm.authentication = Authentication;
-    console.log(Authentication);
     vm.isCollapsed = false;
     vm.menu = menuService.getMenu('topbar');
 

@@ -8,6 +8,7 @@ mongoose = require('mongoose'),
 Job = mongoose.model('Job'),
 JobApplication = mongoose.model('JobApplication'),
 errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+const nodemailer = require('nodemailer');
 
 /**
 * Create an article
@@ -146,13 +147,48 @@ exports.applyForJob = function (req, res) {
     var application = new JobApplication();
     application._jobId = req.body._id;
     application._userId = req.user._id;
-    application.save(function (err, appl) {
+    application.save.populate('_jobId').exec(function (err, appl) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
+            var companyEmail = appl._jobId.companyEmail;
+            sendEmailToEmployer(companyEmail);
             res.json(appl);
         }
     });
 };
+
+function sendEmailToEmployer(companyEmail) {
+    let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: "fdibacareercenter@gmail.com", // generated ethereal user
+            pass: process.env.NODEMAILER_PASS  // generated ethereal password
+        }
+    });
+
+    // setup email data with unicode symbols
+    let mailOptions = {
+        from: '"FDIBA Career Center 👻" <fdibacareercenter@gmail.com>', // sender address
+        to: companyEmail, // list of receivers
+        subject: 'Job application', // Subject line
+        text: 'A candidate has applied for this position'
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        // Preview only available when sending through an Ethereal account
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    });
+}

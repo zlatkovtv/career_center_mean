@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('chat')
+    .module('inbox')
     .run(menuConfig);
 
   menuConfig.$inject = ['menuService'];

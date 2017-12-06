@@ -2,20 +2,20 @@
   'use strict';
 
   angular
-    .module('chat.routes')
+    .module('inbox.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider'];
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('chat', {
-        url: '/chat',
-        templateUrl: '/modules/chat/client/views/chat.client.view.html',
-        controller: 'ChatController',
+      .state('inbox', {
+        url: '/inbox',
+        templateUrl: '/modules/inbox/client/views/inbox.client.view.html',
+        controller: 'InboxController',
         controllerAs: 'vm',
         data: {
-          roles: ['user', 'admin']
+          roles: ['admin', 'student', 'employer']
         }
       });
   }

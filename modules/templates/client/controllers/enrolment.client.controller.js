@@ -73,7 +73,10 @@
 
             $scope.transcriptModalInstance = $uibModal.open({
                 templateUrl: '/modules/templates/client/views/transcript-input.client.modal.html',
-                controller: 'TranscriptInputController'
+                controller: 'TranscriptInputController',
+                resolve: {
+                    grade: null
+                }
             });
 
             $scope.transcriptModalInstance.result.then(function (result) {
