@@ -20,6 +20,11 @@
     });
 
     menuService.addSubMenuItem('account', 'settings', {
+      title: 'Change Profile Picture',
+      state: 'settings.picture'
+    });
+
+    menuService.addSubMenuItem('account', 'settings', {
       title: 'Change Password',
       state: 'settings.password'
     });

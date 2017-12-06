@@ -5,9 +5,9 @@
     .module('student')
     .controller('StudentController', StudentController);
 
-    StudentController.$inject = ['$scope', '$state', 'Authentication', 'Socket', '$location', 'Notification', 'UsersService'];
+    StudentController.$inject = ['$scope', '$timeout', 'Authentication', 'Upload', '$location', 'Notification', 'UsersService'];
 
-    function StudentController($scope, $state, Authentication, Socket, $location, Notification, UsersService) {
+    function StudentController($scope, $timeout, Authentication, Upload, $location, Notification, UsersService) {
         $scope.progressLabel = "Profile information";
         $scope.showAlert = true;
         $scope.user = Authentication.user;
@@ -58,6 +58,19 @@
                 }, function (response) {
                     Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Edit profile failed!' });
                 });
+
+                Upload.upload({
+                    url: '/api/users/picture',
+                    data: {
+                        newProfilePicture: $scope.picFile
+                    }
+                }).then(function (response) {
+                    $timeout(function () {
+                      onSuccessItem(response.data);
+                    });
+                }, function (response) {
+                }, function (evt) {
+                });
             }
 
             $scope.wizardProgress++;
@@ -85,5 +98,9 @@
         };
 
         $scope.validateCurrentForm();
+
+        function onSuccessItem(response) {
+          $scope.user = Authentication.user = response;
+        }
     }
 }());

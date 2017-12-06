@@ -161,6 +161,10 @@ exports.applyForJob = function (req, res) {
 };
 
 function sendEmailToEmployer(companyEmail) {
+    if (!process.env.NODEMAILER_PASS) {
+        return;
+    }
+
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
         port: 465,
