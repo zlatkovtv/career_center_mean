@@ -44,7 +44,12 @@
             generateTranscriptPdf: {
                 method: 'GET',
                 url: '/api/faculty/report',
-                responseType: 'arraybuffer'
+                responseType: 'arraybuffer',
+                transformResponse: function (data, headersGetter) {
+                    return {
+                        data: data
+                    };
+                }
             }
         });
 

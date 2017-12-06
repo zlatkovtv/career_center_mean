@@ -11,7 +11,7 @@
         $scope.generateTranscriptPdf = () => {
             $scope.report = {};
             $scope.report = FacultyService.generateTranscriptPdf(function (response) {
-                var file = new Blob([response], { type: 'application/pdf' });
+                var file = new Blob([response.data], { type: 'application/pdf' });
                 var fileUrl = window.URL.createObjectURL(file);
                 $scope.report = $sce.trustAsResourceUrl(fileUrl);
                 var a = document.createElement("a");
