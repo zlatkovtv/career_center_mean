@@ -8,7 +8,7 @@ errorHandler = require(path.resolve('./modules/core/server/controllers/errors.se
 mongoose = require('mongoose'),
 passport = require('passport'),
 User = mongoose.model('User'),
-UserMetadata = mongoose.model('UserMetadata'),
+StudentMetadata = mongoose.model('StudentMetadata'),
 FacultyMetadata = mongoose.model('FacultyMetadata'),
 EmployerMetadata = mongoose.model('EmployerMetadata'),
 _ = require('lodash');
@@ -29,7 +29,7 @@ exports.signup = function (req, res) {
     // Init user and add missing fields
     var user = new User(req.body);
     var metadata = null;
-    switch (user.roles) {
+    switch (user.roles[0]) {
         case 'student':
             metadata = new StudentMetadata(req.body);
             user.displayName = metadata.firstName + ' ' + metadata.lastName;
@@ -48,7 +48,13 @@ exports.signup = function (req, res) {
         default:
     }
 
-    metadata = saveMetadata(metadata, res);
+    metadata.save(function (err, returnedMetadata) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+    });
 
     user.provider = 'local';
 
@@ -61,7 +67,7 @@ exports.signup = function (req, res) {
             user.password = undefined;
             user.salt = undefined;
 
-            returnedUser[user.roles + 'Metadata'] = metadata;
+            returnedUser[user.roles[0] + 'Metadata'] = metadata;
             req.login(returnedUser, function (err) {
                 if (err) {
                     res.status(400).send(err);
@@ -72,18 +78,6 @@ exports.signup = function (req, res) {
         }
     });
 };
-
-function saveMetadata(metadataInput, res) {
-    metadataInput.save(function (err, returnedMetadata) {
-        if (err) {
-            return res.status(422).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        }
-
-        return returnedMetadata;
-    });
-}
 
 exports.signin = function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {

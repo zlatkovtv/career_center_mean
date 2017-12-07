@@ -12,7 +12,7 @@ chalk = require('chalk');
 
 owasp.config(config.shared.owasp);
 
-var UserMetadataSchema = new Schema({
+var StudentMetadataSchema = new Schema({
     firstName: {
         type: String,
         trim: true,
@@ -33,4 +33,4 @@ var UserMetadataSchema = new Schema({
     }
 });
 
-mongoose.model('UserMetadata', UserMetadataSchema);
+mongoose.model('StudentMetadata', StudentMetadataSchema);

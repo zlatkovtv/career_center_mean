@@ -12,7 +12,7 @@
         $scope.showAlert = true;
         $scope.user = Authentication.user;
         $scope.isContinueEnabled = true;
-        $scope.wizardProgress = $scope.user.metadata.isPersonalProfileCompleted ? 5 : 1;
+        $scope.wizardProgress = $scope.user.studentMetadata.isPersonalProfileCompleted ? 5 : 1;
         $scope.progressPercent = $scope.wizardProgress * 20;
         $scope.programmingLanguages = [
             'C#', 'Java', 'C++', 'C', 'JavaSript', 'Python', 'PHP', 'Go', 'Ruby', 'CSS/Sass/Less', 'HTML/Pug/other markup language', 'Other'
@@ -33,7 +33,7 @@
         };
 
         $scope.validateCurrentForm = () => {
-            if (!$scope.user.metadata.firstName || !$scope.user.metadata.lastName || !$scope.user.email || !$scope.user.metadata.personality) {
+            if (!$scope.user.studentMetadata.firstName || !$scope.user.studentMetadata.lastName || !$scope.user.email || !$scope.user.studentMetadata.personality) {
                 $scope.isContinueEnabled = false;
                 return;
             }
@@ -48,7 +48,7 @@
 
             if ($scope.wizardProgress === 4) {
                 // save user personal info progress
-                $scope.user.metadata.isPersonalProfileCompleted = true;
+                $scope.user.studentMetadata.isPersonalProfileCompleted = true;
                 console.log($scope.user);
                 var userService = new UsersService($scope.user);
                 userService.$update(function (response) {
@@ -81,7 +81,7 @@
                 return;
             }
 
-            $scope.user.metadata.isPersonalProfileCompleted = false;
+            $scope.user.studentMetadata.isPersonalProfileCompleted = false;
             $scope.wizardProgress--;
             $scope.progressPercent = $scope.wizardProgress * 20;
         };
@@ -89,7 +89,7 @@
         $scope.startOver = () => {
             $scope.wizardProgress = 1;
             $scope.progressPercent = $scope.wizardProgress * 20;
-            $scope.user.metadata.isPersonalProfileCompleted = false;
+            $scope.user.studentMetadata.isPersonalProfileCompleted = false;
         };
 
         $scope.goToJobsPage = () => {
