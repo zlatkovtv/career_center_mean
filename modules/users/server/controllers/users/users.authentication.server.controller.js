@@ -9,6 +9,8 @@ mongoose = require('mongoose'),
 passport = require('passport'),
 User = mongoose.model('User'),
 UserMetadata = mongoose.model('UserMetadata'),
+FacultyMetadata = mongoose.model('FacultyMetadata'),
+EmployerMetadata = mongoose.model('EmployerMetadata'),
 _ = require('lodash');
 
 // URLs for which user can't be redirected on signin
@@ -29,21 +31,25 @@ exports.signup = function (req, res) {
     var metadata = null;
     switch (user.roles) {
         case 'student':
-            metadata = saveMetadata(req, res);
+            metadata = new StudentMetadata(req.body);
             user.displayName = metadata.firstName + ' ' + metadata.lastName;
+            user.studentMetadata = metadata._id;
             break;
         case 'faculty':
-            metadata = saveMetadata(req, res);
+            metadata = new FacultyMetadata(req.body);
             user.displayName = metadata.firstName + ' ' + metadata.lastName;
+            user.facultyMetadata = metadata._id;
             break;
         case 'employer':
-            metadata = saveMetadata(req, res);
+            metadata = new EmployerMetadata(req.body);
             user.displayName = metadata.companyName;
+            user.employerMetadata = metadata._id;
             break;
         default:
     }
 
-    user.metadata = metadata._id;
+    metadata = saveMetadata(metadata, res);
+
     user.provider = 'local';
 
     user.save(function (err, returnedUser) {
@@ -55,7 +61,7 @@ exports.signup = function (req, res) {
             user.password = undefined;
             user.salt = undefined;
 
-            returnedUser.metadata = metadata;
+            returnedUser[user.roles + 'Metadata'] = metadata;
             req.login(returnedUser, function (err) {
                 if (err) {
                     res.status(400).send(err);
