@@ -15,19 +15,19 @@
             {
                 title: 'Student',
                 value: 'student',
-                templateUrl: '/modules/users/client/views/authentication/student-signup.client.template.html',
+                templateUrl: '/modules/templates/client/views/student-signup.client.template.html',
                 icon: 'glyphicon-book'
             },
             {
                 title: 'Faculty member',
                 value: 'faculty',
-                templateUrl: '/modules/users/client/views/authentication/faculty-signup.client.template.html',
+                templateUrl: '/modules/templates/client/views/faculty-signup.client.template.html',
                 icon: 'glyphicon-education'
             },
             {
                 title: 'Employer',
                 value: 'employer',
-                templateUrl: '/modules/users/client/views/authentication/employer-signup.client.template.html',
+                templateUrl: '/modules/templates/client/views/employer-signup.client.template.html',
                 icon: 'glyphicon-briefcase'
             }
         ];
