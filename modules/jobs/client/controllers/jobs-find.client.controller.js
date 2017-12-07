@@ -17,7 +17,7 @@
         $scope.getApplications = () => {
             $scope.applicationsForUser = JobsService.getAllApplications(function (response) {
                 $scope.applicationsForUser = response;
-                $scope.applicationJobIds = response.map(appl => appl._jobId);
+                $scope.applicationJobIds = response.map(appl => appl.job);
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve classes for some reason!' });
             });

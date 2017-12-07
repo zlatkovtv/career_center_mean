@@ -16,7 +16,7 @@
             level: "Specialist level",
             companyName: $scope.employer.companyName,
             companyWebsite: $scope.employer.companyWebsite,
-            companyEmail: $scope.employer.companyEmail,
+            companyEmail: $scope.employer.email,
             companyPhone: $scope.employer.companyPhone,
             requirements: null,
             responsibilities: null
@@ -51,7 +51,7 @@
         };
 
         $scope.verifyEmployerProfileCompleted = () => {
-            if (!$scope.employer.companyName || !$scope.employer.companyWebsite || !$scope.employer.companyEmail || !$scope.employer.companyPhone) {
+            if (!$scope.employer.companyName || !$scope.employer.companyWebsite || !$scope.employer.companyPhone) {
                 var modalInstance = $uibModal.open({
                     templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
                     controller: 'ConfirmController',

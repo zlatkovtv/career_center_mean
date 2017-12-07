@@ -14,11 +14,11 @@ var ClassEnrolmentSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    _classId: {
+    class: {
         type: Schema.Types.ObjectId,
         ref: 'FacultyClass'
     },
-    _studentId: {
+    student: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }

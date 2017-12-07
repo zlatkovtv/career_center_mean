@@ -26,7 +26,7 @@
 
             $scope.enrolments = FacultyService.getEnrolments({ classId: $scope.facultyClass._id }, {}, function (response) {
                 $scope.enrolments = response;
-                $scope.enroledStudentIds = $scope.enrolments.map(entry => entry._studentId);
+                $scope.enroledStudentIds = $scope.enrolments.map(entry => entry.student);
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve classes for some reason!' });
             });
@@ -67,8 +67,8 @@
 
         $scope.showTranscriptContainer = (student) => {
             $scope.isTranscriptContainerShown = true;
-            $scope.selectedStudentTranscript._enrolmentId = $scope.enrolments.filter(function (enrolment) {
-                return enrolment._studentId === student._id;
+            $scope.selectedStudentTranscript.enrolment = $scope.enrolments.filter(function (enrolment) {
+                return enrolment.student === student._id;
             })[0]._id;
 
             $scope.transcriptModalInstance = $uibModal.open({
@@ -86,7 +86,7 @@
 
                 $scope.selectedStudentTranscript.grade = result;
                 FacultyService.saveStudentTranscript({}, $scope.selectedStudentTranscript, function (response) {
-                    Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i>Success', message: 'Saved grade for ' + student.displayName + '!' });
+                    Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i>Success', message: 'Saved grade for ' + student.metadata.displayName + '!' });
                 }, function (response) {
                     Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not save grade for some reason!' });
                 });

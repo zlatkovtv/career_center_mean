@@ -1,4 +1,6 @@
-<section>
+<div class="page-header alert alert-info" ng-show="jobs.length === 0">There are no ads at this moment. Please check back later.</div>
+
+<section ng-show="jobs.length > 0">
     <div id="jobs-find-header" class="page-header">
         <h1 class="inline"><small>All jobs and internships</small></h1>
         <span class="badge inline" style="margin-left:5px;">{{jobs.length}}</span>

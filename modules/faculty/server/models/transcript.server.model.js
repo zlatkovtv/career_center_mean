@@ -17,7 +17,7 @@ var TranscriptSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    _enrolmentId: {
+    enrolment: {
         type: Schema.Types.ObjectId,
         ref: 'ClassEnrolment'
     },

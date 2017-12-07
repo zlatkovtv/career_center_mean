@@ -12,8 +12,7 @@
         $scope.showAlert = true;
         $scope.user = Authentication.user;
         $scope.isContinueEnabled = true;
-        console.log($scope.user);
-        $scope.wizardProgress = $scope.user.isPersonalProfileCompleted ? 5 : 1;
+        $scope.wizardProgress = $scope.user.metadata.isPersonalProfileCompleted ? 5 : 1;
         $scope.progressPercent = $scope.wizardProgress * 20;
         $scope.programmingLanguages = [
             'C#', 'Java', 'C++', 'C', 'JavaSript', 'Python', 'PHP', 'Go', 'Ruby', 'CSS/Sass/Less', 'HTML/Pug/other markup language', 'Other'
@@ -34,7 +33,7 @@
         };
 
         $scope.validateCurrentForm = () => {
-            if (!$scope.user.firstName || !$scope.user.lastName || !$scope.user.email || !$scope.user.personality) {
+            if (!$scope.user.metadata.firstName || !$scope.user.metadata.lastName || !$scope.user.email || !$scope.user.metadata.personality) {
                 $scope.isContinueEnabled = false;
                 return;
             }
@@ -49,7 +48,7 @@
 
             if ($scope.wizardProgress === 4) {
                 // save user personal info progress
-                $scope.user.isPersonalProfileCompleted = true;
+                $scope.user.metadata.isPersonalProfileCompleted = true;
                 console.log($scope.user);
                 var userService = new UsersService($scope.user);
                 userService.$update(function (response) {
@@ -82,7 +81,7 @@
                 return;
             }
 
-            $scope.user.isPersonalProfileCompleted = false;
+            $scope.user.metadata.isPersonalProfileCompleted = false;
             $scope.wizardProgress--;
             $scope.progressPercent = $scope.wizardProgress * 20;
         };
@@ -90,7 +89,7 @@
         $scope.startOver = () => {
             $scope.wizardProgress = 1;
             $scope.progressPercent = $scope.wizardProgress * 20;
-            $scope.user.isPersonalProfileCompleted = false;
+            $scope.user.metadata.isPersonalProfileCompleted = false;
         };
 
         $scope.goToJobsPage = () => {

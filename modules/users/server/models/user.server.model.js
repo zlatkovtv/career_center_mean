@@ -1,8 +1,5 @@
 'use strict';
 
-/**
-* Module dependencies
-*/
 var mongoose = require('mongoose'),
 path = require('path'),
 config = require(path.resolve('./config/config')),
@@ -15,30 +12,13 @@ chalk = require('chalk');
 
 owasp.config(config.shared.owasp);
 
-
-/**
-* A Validation function for local strategy properties
-*/
 var validateLocalStrategyProperty = function (property) {
     return ((this.provider !== 'local' && !this.updated) || property.length);
 };
 
-/**
-* A Validation function for local strategy email
-*/
 var validateLocalStrategyEmail = function (email) {
     return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email, { require_tld: false }));
 };
-
-/**
-* A Validation function for username
-* - at least 3 characters
-* - only a-z0-9_-.
-* - contain at least one alphanumeric character
-* - not in list of illegal usernames
-* - no consecutive dots: "." ok, ".." nope
-* - not begin or end with "."
-*/
 
 var validateUsername = function (username) {
     var usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
@@ -48,49 +28,23 @@ var validateUsername = function (username) {
     );
 };
 
-/**
-* User Schema
-*/
 var UserSchema = new Schema({
-    facultyPosition: {
-        type: String,
-        trim: true,
-        default: null
+    studentMetadata: {
+        type: Schema.Types.ObjectId,
+        ref: 'StudentMetadata'
     },
-    companyName: {
-        type: String,
-        default: null,
-        trim: true
+    facultyMetadata: {
+        type: Schema.Types.ObjectId,
+        ref: 'FacultyMetadata'
     },
-    companyWebsite: {
-        type: String,
-        default: null,
-        trim: true
-    },
-    companyEmail: {
-        type: String,
-        default: null,
-        trim: true
-    },
-    companyPhone: {
-        type: String,
-        default: null,
-        trim: true
-    },
-    firstName: {
-        type: String,
-        trim: true,
-        default: null
-    },
-    lastName: {
-        type: String,
-        trim: true,
-        default: null
+    employerMetadata: {
+        type: Schema.Types.ObjectId,
+        ref: 'EmployerMetadata'
     },
     displayName: {
         type: String,
         trim: true,
-        default: null
+        default: ''
     },
     email: {
         type: String,
@@ -122,11 +76,9 @@ var UserSchema = new Schema({
     providerData: {},
     additionalProvidersData: {},
     roles: {
-        type: [{
-            type: String,
-            enum: ['student', 'faculty', 'employer', 'admin']
-        }],
-        default: ['student'],
+        type: String,
+        enum: ['student', 'faculty', 'employer', 'admin'],
+        default: 'student',
         required: 'Please provide a role'
     },
     updated: {
@@ -136,38 +88,14 @@ var UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    /* For reset password */
     resetPasswordToken: {
         type: String
     },
     resetPasswordExpires: {
         type: Date
-    },
-    isPersonalProfileCompleted: {
-        type: Boolean,
-        default: false
-    },
-    personality: {
-        type: String,
-        default: null
     }
 });
 
-/**
-* Hook a pre save method to hash the password
-*/
-UserSchema.pre('save', function (next) {
-    if (this.password && this.isModified('password')) {
-        this.salt = crypto.randomBytes(16).toString('base64');
-        this.password = this.hashPassword(this.password);
-    }
-
-    next();
-});
-
-/**
-* Hook a pre validate method to test the local password
-*/
 UserSchema.pre('validate', function (next) {
     if (this.provider === 'local' && this.password && this.isModified('password')) {
         var result = owasp.test(this.password);
@@ -180,9 +108,6 @@ UserSchema.pre('validate', function (next) {
     next();
 });
 
-/**
-* Create instance method for hashing a password
-*/
 UserSchema.methods.hashPassword = function (password) {
     if (this.salt && password) {
         return crypto.pbkdf2Sync(password, new Buffer(this.salt, 'base64'), 10000, 64, 'SHA1').toString('base64');
@@ -191,16 +116,10 @@ UserSchema.methods.hashPassword = function (password) {
     }
 };
 
-/**
-* Create instance method for authenticating user
-*/
 UserSchema.methods.authenticate = function (password) {
     return this.password === this.hashPassword(password);
 };
 
-/**
-* Find possible not used username
-*/
 UserSchema.statics.findUniqueUsername = function (username, suffix, callback) {
     var _this = this;
     var possibleUsername = username.toLowerCase() + (suffix || '');
@@ -260,10 +179,6 @@ UserSchema.statics.seed = seed;
 
 mongoose.model('User', UserSchema);
 
-/**
-* Seeds the User collection with document (User)
-* and provided options.
-*/
 function seed(doc, options) {
     var User = mongoose.model('User');
 

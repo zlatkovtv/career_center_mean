@@ -19,7 +19,7 @@ errorHandler = require(path.resolve('./modules/core/server/controllers/errors.se
 */
 exports.createClass = function (req, res) {
     var facultyClass = new FacultyClass(req.body);
-    facultyClass._creatorId = req.user._id;
+    facultyClass.creator = req.user._id;
 
     facultyClass.save(function (err) {
         if (err) {
@@ -37,8 +37,8 @@ exports.addUserToClass = function (req, res) {
     var classId = req.params.classId;
 
     var enrolmentEntry = new ClassEnrolment();
-    enrolmentEntry._classId = classId;
-    enrolmentEntry._studentId = user._id;
+    enrolmentEntry.class = classId;
+    enrolmentEntry.student = user._id;
 
     enrolmentEntry.save(function (err, enrolment) {
         if (err) {
@@ -54,7 +54,7 @@ exports.addUserToClass = function (req, res) {
 exports.getClassesForUser = function (req, res) {
     var user = req.user;
 
-    FacultyClass.find({ '_creatorId': user._id }).exec(function (err, classes) {
+    FacultyClass.find({ 'creator': user._id }).exec(function (err, classes) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
@@ -80,7 +80,7 @@ exports.deleteClass = function (req, res) {
 exports.getEnrolments = function (req, res) {
     var classId = req.params.classId;
 
-    ClassEnrolment.find({ '_classId': classId }).exec(function (err, enrolments) {
+    ClassEnrolment.find({ 'class': classId }).exec(function (err, enrolments) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
@@ -108,9 +108,9 @@ exports.saveStudentTranscript = function (req, res) {
 exports.generatePdfReportForStudent = function (req, res) {
     var studentId = req.user._id;
     Transcript.find().populate({
-        path: '_enrolmentId',
+        path: 'enrolment',
         populate: {
-            path: '_classId'
+            path: 'class'
         }
     }).exec(function (err, mongoRes) {
         if (err) {
@@ -120,7 +120,7 @@ exports.generatePdfReportForStudent = function (req, res) {
         }
 
         mongoRes = mongoRes.filter(function (obj) {
-            return obj._enrolmentId._studentId.equals(studentId);
+            return obj.enrolment.student.equals(studentId);
         });
 
         generatePdfTranscript(mongoRes, req, res);
@@ -149,8 +149,8 @@ function generatePdfTranscript(mongoRes, req, res) {
 
     _.forEach(mongoRes, function (value) {
         pdf.fontSize(16).text(
-            index + '. ' + value._enrolmentId._classId.department + '/' +
-            value._enrolmentId._classId.subjectName + ' - ' + value.grade
+            index + '. ' + value.enrolment.class.department + '/' +
+            value.enrolment.class.subjectName + ' - ' + value.grade
         );
         index++;
     });

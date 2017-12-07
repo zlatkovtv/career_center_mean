@@ -29,7 +29,7 @@ var FacultyClassSchema = new Schema({
         trim: true,
         required: 'Department is required'
     },
-    _creatorId: {
+    creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }

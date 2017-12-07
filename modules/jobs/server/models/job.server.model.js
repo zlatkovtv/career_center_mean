@@ -90,19 +90,6 @@ var JobSchema = new Schema({
     }
 });
 
-// JobSchema.pre('save', function (next) {
-//     var User = mongoose.model('User');
-//     User.findOne({ companyName: this.companyName }, '_id', function (err, user) {
-//         if (err) {
-//             next();
-//             return null;
-//         }
-//
-//         this.companyId = user._id;
-//         next();
-//     });
-// });
-
 JobSchema.statics.seed = seed;
 
 mongoose.model('Job', JobSchema);

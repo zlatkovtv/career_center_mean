@@ -12,7 +12,7 @@
       console.log($scope.user);
 
       $scope.validateCurrentForm = () => {
-          if (!$scope.user.companyName || !$scope.user.companyWebsite || !$scope.user.companyEmail || !$scope.user.companyPhone) {
+          if (!$scope.user.companyName || !$scope.user.companyWebsite || !$scope.user.companyPhone) {
               $scope.isSaveEnabled = false;
               return;
           }

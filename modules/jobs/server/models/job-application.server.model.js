@@ -8,11 +8,11 @@ var JobApplicationSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    _jobId: {
+    job: {
         type: Schema.Types.ObjectId,
         ref: 'Job'
     },
-    _userId: {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
