@@ -14,8 +14,11 @@ aws = require('aws-sdk'),
 amazonS3URI = require('amazon-s3-uri'),
 config = require(path.resolve('./config/config')),
 User = mongoose.model('User'),
-UserMetadata = mongoose.model('UserMetadata'),
-validator = require('validator');
+StudentMetadata = mongoose.model('StudentMetadata'),
+FacultyMetadata = mongoose.model('FacultyMetadata'),
+EmployerMetadata = mongoose.model('EmployerMetadata'),
+validator = require('validator'),
+Gridfs = require('gridfs-stream');
 
 var whitelistedFields = ['firstName', 'lastName', 'email', 'username'];
 
@@ -31,59 +34,89 @@ if (useS3Storage) {
     s3 = new aws.S3();
 }
 
+var db = mongoose.connection.db;
+var mongoDriver = mongoose.mongo;
+var gfs = new Gridfs(db, mongoDriver);
+
 /**
 * Update user details
 */
 exports.update = function (req, res) {
-    // Init Variables
-    var user = new User(req.user);
-    var userMetadata = new UserMetadata(req.user);
-
-    if (user.roles[0] === 'employer') {
-        user.displayName = userMetadata.companyName;
-    } else {
-        user.displayName = userMetadata.firstName + ' ' + userMetadata.lastName;
+    var user = new User(req.body);
+    var metadata = null;
+    switch (user.roles[0]) {
+        case 'student':
+            metadata = new StudentMetadata(req.body);
+            user.displayName = metadata.firstName + ' ' + metadata.lastName;
+            user.studentMetadata = metadata._id;
+            break;
+        case 'faculty':
+            metadata = new FacultyMetadata(req.body);
+            user.displayName = metadata.firstName + ' ' + metadata.lastName;
+            user.facultyMetadata = metadata._id;
+            break;
+        case 'employer':
+            metadata = new EmployerMetadata(req.body);
+            user.displayName = metadata.companyName;
+            user.employerMetadata = metadata._id;
+            break;
+        default:
     }
 
-    if (user) {
-        // Update whitelisted fields only
-        user = _.extend(user, req.body);
-
-        user.updated = Date.now();
-
-        user.save(function (err) {
-            if (err) {
-                return res.status(422).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                req.login(user, function (err) {
-                    if (err) {
-                        res.status(400).send(err);
-                    } else {
-                        res.json(user);
-                    }
-                });
-            }
-        });
-
-        saveUserMetadata(userMetadata, res);
-    } else {
-        res.status(401).send({
-            message: 'User is not signed in'
-        });
-    }
-};
-
-function saveUserMetadata(userMetadata, res) {
-    userMetadata.save(function (err) {
+    StudentMetadata.findOneAndUpdate({ _id: metadata._id }, metadata, { upsert: true }, function (err, returnedMetadata) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         }
     });
-}
+
+    User.findOneAndUpdate({ _id: user._id }, user, { upsert: true }, function (err, returnedUser) {
+        if (err) {
+            console.log(err);
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            user.password = undefined;
+            user.salt = undefined;
+
+            returnedUser[user.roles[0] + 'Metadata'] = metadata;
+            req.login(returnedUser, function (err) {
+                if (err) {
+                    res.status(400).send(err);
+                } else {
+                    res.json(returnedUser);
+                }
+            });
+        }
+    });
+};
+
+exports.uploadFilesForUser = function (req, res) {
+    var fieldName = req.body.fieldName;
+    var file = req.files.file;
+    var writestream = gfs.createWriteStream({
+        filename: file.name,
+        mode: 'w',
+        content_type: file.mimetype,
+        metadata: ''
+        });
+
+        fs.createReadStream(file.path).pipe(writestream);
+
+        writestream.on('close', function (file) {
+            StudentMetadata.findById(req.user.studentMetadata.id, function (err, metadata) {
+                metadata[fieldName] = file._id;
+                metadata.save(function (err, updatedUser) {
+                    return res.json(200, updatedUser);
+                });
+            });
+            fs.unlink(file.path, function (err) {
+            console.log('success!');
+            });
+        });
+};
 
 /**
 * Update profile picture
@@ -130,6 +163,18 @@ exports.changeProfilePicture = function (req, res) {
     }
 
     function uploadImage() {
+        return new Promise(function (resolve, reject) {
+            upload(req, res, function (uploadError) {
+                if (uploadError) {
+                    reject(errorHandler.getErrorMessage(uploadError));
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    function uploadPdf() {
         return new Promise(function (resolve, reject) {
             upload(req, res, function (uploadError) {
                 if (uploadError) {
@@ -241,5 +286,5 @@ exports.me = function (req, res) {
         };
     }
 
-    res.json(safeUserObject || null);
+    res.json(req.user || null);
 };

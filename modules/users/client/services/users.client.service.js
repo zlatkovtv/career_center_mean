@@ -39,12 +39,17 @@
       signin: {
         method: 'POST',
         url: '/api/auth/signin'
-    },
-    getAllStudents: {
-        method: 'GET',
-        url: '/api/users/students',
+      },
+      getAllStudents: {
+          method: 'GET',
+          url: '/api/users/students',
+          isArray: true
+      },
+      uploadFilesForUser: {
+        method: 'POST',
+        url: '/api/users/files',
         isArray: true
-    }
+      }
     });
 
     angular.extend(Users, {

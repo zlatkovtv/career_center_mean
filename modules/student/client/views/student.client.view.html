@@ -43,11 +43,8 @@
     </button>
 </div>
 
-<div class="panel panel-default" ng-show="wizardProgress === 1">
-    <div class="panel-heading">
-        <h3 class="panel-title">Profile information</h3>
-    </div>
-    <div class="panel-body">
+<uib-accordion close-others="oneAtATime">
+    <div uib-accordion-group class="panel-default" heading="Profile information" is-open="wizardProgress === 1" is-disabled="true">
         <div class="col-xs-3">
             <div class="form-group">
                 <label>First name</label>
@@ -67,7 +64,7 @@
         </div>
         <div class="col-xs-3">
             <div class="form-group">
-                <label for="personality">How do I describe my personality?</label>
+                <label for="personality">How would you describe your personality?</label>
                 <span class="glyphicon glyphicon-asterisk text-danger" style="float:right;"></span>
                 <textarea ng-change="validateCurrentForm(user.studentMetadata.personality)" class="form-control" rows="5" name="personality" id="personality" ng-model="user.studentMetadata.personality" required></textarea>
             </div>
@@ -89,17 +86,11 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="panel panel-default" ng-show="wizardProgress === 2">
-    <div class="panel-heading">
-        <h3 class="panel-title">Skills to pay the bills</h3>
-    </div>
-    <div class="panel-body" id="student-skills-container">
+    <div uib-accordion-group class="panel-default" heading="Skills to pay the bills" is-open="wizardProgress === 2" is-disabled="true">
         <div class="col-xs-3">
             <div class="form-group">
                 <label>Which programming languages are you comfortable using?</label>
-                <select ng-model="user.programmingLanguages" multiple class="form-control">
+                <select ng-model="user.studentMetadata.languages" multiple class="form-control">
                     <option ng-repeat="language in programmingLanguages track by $index" value="{{language}}">{{language}}</option>
                 </select>
             </div>
@@ -107,7 +98,7 @@
         <div class="col-xs-3">
             <div class="form-group">
                 <label>Which other technical skills do you possess?</label>
-                <select ng-model="user.technicalSkills" multiple class="form-control">
+                <select ng-model="user.studentMetadata.technicalSkills" multiple class="form-control">
                     <option ng-repeat="techSkill in technicalSkills track by $index" value="{{techSkill}}">{{techSkill}}</option>
                 </select>
             </div>
@@ -115,7 +106,7 @@
         <div class="col-xs-3">
             <div class="form-group">
                 <label>Which soft skills do you have?</label>
-                <select ng-model="user.softSkills" multiple class="form-control">
+                <select ng-model="user.studentMetadata.softSkills" multiple class="form-control">
                     <option ng-repeat="softSkill in softSkills track by $index" value="{{softSkill}}">{{softSkill}}</option>
                 </select>
             </div>
@@ -123,30 +114,24 @@
         <div class="col-xs-3">
             <div class="form-group">
                 <label for="other-skills">Would you like to share anything else that might potentially qualify you for a job/internship?</label>
-                <textarea ng-model="user.otherSkills" class="form-control" rows="5" name="other-skills" id="other-skills"></textarea>
+                <textarea ng-model="user.studentMetadata.otherSkills" class="form-control" rows="5" name="other-skills" id="other-skills"></textarea>
             </div>
         </div>
     </div>
-</div>
-
-<div class="panel panel-default" ng-show="wizardProgress === 3">
-    <div class="panel-heading">
-        <h3 class="panel-title">Upload documents</h3>
-    </div>
-    <div class="panel-body" id="student-documents-container">
+    <div uib-accordion-group class="panel-default" heading="Upload documents" is-open="wizardProgress === 3" is-disabled="true">
         <div class="col-xs-3">
             <div class="form-group">
                 <label>Resume/CV</label>
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
                 <div>
                     <div class="form-group text-center">
-                        <label>{{user.cv.name}}</label>
+                        <label>{{files.cv.name}}</label>
                     </div>
                     <div ng-show="loading" class="form-group text-center">
                         <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
                     </div>
                     <div class="text-center form-group">
-                        <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="user.cv" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
+                        <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="files.cv" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
                     </div>
                 </div>
             </div>
@@ -157,13 +142,13 @@
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
                 <div>
                     <div class="form-group text-center">
-                        <label>{{user.motivation.name}}</label>
+                        <label>{{files.motivation.name}}</label>
                     </div>
                     <div ng-show="loading" class="form-group text-center">
                         <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
                     </div>
                     <div class="text-center form-group">
-                        <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="user.motivation" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
+                        <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="files.motivation" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
                     </div>
                 </div>
             </div>
@@ -174,13 +159,13 @@
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
                 <div>
                     <div class="form-group text-center">
-                        <label>{{user.recommendation.name}}</label>
+                        <label>{{files.recommendation.name}}</label>
                     </div>
                     <div ng-show="loading" class="form-group text-center">
                         <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
                     </div>
                     <div class="text-center form-group">
-                        <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="user.recommendation" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
+                        <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="files.recommendation" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
                     </div>
                 </div>
             </div>
@@ -190,59 +175,42 @@
                 <label>Additional document</label>
                 <div>
                     <div class="form-group text-center">
-                        <label>{{user.additionalDocument.name}}</label>
+                        <label>{{files.additionalDocument.name}}</label>
                     </div>
                     <div ng-show="loading" class="form-group text-center">
                         <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
                     </div>
                     <div class="text-center form-group">
-                        <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="user.additionalDocument" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
+                        <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="files.additionalDocument" accept="pdf,.doc,.docx" ngf-before-model-change="loading = true">Select file</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="panel panel-default" ng-show="wizardProgress === 4">
-    <div class="panel-heading">
-        <h3 class="panel-title">Job preferences</h3>
-    </div>
-    <div class="panel-body" id="student-skills-container">
-        <div class="col-xs-3">
+    <div uib-accordion-group class="panel-default" heading="Job preferences" is-open="wizardProgress === 4" is-disabled="true">
+        <div class="col-xs-4">
             <div class="form-group">
-                <label>Option 1</label>
-                <input type="checkbox" value="false" >
+                <label>I am in my final year of study</label>
+                <input type="checkbox" value="false" ng-model="user.studentMetadata.finalYear">
             </div>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-4">
             <div class="form-group">
-                <label>Option 1</label>
-                <input type="checkbox" value="false" >
+                <label>I am currently enrolled in TU-Sofia fulltime</label>
+                <input type="checkbox" value="false" ng-model="user.studentMetadata.enrolled">
             </div>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-4">
             <div class="form-group">
-                <label>Option 1</label>
-                <input type="checkbox" value="false" >
-            </div>
-        </div>
-        <div class="col-xs-3">
-            <div class="form-group">
-                <label>Option 1</label>
-                <input type="checkbox" value="false" >
+                <label>I want emails with job ads</label>
+                <input type="checkbox" value="false" ng-model="user.studentMetadata.subscribe">
             </div>
         </div>
     </div>
-</div>
-
-<div class="panel panel-success" ng-show="wizardProgress === 5">
-    <div class="panel-heading">
-        <h3 class="panel-title">Completed!</h3>
+    <div uib-accordion-group class="panel-default" heading="Completed!" is-open="wizardProgress === 5" is-disabled="true">
+        <div class="panel-body">
+            Congratulations! You have successfully completed your personal profile. Start browsing the job page to discover your dream career!
+        </div>
     </div>
-    <div class="panel-body">
-        Congratulations! You have successfully completed your personal profile. Start browsing the job page to discover your dream career!
-    </div>
-</div>
-
+</uib-accordion>
 </section>

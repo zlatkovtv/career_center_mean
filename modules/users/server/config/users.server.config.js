@@ -18,10 +18,9 @@ module.exports = function (app) {
   });
 
   // Deserialize sessions
+  // Konstantin this gets called every time you refresh the web app and overrides $window.user
   passport.deserializeUser(function (id, done) {
-    User.findOne({
-      _id: id
-    }, '-salt -password', function (err, user) {
+    User.findOne({ _id: id }).select('-salt -password').populate('studentMetadata facultyMetadata employerMetadata').exec(function (err, user) {
       done(err, user);
     });
   });

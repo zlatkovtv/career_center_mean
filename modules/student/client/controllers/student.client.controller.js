@@ -14,6 +14,7 @@
         $scope.isContinueEnabled = true;
         $scope.wizardProgress = $scope.user.studentMetadata.isPersonalProfileCompleted ? 5 : 1;
         $scope.progressPercent = $scope.wizardProgress * 20;
+        $scope.files = [];
         $scope.programmingLanguages = [
             'C#', 'Java', 'C++', 'C', 'JavaSript', 'Python', 'PHP', 'Go', 'Ruby', 'CSS/Sass/Less', 'HTML/Pug/other markup language', 'Other'
         ];
@@ -54,27 +55,43 @@
                 userService.$update(function (response) {
                     Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> You have successfully completed your profile!', delay: 3000 });
                     Authentication.user = response;
+                    saveUserFiles();
                 }, function (response) {
                     Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Edit profile failed!' });
                 });
 
-                Upload.upload({
-                    url: '/api/users/picture',
-                    data: {
-                        newProfilePicture: $scope.picFile
-                    }
-                }).then(function (response) {
-                    $timeout(function () {
-                      onSuccessItem(response.data);
-                    });
-                }, function (response) {
-                }, function (evt) {
-                });
             }
 
             $scope.wizardProgress++;
             $scope.progressPercent = $scope.wizardProgress * 20;
         };
+
+        function saveUserFiles() {
+            var filesToPost = {
+                "newProfilePicture": $scope.files.picFile,
+                "cv": $scope.files.cv,
+                "motivation": $scope.files.motivation,
+                "recommendation": $scope.files.recommendation,
+                "additionalDocument": $scope.files.additionalDocument
+            };
+
+            for (var fileName in filesToPost) {
+                if (filesToPost.hasOwnProperty(fileName)) {
+                    if (!filesToPost[fileName]) {
+                        continue;
+                    }
+
+                    Upload.upload({
+                        url: '/api/users/files',
+                        method: 'POST',
+                        data: {
+                            file: filesToPost[fileName],
+                            'fieldName': fileName
+                        }
+                    });
+                }
+            }            
+        }
 
         $scope.goBack = () => {
             if ($scope.wizardProgress === 1) {

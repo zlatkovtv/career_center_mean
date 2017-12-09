@@ -30,6 +30,50 @@ var StudentMetadataSchema = new Schema({
     personality: {
         type: String,
         default: ''
+    },
+    languages: {
+        type: Array,
+        default: []
+    },
+    techSkills: {
+        type: Array,
+        default: []
+    },
+    softSkills: {
+        type: Array,
+        default: []
+    },
+    otherSkills: {
+        type: String,
+        default: ''
+    },
+    finalYear: {
+        type: Boolean,
+        default: false
+    },
+    enrolled: {
+        type: Boolean,
+        default: false
+    },
+    subscribe: {
+        type: Boolean,
+        default: false
+    },
+    cv: {
+        type: Schema.Types.ObjectId,
+        ref: "fs.files"
+    },
+    motivation: {
+        type: Schema.Types.ObjectId,
+        ref: "fs.files"
+    },
+    recommendation: {
+        type: Schema.Types.ObjectId,
+        ref: "fs.files"
+    },
+    additionalDocument: {
+        type: Schema.Types.ObjectId,
+        ref: "fs.files"
     }
 });
 

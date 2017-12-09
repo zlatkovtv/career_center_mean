@@ -2,7 +2,9 @@
 
 module.exports = function (app) {
   // User Routes
-  var users = require('../controllers/users.server.controller');
+  var users = require('../controllers/users.server.controller'),
+  multiparty = require('connect-multiparty'),
+  multipartyMiddleware = multiparty();
 
   // Setting up the users profile api
   app.route('/api/users/me').get(users.me);
@@ -12,6 +14,7 @@ module.exports = function (app) {
   app.route('/api/users/picture').post(users.changeProfilePicture);
   app.route('/api/users').put(users.update);
   app.route('/api/users/students').get(users.getAllStudents);
+  app.use(multipartyMiddleware).route('/api/users/files').post(users.uploadFilesForUser);
 
   // Finish by binding the user middleware
   app.param('userId', users.userByID);
