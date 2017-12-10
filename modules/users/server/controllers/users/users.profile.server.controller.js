@@ -46,47 +46,41 @@ exports.update = function (req, res) {
     var metadata = null;
     switch (user.roles[0]) {
         case 'student':
-            metadata = new StudentMetadata(req.body);
+            metadata = new StudentMetadata(req.body.studentMetadata);
             user.displayName = metadata.firstName + ' ' + metadata.lastName;
             user.studentMetadata = metadata._id;
             break;
         case 'faculty':
-            metadata = new FacultyMetadata(req.body);
+            metadata = new FacultyMetadata(req.body.facultyMetadata);
             user.displayName = metadata.firstName + ' ' + metadata.lastName;
             user.facultyMetadata = metadata._id;
             break;
         case 'employer':
-            metadata = new EmployerMetadata(req.body);
+            metadata = new EmployerMetadata(req.body.employerMetadata);
             user.displayName = metadata.companyName;
             user.employerMetadata = metadata._id;
             break;
         default:
     }
 
-    StudentMetadata.findOneAndUpdate({ _id: metadata._id }, metadata, { upsert: true }, function (err, returnedMetadata) {
+    StudentMetadata.update({ _id: metadata._id }, metadata, function (err, returnedMetadata) {
         if (err) {
-            return res.status(422).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        }
-    });
-
-    User.findOneAndUpdate({ _id: user._id }, user, { upsert: true }, function (err, returnedUser) {
-        if (err) {
-            console.log(err);
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            user.password = undefined;
-            user.salt = undefined;
-
-            returnedUser[user.roles[0] + 'Metadata'] = metadata;
-            req.login(returnedUser, function (err) {
+            User.update({ _id: user._id }, user, function (err, returnedUser) {
                 if (err) {
-                    res.status(400).send(err);
+                    console.log(err);
+                    return res.status(422).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
                 } else {
-                    res.json(returnedUser);
+                    user.password = undefined;
+                    user.salt = undefined;
+        
+                    user[user.roles[0] + 'Metadata'] = metadata;
+                    res.json(user);
                 }
             });
         }

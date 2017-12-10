@@ -34,9 +34,13 @@
     background: rgba(34,34,34,0.75);
 }
 
-.panel-default > .panel-heading {
+.panel-white > .panel-heading {
     background-image: none;
     background-color: white;
+}
+
+* {
+    border-radius: 0px !important;
 }
 
 .inline {
