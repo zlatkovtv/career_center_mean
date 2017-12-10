@@ -1,83 +1,84 @@
-<div class="page-header alert alert-info" ng-show="jobs.length === 0">There are no ads at this moment. Please check back later.</div>
+<div class="container">
 
-<section ng-show="jobs.length > 0">
-    <div id="jobs-find-header" class="page-header">
-        <h1 class="inline"><small>All jobs and internships</small></h1>
-        <span class="badge inline" style="margin-left:5px;">{{jobs.length}}</span>
-    </div>
+    <div class="page-header alert alert-info" ng-show="jobs.length === 0">There are no ads at this moment. Please check back later.</div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Featured</h3>
+    <section ng-show="jobs.length > 0">
+        <div id="jobs-find-header" class="page-header">
+            <h1 class="inline">
+                <small>All jobs and internships</small>
+            </h1>
+            <span class="badge inline" style="margin-left:5px;">{{jobs.length}}</span>
         </div>
-        <div id="featured-job-carousel">
-            <div uib-carousel active="active" interval="5000" no-wrap="false">
-                <div uib-slide ng-repeat="featuredJob in jobs track by $index" index="$index">
-                    <img ng-src="/modules/core/client/img/brand/tu-sofia-background.jpg" style="margin:auto;">
-                    <div class="carousel-blur">
-                    </div>
-                    <div class="carousel-caption">
-                        <h4>{{featuredJob.title}}</h4>
-                        <p>{{featuredJob.companyName}}</p>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Featured</h3>
+            </div>
+            <div id="featured-job-carousel">
+                <div uib-carousel active="active" interval="5000" no-wrap="false">
+                    <div uib-slide ng-repeat="featuredJob in jobs track by $index" index="$index">
+                        <img ng-src="/modules/core/client/img/brand/tu-sofia-background.jpg" style="margin:auto;">
+                        <div class="carousel-blur">
+                        </div>
+                        <div class="carousel-caption">
+                            <h4>{{featuredJob.title}}</h4>
+                            <p>{{featuredJob.companyName}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="panel panel-default">
-      <table class="table">
-        <thead>
-            <tr>
-                <th>
+        <div class="panel panel-default">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
 
-                </th>
-                <th>
-                    Position
-                </th>
-                <th>
-                    Company
-                </th>
-                <th>
-                    Category
-                </th>
-                <th>
-                    Type
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="job in jobs">
-                <th>
-                    <button class="btn btn-primary" ng-click="popJobDetail(job)">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                    <button class="btn btn-primary"
-                    ng-click="applyForJob(job)"
-                    ng-hide="hasUserAppliedForJob(job)">
-                        Apply
-                    </button>
-                    <button class="btn btn-success"
-                    ng-disabled="true"
-                    ng-show="hasUserAppliedForJob(job)">
-                    <span class="glyphicon glyphicon-ok"></span>
-                        Applied
-                    </button>
-                </th>
-                <th>
-                    {{job.title}}
-                </th>
-                <th>
-                    {{job.companyName}}
-                </th>
-                <th>
-                    {{job.category}}
-                </th>
-                <th>
-                    {{job.type}}
-                </th>
-            </tr>
-        </tbody>
-      </table>
-    </div>
-</section>
+                        </th>
+                        <th>
+                            Position
+                        </th>
+                        <th>
+                            Company
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="job in jobs">
+                        <th>
+                            <button class="btn btn-primary" ng-click="popJobDetail(job)">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            <button class="btn btn-primary" ng-click="applyForJob(job)" ng-hide="hasUserAppliedForJob(job)">
+                                Apply
+                            </button>
+                            <button class="btn btn-success" ng-disabled="true" ng-show="hasUserAppliedForJob(job)">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                Applied
+                            </button>
+                        </th>
+                        <th>
+                            {{job.title}}
+                        </th>
+                        <th>
+                            {{job.companyName}}
+                        </th>
+                        <th>
+                            {{job.category}}
+                        </th>
+                        <th>
+                            {{job.type}}
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

@@ -30,6 +30,7 @@
 
             modalInstance.result.then(function (yes) {
                 if (!yes) {
+                    $location.url('/');
                     return;
                 }
 
