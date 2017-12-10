@@ -78,7 +78,7 @@ exports.update = function (req, res) {
                 } else {
                     user.password = undefined;
                     user.salt = undefined;
-        
+
                     user[user.roles[0] + 'Metadata'] = metadata;
                     res.json(user);
                 }
@@ -91,7 +91,7 @@ exports.uploadFilesForUser = function (req, res) {
     var fieldName = req.body.fieldName;
     var file = req.files.file;
     var writestream = gfs.createWriteStream({
-        filename: file.name,
+        filename: file.filename,
         mode: 'w',
         content_type: file.mimetype,
         metadata: ''

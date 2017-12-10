@@ -14,7 +14,6 @@
         $scope.isContinueEnabled = true;
         $scope.wizardProgress = $scope.user.studentMetadata.isPersonalProfileCompleted ? 5 : 1;
         $scope.progressPercent = $scope.wizardProgress * 20;
-        $scope.files = [];
         $scope.programmingLanguages = [
             'C#', 'Java', 'C++', 'C', 'JavaSript', 'Python', 'PHP', 'Go', 'Ruby', 'CSS/Sass/Less', 'HTML/Pug/other markup language', 'Other'
         ];
@@ -67,6 +66,7 @@
         };
 
         function saveUserFiles() {
+            // TODO replace files with studentMetadata and see why aut.user returns weird shit that breaks the client on refresh
             var filesToPost = {
                 "newProfilePicture": $scope.files.picFile,
                 "cv": $scope.files.cv,

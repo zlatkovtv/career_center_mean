@@ -4,9 +4,13 @@
  * Module dependencies
  */
 var passport = require('passport'),
-  User = require('mongoose').model('User'),
+  mongoose = require('mongoose'),
+  User = mongoose.model('User'),
   path = require('path'),
-  config = require(path.resolve('./config/config'));
+  config = require(path.resolve('./config/config')),
+  deepPopulate = require('mongoose-deep-populate')(mongoose);
+
+  User.schema.plugin(deepPopulate, {});
 
 /**
  * Module init function
@@ -20,7 +24,7 @@ module.exports = function (app) {
   // Deserialize sessions
   // Konstantin this gets called every time you refresh the web app and overrides $window.user
   passport.deserializeUser(function (id, done) {
-    User.findOne({ _id: id }).select('-salt -password').populate('studentMetadata facultyMetadata employerMetadata').exec(function (err, user) {
+    User.findOne({ _id: id }).select('-salt -password').deepPopulate('studentMetadata.cv studentMetadata.motivation studentMetadata.recommendation studentMetadata.additionalDocument').exec(function (err, user) {
       done(err, user);
     });
   });
