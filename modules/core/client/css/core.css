@@ -68,3 +68,7 @@ a:hover .header-profile-image {
     background-position: center;
     height: 500px;
 }
+
+textarea {
+    overflow: hidden;
+}
