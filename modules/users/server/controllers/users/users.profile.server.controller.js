@@ -91,7 +91,7 @@ exports.uploadFilesForUser = function (req, res) {
     var fieldName = req.body.fieldName;
     var file = req.files.file;
     var writestream = gfs.createWriteStream({
-        filename: file.filename,
+        filename: file.name,
         mode: 'w',
         content_type: file.mimetype,
         metadata: ''

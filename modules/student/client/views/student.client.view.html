@@ -98,7 +98,7 @@
         <div class="col-xs-3">
             <div class="form-group">
                 <label>Which other technical skills do you possess?</label>
-                <select ng-model="user.studentMetadata.technicalSkills" multiple class="form-control">
+                <select ng-model="user.studentMetadata.techSkills" multiple class="form-control">
                     <option ng-repeat="techSkill in technicalSkills track by $index" value="{{techSkill}}">{{techSkill}}</option>
                 </select>
             </div>
@@ -125,7 +125,7 @@
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
                 <div>
                     <div class="form-group text-center">
-                        <label>{{files.cv.filename}}</label>
+                        <label>{{files.cv.name}}</label>
                     </div>
                     <div ng-show="loading" class="form-group text-center">
                         <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
@@ -142,7 +142,7 @@
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
                 <div>
                     <div class="form-group text-center">
-                        <label>{{files.motivation.filename}}</label>
+                        <label>{{files.motivation.name}}</label>
                     </div>
                     <div ng-show="loading" class="form-group text-center">
                         <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
@@ -159,7 +159,7 @@
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
                 <div>
                     <div class="form-group text-center">
-                        <label>{{files.recommendation.filename}}</label>
+                        <label>{{files.recommendation.name}}</label>
                     </div>
                     <div ng-show="loading" class="form-group text-center">
                         <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">
@@ -175,7 +175,7 @@
                 <label>Additional document</label>
                 <div>
                     <div class="form-group text-center">
-                        <label>{{files.additionalDocument.filename}}</label>
+                        <label>{{files.additionalDocument.name}}</label>
                     </div>
                     <div ng-show="loading" class="form-group text-center">
                         <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading file...">

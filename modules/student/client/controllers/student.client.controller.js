@@ -14,6 +14,30 @@
         $scope.isContinueEnabled = true;
         $scope.wizardProgress = $scope.user.studentMetadata.isPersonalProfileCompleted ? 5 : 1;
         $scope.progressPercent = $scope.wizardProgress * 20;
+
+        $scope.files = {
+            cv: {},
+            motivation: {},
+            recommendation: {},
+            additionalDocument: {}
+        };
+
+        if ($scope.user.studentMetadata.cv) {
+            $scope.files.cv.name = $scope.user.studentMetadata.cv.filename;
+        }
+
+        if ($scope.user.studentMetadata.motivation) {
+            $scope.files.motivation.name = $scope.user.studentMetadata.motivation.filename;
+        }
+
+        if ($scope.user.studentMetadata.recommendation) {
+            $scope.files.recommendation.name = $scope.user.studentMetadata.recommendation.filename;
+        }
+
+        if ($scope.user.studentMetadata.additionalDocument) {
+            $scope.files.additionalDocument.name = $scope.user.studentMetadata.additionalDocument.filename;
+        }
+
         $scope.programmingLanguages = [
             'C#', 'Java', 'C++', 'C', 'JavaSript', 'Python', 'PHP', 'Go', 'Ruby', 'CSS/Sass/Less', 'HTML/Pug/other markup language', 'Other'
         ];
@@ -66,7 +90,6 @@
         };
 
         function saveUserFiles() {
-            // TODO replace files with studentMetadata and see why aut.user returns weird shit that breaks the client on refresh
             var filesToPost = {
                 "newProfilePicture": $scope.files.picFile,
                 "cv": $scope.files.cv,
@@ -77,7 +100,7 @@
 
             for (var fileName in filesToPost) {
                 if (filesToPost.hasOwnProperty(fileName)) {
-                    if (!filesToPost[fileName]) {
+                    if (!filesToPost[fileName] || !filesToPost[fileName].size) {
                         continue;
                     }
 
