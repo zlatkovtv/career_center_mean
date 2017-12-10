@@ -86,7 +86,7 @@
 
                 $scope.selectedStudentTranscript.grade = result;
                 FacultyService.saveStudentTranscript({}, $scope.selectedStudentTranscript, function (response) {
-                    Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i>Success', message: 'Saved grade for ' + student.metadata.displayName + '!' });
+                    Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i>Success', message: 'Saved grade for ' + student.displayName + '!' });
                 }, function (response) {
                     Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not save grade for some reason!' });
                 });

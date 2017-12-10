@@ -78,6 +78,16 @@
                 userService.$update(function (response) {
                     Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> You have successfully completed your profile!', delay: 3000 });
                     Authentication.user = response;
+
+                    Upload.upload({
+                        url: '/api/users/picture',
+                        data: {
+                          newProfilePicture: $scope.files.picFile
+                        }
+                    }).then(function (response) {
+                        Authentication.user = response.data;
+                    });
+
                     saveUserFiles();
                 }, function (response) {
                     Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Edit profile failed!' });
@@ -91,7 +101,6 @@
 
         function saveUserFiles() {
             var filesToPost = {
-                "newProfilePicture": $scope.files.picFile,
                 "cv": $scope.files.cv,
                 "motivation": $scope.files.motivation,
                 "recommendation": $scope.files.recommendation,

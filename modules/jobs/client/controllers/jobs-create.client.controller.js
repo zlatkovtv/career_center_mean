@@ -14,10 +14,10 @@
             type: "Full-time",
             category: "IT",
             level: "Specialist level",
-            companyName: $scope.employer.companyName,
-            companyWebsite: $scope.employer.companyWebsite,
+            companyName: $scope.employer.employerMetadata.companyName,
+            companyWebsite: $scope.employer.employerMetadata.companyWebsite,
             companyEmail: $scope.employer.email,
-            companyPhone: $scope.employer.companyPhone,
+            companyPhone: $scope.employer.employerMetadata.companyPhone,
             requirements: null,
             responsibilities: null
         };
@@ -51,7 +51,7 @@
         };
 
         $scope.verifyEmployerProfileCompleted = () => {
-            if (!$scope.employer.companyName || !$scope.employer.companyWebsite || !$scope.employer.companyPhone) {
+            if (!$scope.employer.employerMetadata.companyName || !$scope.employer.employerMetadata.companyWebsite || !$scope.employer.employerMetadata.companyPhone) {
                 var modalInstance = $uibModal.open({
                     templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
                     controller: 'ConfirmController',

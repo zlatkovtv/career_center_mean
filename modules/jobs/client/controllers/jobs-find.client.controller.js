@@ -5,14 +5,38 @@
     .module('jobs')
     .controller('JobsFindController', JobsFindController);
 
-    JobsFindController.$inject = ['$scope', 'Authentication', 'JobsService', '$uibModal', 'Notification'];
+    JobsFindController.$inject = ['$scope', 'Authentication', 'JobsService', '$uibModal', 'Notification', '$location'];
 
-    function JobsFindController($scope, Authentication, JobsService, $uibModal, Notification) {
+    function JobsFindController($scope, Authentication, JobsService, $uibModal, Notification, $location) {
         $scope.jobs = [];
         $scope.applicationsForUser = [];
         $scope.applicationJobIds = [];
-        $scope.authentication = Authentication;
+        $scope.user = Authentication.user;
         $scope.oneAtATime = true;
+
+        if ($scope.user.roles.indexOf('student') !== -1 && !$scope.user.studentMetadata.isPersonalProfileCompleted) {
+            var modalInstance = $uibModal.open({
+                templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
+                controller: 'ConfirmController',
+                resolve: {
+                    options: {
+                        title: 'You need to complete your student profile before you can apply for jobs.',
+                        yes: 'OK, go there now',
+                        no: 'Cancel',
+                        yesColor: 'primary'
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (yes) {
+                if (!yes) {
+                    return;
+                }
+
+                $location.url('/student/profile');
+            }, function () {
+            });
+        }
 
         $scope.getApplications = () => {
             $scope.applicationsForUser = JobsService.getAllApplications(function (response) {

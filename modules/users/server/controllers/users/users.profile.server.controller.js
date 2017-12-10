@@ -44,26 +44,30 @@ var gfs = new Gridfs(db, mongoDriver);
 exports.update = function (req, res) {
     var user = new User(req.body);
     var metadata = null;
+    var metadataModel = null;
     switch (user.roles[0]) {
         case 'student':
             metadata = new StudentMetadata(req.body.studentMetadata);
+            metadataModel = StudentMetadata;
             user.displayName = metadata.firstName + ' ' + metadata.lastName;
             user.studentMetadata = metadata._id;
             break;
         case 'faculty':
             metadata = new FacultyMetadata(req.body.facultyMetadata);
+            metadataModel = FacultyMetadata;
             user.displayName = metadata.firstName + ' ' + metadata.lastName;
             user.facultyMetadata = metadata._id;
             break;
         case 'employer':
             metadata = new EmployerMetadata(req.body.employerMetadata);
+            metadataModel = EmployerMetadata;
             user.displayName = metadata.companyName;
             user.employerMetadata = metadata._id;
             break;
         default:
     }
 
-    StudentMetadata.update({ _id: metadata._id }, metadata, function (err, returnedMetadata) {
+    metadataModel.update({ _id: metadata._id }, metadata, function (err, returnedMetadata) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)

@@ -61,7 +61,7 @@
         };
 
         $scope.getJobs = () => {
-            $scope.jobs = JobsService.getJobsByUserId({}, { 'companyName': $scope.user.companyName }, function (response) {
+            $scope.jobs = JobsService.getJobsByUserId({}, { 'companyName': $scope.user.employerMetadata.companyName }, function (response) {
                 $scope.jobs = response;
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Error!' });

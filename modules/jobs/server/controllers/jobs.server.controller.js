@@ -59,12 +59,9 @@ exports.read = function (req, res) {
 * Update an article
 */
 exports.update = function (req, res) {
-    var job = req.job;
+    var job = req.body;
 
-    job.title = req.body.title;
-    job.content = req.body.content;
-
-    job.save(function (err) {
+    Job.update({ _id: job._id }, job, function (err) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)

@@ -13,11 +13,6 @@ chalk = require('chalk');
 owasp.config(config.shared.owasp);
 
 var EmployerMetadataSchema = new Schema({
-    facultyPosition: {
-        type: String,
-        trim: true,
-        default: ''
-    },
     companyName: {
         type: String,
         default: '',
@@ -32,24 +27,6 @@ var EmployerMetadataSchema = new Schema({
         type: String,
         default: '',
         trim: true
-    },
-    firstName: {
-        type: String,
-        trim: true,
-        default: ''
-    },
-    lastName: {
-        type: String,
-        trim: true,
-        default: ''
-    },
-    isPersonalProfileCompleted: {
-        type: Boolean,
-        default: false
-    },
-    personality: {
-        type: String,
-        default: ''
     }
 });
 

@@ -5,9 +5,9 @@
     .module('templates')
     .controller('JobEditController', JobEditController);
 
-    JobEditController.$inject = ['$scope', 'job', '$uibModalInstance'];
+    JobEditController.$inject = ['$scope', 'job', '$uibModalInstance', 'JobsService', 'Notification'];
 
-    function JobEditController($scope, job, $uibModalInstance) {
+    function JobEditController($scope, job, $uibModalInstance, JobsService, Notification) {
         $scope.job = job;
         $scope.canEditCompanyFields = false;
         $scope.jobTypes =
@@ -41,6 +41,15 @@
 
         $scope.close = (data) => {
             $uibModalInstance.close(data);
+        };
+
+        $scope.update = () => {
+            $scope.classes = JobsService.updateJob({}, $scope.job, function (response) {
+                $scope.job = response;
+                Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i> Success', message: 'Class deleted!' });
+            }, function (response) {
+                Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not delete class for some reason!' });
+            });
         };
     }
 }());
