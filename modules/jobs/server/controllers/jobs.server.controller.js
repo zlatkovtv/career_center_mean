@@ -150,9 +150,10 @@ exports.applyForJob = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            var companyEmail = appl.job.companyEmail;
-            sendEmailToEmployer(companyEmail);
-            res.json(appl);
+            JobApplication.populate(appl, { path: "job" }, function (err, populatedAppl) {
+                sendEmailToEmployer(populatedAppl.job.companyEmail);
+                res.json(appl);
+            });
         }
     });
 };
