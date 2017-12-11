@@ -144,7 +144,7 @@ exports.applyForJob = function (req, res) {
     var application = new JobApplication();
     application.job = req.body._id;
     application.user = req.user._id;
-    application.save.populate('job').exec(function (err, appl) {
+    application.save(function (err, appl) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)

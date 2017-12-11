@@ -1,9 +1,11 @@
 <section class="container">
     <div class="page-header">
-        <h1 ><small>Creating new job...</small></h1>
+        <h1>
+            <small>Creating new job...</small>
+        </h1>
     </div>
 
-    <div id="job-create-navigation">
+    <div class="job-create-navigation" ng-show="creatingJobAd">
         <div class="alert alert-info" style="margin-bottom: 0px;" ng-hide="wizardProgress === 5">
             Fields with
             <span class="glyphicon glyphicon-asterisk text-danger"></span>
@@ -14,10 +16,16 @@
             <span class="glyphicon glyphicon-ok"></span>
         </button>
     </div>
+    <div class="job-create-navigation" ng-show="!creatingJobAd">
+        <button class="btn btn-lg btn-primary" ng-click="createInitialJobObject()">
+            Post another
+            <span class="glyphicon glyphicon-repeat"></span>
+        </button>
+    </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">Please enter the job specifications below</div>
-        <div class="panel-body">
+    <uib-accordion close-others="true">
+        <div uib-accordion-group class="panel-default" heading="Please enter the job specifications below" is-open="creatingJobAd"
+            is-disabled="true">
             <div class="col-xs-4 col-md-4">
                 <div class="form-group">
                     <label>Position title</label>
@@ -27,22 +35,26 @@
                 <div class="form-group">
                     <label>Company name</label>
                     <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                    <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyName" class="form-control" required placeholder="Microsoft" />
+                    <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyName" class="form-control" required placeholder="Microsoft"
+                    />
                 </div>
                 <div class="form-group">
                     <label>Company website</label>
                     <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                    <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyWebsite" class="form-control" required placeholder="www.microsoft.com" />
+                    <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyWebsite" class="form-control" required placeholder="www.microsoft.com"
+                    />
                 </div>
                 <div class="form-group">
                     <label>Company email</label>
                     <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                    <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyEmail" class="form-control" required placeholder="helpdesk@microsoft.com" />
+                    <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyEmail" class="form-control" required placeholder="helpdesk@microsoft.com"
+                    />
                 </div>
                 <div class="form-group">
                     <label>Company phone</label>
                     <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                    <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyPhone" class="form-control" required placeholder="+359 888 888 888" />
+                    <input type="text" ng-disabled="!canEditCompanyFields" ng-model="job.companyPhone" class="form-control" required placeholder="+359 888 888 888"
+                    />
                 </div>
             </div>
             <div class="col-xs-4 col-md-4">
@@ -70,21 +82,25 @@
                 <div class="form-group">
                     <label>Requirements</label>
                     <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                    <textarea  ng-model="job.requirements" class="form-control" rows="5"></textarea>
+                    <textarea ng-model="job.requirements" class="form-control" rows="5"></textarea>
                 </div>
             </div>
             <div class="col-xs-4 col-md-4">
                 <div class="form-group">
                     <label>Job description</label>
                     <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                    <textarea  ng-model="job.description" class="form-control" rows="5"></textarea>
+                    <textarea ng-model="job.description" class="form-control" rows="5"></textarea>
                 </div>
                 <div class="form-group">
                     <label>Job responsibilities</label>
                     <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                    <textarea  ng-model="job.responsibilities" class="form-control" rows="5"></textarea>
+                    <textarea ng-model="job.responsibilities" class="form-control" rows="5"></textarea>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div ng-show="!creatingJobAd" uib-accordion-group class="panel-success" heading="Success" is-open="!creatingJobAd" is-disabled="true">
+            Successfully created job ad!
+        </div>
+    </uib-accordion>
 </section>

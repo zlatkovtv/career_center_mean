@@ -10,17 +10,6 @@
     function JobsCreateController($scope, JobsService, Notification, Authentication, $uibModal, $location) {
         $scope.employer = Authentication.user;
         $scope.canEditCompanyFields = false;
-        $scope.job = {
-            type: "Full-time",
-            category: "IT",
-            level: "Specialist level",
-            companyName: $scope.employer.employerMetadata.companyName,
-            companyWebsite: $scope.employer.employerMetadata.companyWebsite,
-            companyEmail: $scope.employer.email,
-            companyPhone: $scope.employer.employerMetadata.companyPhone,
-            requirements: null,
-            responsibilities: null
-        };
         $scope.jobTypes =
         {
             'fulltime': 'Full-time',
@@ -97,6 +86,7 @@
             var jobsService = new JobsService($scope.job);
 
             jobsService.$post(function (response) {
+                $scope.creatingJobAd = false;
                 Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> You have successfully created a job ad!', delay: 3000 });
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Job creation failed for some reason!' });
@@ -104,6 +94,22 @@
 
         };
 
+        $scope.createInitialJobObject = () => {
+            $scope.creatingJobAd = true;
+            $scope.job = {
+                type: "Full-time",
+                category: "IT",
+                level: "Specialist level",
+                companyName: $scope.employer.employerMetadata.companyName,
+                companyWebsite: $scope.employer.employerMetadata.companyWebsite,
+                companyEmail: $scope.employer.email,
+                companyPhone: $scope.employer.employerMetadata.companyPhone,
+                requirements: null,
+                responsibilities: null
+            };
+        };
+
         $scope.verifyEmployerProfileCompleted();
+        $scope.createInitialJobObject();
     }
 }());

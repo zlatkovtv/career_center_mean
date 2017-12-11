@@ -5,9 +5,9 @@
     .module('employer')
     .controller('EmployerCreatedController', EmployerCreatedController);
 
-    EmployerCreatedController.$inject = ['$scope', '$state', 'Authentication', 'JobsService', '$uibModal', '$location'];
+    EmployerCreatedController.$inject = ['$scope', '$state', 'Authentication', 'JobsService', '$uibModal', '$location', 'Notification'];
 
-    function EmployerCreatedController($scope, $state, Authentication, JobsService, $uibModal, $location) {
+    function EmployerCreatedController($scope, $state, Authentication, JobsService, $uibModal, $location, Notification) {
         $scope.user = Authentication.user;
 
         $scope.deleteJob = (job) => {
@@ -32,7 +32,7 @@
 
                 $scope.jobs = JobsService.delete({ jobId: job._id }, {}, function (response) {
                     $scope.getJobs();
-                    Notification.error({ message: 'Success', title: '<i class="glyphicon glyphicon-remove"></i> Job successfully deleted!' });
+                    Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i> Success', message: ' Job ad successfully deleted!' });
                 }, function (response) {
                     Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Error!' });
                 });

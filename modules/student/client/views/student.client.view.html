@@ -207,7 +207,7 @@
             </div>
         </div>
     </div>
-    <div uib-accordion-group class="panel-success" heading="Completed!" is-open="wizardProgress === 5" is-disabled="true">
+    <div ng-show="user.studentMetadata.isPersonalProfileCompleted" uib-accordion-group class="panel-success" heading="Completed!" is-open="wizardProgress === 5" is-disabled="true">
         <div class="panel-body">
             Congratulations! You have successfully completed your personal profile. Start browsing the job page to discover your dream career!
         </div>

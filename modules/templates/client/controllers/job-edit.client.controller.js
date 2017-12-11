@@ -46,9 +46,10 @@
         $scope.update = () => {
             $scope.classes = JobsService.updateJob({}, $scope.job, function (response) {
                 $scope.job = response;
-                Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i> Success', message: 'Class deleted!' });
+                Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i> Success', message: 'Job ad successfully updated!' });
+                $uibModalInstance.close();
             }, function (response) {
-                Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not delete class for some reason!' });
+                Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not update job ad for some reason!' });
             });
         };
     }
