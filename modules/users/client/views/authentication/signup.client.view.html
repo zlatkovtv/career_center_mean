@@ -7,7 +7,11 @@
             <uib-tab-heading>
                 <i class="glyphicon {{tab.icon}} margin-right-5"></i>{{tab.title}}
             </uib-tab-heading>
-            <div ng-include="vm.selectedTabTemplateUrl" ng-controller="AuthenticationController" class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4"></div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div ng-include="vm.selectedTabTemplateUrl" ng-controller="AuthenticationController" class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4"></div>
+                </div>
+            </div>
         </uib-tab>
     </uib-tabset>
 </div>
