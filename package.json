@@ -1,14 +1,14 @@
 {
-  "name": "meanjs",
-  "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
+  "name": "fcc",
+  "description": "FDIBA Career Center",
   "version": "0.6.0",
   "meanjs-version": "0.6.0",
   "private": false,
-  "author": "https://github.com/meanjs/mean/graphs/contributors",
+  "author": "https://github.com/zlatkovtv",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/meanjs/mean.git"
+    "url": "https://github.com/zlatkovtv/career_center_mean"
   },
   "engines": {
     "node": ">=9.2.0",
