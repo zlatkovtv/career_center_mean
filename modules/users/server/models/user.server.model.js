@@ -98,6 +98,15 @@ var UserSchema = new Schema({
     }
 });
 
+UserSchema.pre('save', function (next) {
+    if (this.password && this.isModified('password')) {
+      this.salt = crypto.randomBytes(16).toString('base64');
+      this.password = this.hashPassword(this.password);
+    }
+  
+    next();
+});
+
 UserSchema.pre('validate', function (next) {
     if (this.provider === 'local' && this.password && this.isModified('password')) {
         var result = owasp.test(this.password);
