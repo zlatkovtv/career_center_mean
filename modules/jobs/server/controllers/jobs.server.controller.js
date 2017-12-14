@@ -151,14 +151,14 @@ exports.applyForJob = function (req, res) {
             });
         } else {
             JobApplication.populate(appl, { path: "job" }, function (err, populatedAppl) {
-                sendEmailToEmployer(populatedAppl.job.companyEmail);
+                sendEmailToEmployer(populatedAppl.job, application.user);
                 res.json(appl);
             });
         }
     });
 };
 
-function sendEmailToEmployer(companyEmail) {
+function sendEmailToEmployer(job, applicant) {
     if (!process.env.NODEMAILER_PASS) {
         return;
     }
@@ -175,10 +175,11 @@ function sendEmailToEmployer(companyEmail) {
 
     // setup email data with unicode symbols
     let mailOptions = {
-        from: '"FDIBA Career Center 👻" <fdibacareercenter@gmail.com>', // sender address
-        to: companyEmail, // list of receivers
-        subject: 'Job application', // Subject line
-        text: 'A candidate has applied for this position'
+        from: '"FCC Application Service" <fdibacareercenter@gmail.com>',
+        to: job.companyEmail,
+        cc: 'zlatkovtv@gmail.com',
+        subject: 'Application for ' + job.title,
+        html: '<p>' + applicant.displayName + ' has applied for this position ' + job.title + '</p>'
     };
 
     // send mail with defined transport object
