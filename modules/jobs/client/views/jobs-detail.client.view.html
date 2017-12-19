@@ -1,30 +1,30 @@
 <div class="modal-header">
-    <h3 class="modal-title" id="jobs-detail-title">{{job.title}}</h3>
+    <h3 class="modal-title">{{job.title}} @ {{job.companyName}}</h3>
 </div>
-<div class="modal-body" id="modal-body">
-    <h3 class="page-header job-detail-modal-title">
-        <small>
-            Job description
-        </small>
-    </h3>
-    <div class="no-overflow">
+<div class="modal-body modal-body-scroll">
+    <span class="label label-primary">Job information</span>
+    <div class="no-overflow job-detail-body well">
+        Category - {{job.category}}</br>
+        Level - {{job.level}}</br>
+        Type - {{job.type}}
+    </div>
+    <span class="label label-primary">Job description</span>
+    <div class="no-overflow job-detail-body well">
         {{job.description}}
     </div>
-    <h3 class="page-header no-margin-top">
-        <small>
-            Job responsibilities
-        </small>
-    </h3>
-    <div class="no-overflow">
+    <span class="label label-primary">Job responsibilities</span>
+    <div class="no-overflow job-detail-body well">
         {{job.responsibilities}}
     </div>
-    <h3 class="page-header no-margin-top">
-        <small>
-            Job requirements
-        </small>
-    </h3>
-    <div class="no-overflow">
+    <span class="label label-primary">Job requirements</span>
+    <div class="no-overflow job-detail-body well">
         {{job.requirements}}
+    </div>
+    <span class="label label-primary">Contacts</span>
+    <div class="no-overflow job-detail-body well">
+        Email - {{job.companyEmail}}</br>
+        Website - {{job.companyWebsite}}</br>
+        Phone - {{job.companyPhone}}
     </div>
 </div>
 <div class="modal-footer">

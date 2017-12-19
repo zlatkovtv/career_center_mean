@@ -10,7 +10,7 @@
   function menuConfig(menuService) {
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
-      title: 'View and edit student profiles',
+      title: 'Manage classes',
       state: 'faculty',
       roles: ['faculty'],
       position: 1

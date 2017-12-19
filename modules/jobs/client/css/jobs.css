@@ -53,10 +53,15 @@
     text-align: center;
 }
 
-.job-detail-modal-title {
-    margin-top: 10px;
+.job-detail-body {
+    margin: 10px 0;
 }
 
 .no-overflow {
     overflow: hidden;
+}
+
+.modal-body-scroll {
+    overflow-y: scroll;
+    max-height: 448px;
 }
