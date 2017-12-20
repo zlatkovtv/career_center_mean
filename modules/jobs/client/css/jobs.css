@@ -27,6 +27,13 @@
 }
 
 #featured-job-carousel {
+    height: 400px;
+}
+
+.placeholder-image {
+    background-image: url('/modules/core/client/img/brand/placeholder.png');
+    background-position: center;
+    background-size: cover;
 }
 
 .carousel-caption {
@@ -37,10 +44,6 @@
 .panel-white > .panel-heading {
     background-image: none;
     background-color: white;
-}
-
-* {
-    border-radius: 0px !important;
 }
 
 .inline {
@@ -64,4 +67,8 @@
 .modal-body-scroll {
     overflow-y: scroll;
     max-height: 448px;
+}
+
+.no-margin-top {
+    margin-top: 0px;
 }

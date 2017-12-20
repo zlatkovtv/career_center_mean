@@ -3,14 +3,19 @@
     <div class="page-header alert alert-info" ng-show="jobs.length === 0">There are no ads at this moment. Please check back later.</div>
 
     <section ng-show="jobs.length > 0">
-        <div id="jobs-find-header" class="page-header">
-            <h1 class="inline">
-                <small>All jobs and internships</small>
-            </h1>
-            <span class="badge inline" style="margin-left:5px;">{{jobs.length}}</span>
+        <h1 class="page-header">
+            <small>Featured</small>
+        </h1>
+
+        <div id="featured-job-carousel">
+            <div class="col-xs-6 col-md-3" ng-repeat="job in jobs | limitTo:4">
+                <a href="#" class="thumbnail card placeholder-image">
+                    
+                </a>
+              </div>
         </div>
 
-        <div class="panel panel-default">
+        <!-- <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Featured</h3>
             </div>
@@ -27,6 +32,13 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+
+        <div id="jobs-find-header" class="page-header">
+            <h1 class="inline">
+                <small>All jobs and internships</small>
+            </h1>
+            <span class="badge inline" style="margin-left:5px;">{{jobs.length}}</span>
         </div>
 
         <div class="panel panel-default">

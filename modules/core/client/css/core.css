@@ -16,6 +16,25 @@ body {
 .content {
     margin-top: 50px;
 }
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1900px;
+        width: 100%;
+    }
+}
+
+.navbar {
+    padding: 0px 30px;
+}
+
+@media (min-width: 960px) {
+    .card {
+        min-height: 400px;
+    }
+}
+
+
 .undecorated-link:hover {
     text-decoration: none;
 }
