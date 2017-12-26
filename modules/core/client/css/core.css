@@ -28,13 +28,6 @@ body {
     padding: 0px 30px;
 }
 
-@media (min-width: 960px) {
-    .card {
-        min-height: 400px;
-    }
-}
-
-
 .undecorated-link:hover {
     text-decoration: none;
 }

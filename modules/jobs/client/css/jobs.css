@@ -28,6 +28,8 @@
 
 #featured-job-carousel {
     height: 400px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .placeholder-image {
@@ -71,4 +73,9 @@
 
 .no-margin-top {
     margin-top: 0px;
+}
+
+
+.card {
+    min-height: 400px;
 }

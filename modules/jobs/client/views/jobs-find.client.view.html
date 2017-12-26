@@ -8,31 +8,11 @@
         </h1>
 
         <div id="featured-job-carousel">
-            <div class="col-xs-6 col-md-3" ng-repeat="job in jobs | limitTo:4">
-                <a href="#" class="thumbnail card placeholder-image">
-                    
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="job in jobs | limitTo:4">
+                <a href="#" class="thumbnail card placeholder-image" ng-click="popJobDetail(job)">
                 </a>
               </div>
         </div>
-
-        <!-- <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Featured</h3>
-            </div>
-            <div id="featured-job-carousel">
-                <div uib-carousel active="active" interval="5000" no-wrap="false">
-                    <div uib-slide ng-repeat="featuredJob in jobs track by $index" index="$index">
-                        <img ng-src="/modules/core/client/img/brand/tu-sofia-background.jpg" style="margin:auto;">
-                        <div class="carousel-blur">
-                        </div>
-                        <div class="carousel-caption">
-                            <h4>{{featuredJob.title}}</h4>
-                            <p>{{featuredJob.companyName}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
         <div id="jobs-find-header" class="page-header">
             <h1 class="inline">

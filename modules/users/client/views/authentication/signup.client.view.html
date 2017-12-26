@@ -2,14 +2,14 @@
     <h3 class="page-header">Sign up to use FDIBA Career center
     </h3>
 
-    <uib-tabset active="active">
+    <uib-tabset active="active" class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-4 col-lg-4">
         <uib-tab index="$index" ng-repeat="tab in vm.userRoleTabs" ng-click="vm.selectTabObject(tab)" disable="tab.disabled">
             <uib-tab-heading>
                 <i class="glyphicon {{tab.icon}} margin-right-5"></i>{{tab.title}}
             </uib-tab-heading>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div ng-include="vm.selectedTabTemplateUrl" ng-controller="AuthenticationController" class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4"></div>
+                    <div ng-include="vm.selectedTabTemplateUrl" ng-controller="AuthenticationController"></div>
                 </div>
             </div>
         </uib-tab>
