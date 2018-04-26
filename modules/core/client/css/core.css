@@ -75,12 +75,41 @@ a:hover .header-profile-image {
 }
 
 #home-image {
-    background: url(/modules/core/client/img/brand/tu-sofia-background.jpg);
+    background: url(https://cdn2.hubspot.net/hubfs/330046/2017_Images/Backgrounds/pool-desk-bg-1.jpg?t=1511213327691);
     background-size: cover;
     background-position: center;
     height: 500px;
+    padding: 200px 0;
 }
 
 textarea {
     overflow: hidden;
 }
+
+.home-main-title {
+    font-size: 38px;
+}
+
+.white {
+    color: white;
+}
+
+.home-div {
+    height: 475px;
+}
+
+#home-div-2 {
+    background-color: black;
+    padding: 40px;
+}
+
+#home-div-3 {
+    background-color: #e54f48;
+    height: 100%;
+}
+
+#home-div-4 {
+    background-color: #52aaac;
+    height: 100%;
+}
+
