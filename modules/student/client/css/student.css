@@ -13,3 +13,7 @@ select[multiple] {
   display: flex;
   align-items: flex-end;
 }
+
+.full-width {
+  width: 100% !important;
+}

@@ -27,7 +27,6 @@
 }
 
 #featured-job-carousel {
-    height: 400px;
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -78,4 +77,6 @@
 
 .card {
     min-height: 400px;
+    width: 275px;
+    margin: 10px auto;
 }
