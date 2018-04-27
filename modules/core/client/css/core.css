@@ -10,7 +10,7 @@ html, body {
 
 body {
     background-color: #F4F7FA;
-    font-family:"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-family:'Open Sans', sans-serif, "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
 }
 
 .content {
@@ -101,6 +101,8 @@ textarea {
 #home-div-2 {
     background-color: black;
     padding: 40px;
+    height: auto;
+    overflow: auto;
 }
 
 #home-div-3 {
@@ -113,3 +115,56 @@ textarea {
     height: 100%;
 }
 
+#student-image {
+    float: left;
+    background-image: url(../img/student-icon.ico);
+    width: 100%;
+    height: 100%;
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#employer-image {
+    float: left;
+    background-image: url(../img/employer-icon.ico);
+    width: 100%;
+    height: 100%;
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#teacher-image {
+    float: left;
+    background-image: url(../img/teacher-icon.ico);
+    width: 100%;
+    height: 100%;
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#student-text {
+    font-size:20px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.circle {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+}
+
+.person-container {
+    margin-top: 20px;
+    height: 200px;
+}
+
+.full-height {
+    height: 100%;
+}
