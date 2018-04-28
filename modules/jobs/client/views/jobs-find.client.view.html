@@ -9,8 +9,11 @@
 
         <div id="featured-job-carousel">
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="job in jobs | limitTo:4">
-                <a href="#" class="thumbnail card placeholder-image" ng-click="popJobDetail(job)">
-                </a>
+                <div class="thumbnail card placeholder-image" ng-click="popJobDetail(job)" ng-style="{'background-image':'url({{setCompanyImage(job.user.profileImageURL)}})'}">
+                    <div class="image-text">
+                        {{job.title}} @ {{job.companyName}}
+                    </div>
+                </div>
               </div>
         </div>
 

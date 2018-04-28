@@ -30,7 +30,7 @@ exports.create = function (req, res) {
 
 exports.getJobsByUserId = function (req, res) {
     var companyName = req.body.companyName;
-    Job.find({ 'companyName': companyName }).exec(function (err, jobs) {
+    Job.find({ 'companyName': companyName }).populate('user').exec(function (err, jobs) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)
@@ -93,7 +93,7 @@ exports.delete = function (req, res) {
 * List of Articles
 */
 exports.getAll = function (req, res) {
-    Job.find().sort('-created').exec(function (err, jobs) {
+    Job.find().populate('user').sort('-created').exec(function (err, jobs) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)

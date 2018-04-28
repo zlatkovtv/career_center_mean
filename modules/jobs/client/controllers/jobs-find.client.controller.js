@@ -87,7 +87,22 @@
 
         $scope.$on('$viewContentLoaded', function () {
             $scope.jobs = JobsService.getJobs();
+            console.log($scope.jobs);
             $scope.getApplications();
         });
+
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.split(search).join(replacement);
+        };
+
+        $scope.setCompanyImage = function (imageUrl) {
+            if(!imageUrl) {
+                imageUrl = "/modules/core/client/img/brand/placeholder.png";
+            }
+
+            var root = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+            return  root + imageUrl.replaceAll("\\", '\/');
+        }
     }
 }());

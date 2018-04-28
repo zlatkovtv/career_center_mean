@@ -5,9 +5,9 @@
     .module('employer')
     .controller('EmployerProfileController', EmployerProfileController);
 
-  EmployerProfileController.$inject = ['$scope', 'Notification', 'UsersService', 'Authentication'];
+  EmployerProfileController.$inject = ['$scope', 'Notification', 'UsersService', 'Authentication', 'Upload'];
 
-  function EmployerProfileController($scope, Notification, UsersService, Authentication) {
+  function EmployerProfileController($scope, Notification, UsersService, Authentication, Upload) {
       $scope.user = Authentication.user;
       console.log($scope.user);
 
@@ -23,6 +23,15 @@
       $scope.save = () => {
           var usersService = new UsersService($scope.user);
           usersService.$update(function (response) {
+            Upload.upload({
+                url: '/api/users/picture',
+                data: {
+                  newProfilePicture: $scope.files.picFile
+                }
+            }).then(function (response) {
+                Authentication.user = response.data;
+            });
+
               Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Employer profile successfully updated!', delay: 3000 });
               Authentication.user = response;
           }, function (response) {

@@ -87,6 +87,10 @@ var JobSchema = new Schema({
         default: '',
         trim: true,
         required: 'Responsibilities are required'
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 
