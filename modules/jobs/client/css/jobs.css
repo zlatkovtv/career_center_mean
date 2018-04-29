@@ -91,3 +91,7 @@
     width: 275px;
     margin: 10px auto;
 }
+
+.card:hover {
+    border: 5px solid #007196;
+}
