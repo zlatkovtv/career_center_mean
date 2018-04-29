@@ -91,18 +91,17 @@
             $scope.getApplications();
         });
 
-        String.prototype.replaceAll = function(search, replacement) {
-            var target = this;
+        function replaceAll(target, search, replacement) {
             return target.split(search).join(replacement);
-        };
+        }
 
         $scope.setCompanyImage = function (imageUrl) {
-            if(!imageUrl) {
+            if (!imageUrl) {
                 imageUrl = "/modules/core/client/img/brand/placeholder.png";
             }
 
             var root = $location.protocol() + "://" + $location.host() + ":" + $location.port();
-            return  root + imageUrl.replaceAll("\\", '\/');
-        }
+            return root + replaceAll(imageUrl, "\\", '\/');
+        };
     }
 }());
