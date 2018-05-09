@@ -91,6 +91,10 @@ exports.update = function (req, res) {
     });
 };
 
+exports.savePremium = function (req, res) {
+    return res.status(422);
+}
+
 exports.uploadFilesForUser = function (req, res) {
     var fieldName = req.body.fieldName;
     var file = req.files.file;

@@ -1,10 +1,10 @@
-<div class="modal-header">
+<div class="modal-body">
     <div class="modal-title">{{options.title}}</div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-{{options.yesColor}}" type="button" ng-click="close('yes')" style="float:left;">
+    <button ng-if="options.yes" class="btn btn-{{options.yesColor}}" type="button" ng-click="close('yes')" style="float:left;">
         <span ng-if="options.yes === 'Delete'" class="glyphicon glyphicon-trash"></span>
         {{options.yes}}
     </button>
-    <button class="btn btn-{{options.noColor}}" type="button" ng-click="close()">{{options.no}}</button>
+    <button ng-if="options.no" class="btn btn-{{options.noColor}}" type="button" ng-click="close()">{{options.no}}</button>
 </div>

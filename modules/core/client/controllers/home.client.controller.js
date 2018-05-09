@@ -9,7 +9,8 @@
 
 	function HomeController($scope) {
 		$scope.author = "Konstantin Zlatkov";
-		$scope.authorText = `Lorem ipsum dolor sit amet, ut nihil labores accusam vim, id repudiare scribentur his, ex has congue graece erroribus. Mazim luptatum antiopam pro te. Ne pro feugait denique incorrupte, et qui erat explicari disputationi. In labore dicunt pri, ea nam facer tempor regione.`;
+		$scope.authorText = `I am a student of Technical University of Sofia and this the application that serves as my dissertation. It's goal is to more easily connect students, faculty members
+		and employers into one single platform in which every side can exchange information about one another and engage in possible employment.`;
 		$scope.techText = "Made with";
 		$scope.techImages = [
 			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/1000px-Angular_full_color_logo.svg.png",
