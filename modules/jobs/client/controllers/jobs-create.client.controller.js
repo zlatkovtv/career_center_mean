@@ -9,6 +9,7 @@
 
     function JobsCreateController($scope, JobsService, Notification, Authentication, $uibModal, $location) {
         $scope.employer = Authentication.user;
+
         $scope.canEditCompanyFields = false;
         $scope.jobTypes =
         {
@@ -83,6 +84,7 @@
                 Notification.error({ title: 'Empty fields', message: '<i class="glyphicon glyphicon-remove"></i> Please fill out all fields before proceeding!', delay: 3000 });
                 return;
             }
+
             var jobsService = new JobsService($scope.job);
 
             jobsService.$post(function (response) {
@@ -105,11 +107,16 @@
                 companyEmail: $scope.employer.email,
                 companyPhone: $scope.employer.employerMetadata.companyPhone,
                 requirements: null,
-                responsibilities: null
+                responsibilities: null,
+                isPremium: ($scope.employer.premium !== null)
             };
         };
 
         $scope.verifyEmployerProfileCompleted();
         $scope.createInitialJobObject();
+
+        if(!$scope.employer.premium) {
+            $('#premium-toggle').bootstrapToggle('disable');
+        }
     }
 }());

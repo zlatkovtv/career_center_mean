@@ -95,7 +95,11 @@ var UserSchema = new Schema({
     },
     resetPasswordExpires: {
         type: Date
-    }
+    },
+    premium: {
+        type: Schema.Types.ObjectId,
+        ref: 'Premium'
+    },
 });
 
 UserSchema.pre('save', function (next) {

@@ -9,7 +9,8 @@ module.exports = {
         // bower:css
         'public/lib/bootstrap/dist/css/bootstrap.css',
         'public/lib/angular-ui-notification/dist/angular-ui-notification.css',
-        'public/lib/tr-ng-grid/trNgGrid.min.css'
+        'public/lib/tr-ng-grid/trNgGrid.min.css',
+        'public/lib/bootstrap-toggle/css/bootstrap-toggle.min.css'
         // endbower
       ],
       js: [
@@ -17,6 +18,8 @@ module.exports = {
         'public/lib/angular/angular.js',
         'public/lib/angular-animate/angular-animate.js',
         'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+        'public/lib/jquery/dist/jquery.min.js',
+        'public/lib/bootstrap-toggle/js/bootstrap-toggle.min.js',
         'public/lib/ng-file-upload/ng-file-upload.js',
         'public/lib/angular-messages/angular-messages.js',
         'public/lib/angular-mocks/angular-mocks.js',
@@ -24,7 +27,7 @@ module.exports = {
         'public/lib/angular-ui-notification/dist/angular-ui-notification.js',
         'public/lib/angular-ui-router/release/angular-ui-router.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
-        'public/lib/tr-ng-grid/trNgGrid.min.js'
+        'public/lib/tr-ng-grid/trNgGrid.min.js',
         // endbower
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']

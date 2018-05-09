@@ -9,6 +9,7 @@
 
 	function EmployerProfileController($scope, Notification, UsersService, Authentication, Upload, $uibModal) {
 		$scope.user = Authentication.user;
+		console.log($scope.user);
 		$scope.premiumPaymentAmount = 9.99;
 
 		$scope.validateCurrentForm = () => {
@@ -42,77 +43,93 @@
 		};
 
 		angular.element(document).ready(function () {
-			paypal.Button.render({
-				env: 'sandbox', 
-	
-				style: {
-					label: 'checkout',
-					size:  'responsive',    // small | medium | large | responsive
-					shape: 'rect',     // pill | rect
-					color: 'gold'      // gold | blue | silver | black
-				},
-	
-				client: {
-					sandbox:    'AW4lsBo0c7OpsZIKWXM4QJo24t22uAYJ7WDN0CG6hUK8XBAmdaxw8EMS5PX0IHweCAgETGqBFNs9LdtG', // from https://developer.paypal.com/developer/applications/
-					production: 'AbN27NSXb6N1bYyh_eu_tyxsPJgQwB574GMxDQxapH3NRV33b8ez_TKuBjsqntt_d_mEHHlg5uhOBeMY'  // from https://developer.paypal.com/developer/applications/
-				},
+			if(!$scope.user.premium) {
+				paypal.Button.render({
+					env: 'sandbox', 
 		
-				payment: function(data, actions) {
-					return actions.payment.create({
-						transactions: [
-							{
-								amount: {
-									total:    premiumPaymentAmount,
-									currency: 'EUR'
+					style: {
+						label: 'checkout',
+						size:  'responsive',    // small | medium | large | responsive
+						shape: 'rect',     // pill | rect
+						color: 'gold'      // gold | blue | silver | black
+					},
+		
+					client: {
+						sandbox:    'AW4lsBo0c7OpsZIKWXM4QJo24t22uAYJ7WDN0CG6hUK8XBAmdaxw8EMS5PX0IHweCAgETGqBFNs9LdtG', // from https://developer.paypal.com/developer/applications/
+						production: 'AbN27NSXb6N1bYyh_eu_tyxsPJgQwB574GMxDQxapH3NRV33b8ez_TKuBjsqntt_d_mEHHlg5uhOBeMY'  // from https://developer.paypal.com/developer/applications/
+					},
+			
+					payment: function(data, actions) {
+						return actions.payment.create({
+							transactions: [
+								{
+									amount: {
+										total: $scope.premiumPaymentAmount,
+										currency: 'EUR'
+									}
 								}
-							}
-						]
-					});
-				},
-				commit: true,
-				onAuthorize: function(data, actions) {
-					return actions.payment.execute().then(function(response) {
-
-
-						var modalInstance = $uibModal.open({
-							templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
-							controller: 'ConfirmController',
-							resolve: {
-								options: {
-									title: 'You have successfully activated Premium. Welcome aboard!',
-									no: 'Let\'s go!',
-									noColor: 'success'
-								}
-							}
+							]
 						});
-					});
-				},
-				onCancel: function(data) {
-					var modalInstance = $uibModal.open({
-						templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
-						controller: 'ConfirmController',
-						resolve: {
-							options: {
-								title: 'The payment was canceled. No funds have been withdrawn from your paypal account. We hope that you will still concider activating Premium.',
-								no: 'Close',
-								noColor: 'primary'
-							}
-						}
-					});
-				}
-		
-			}, '#paypal-button');
+					},
+					commit: true,
+					onAuthorize: function(data, actions) {
+						return actions.payment.execute().then(function(response) {
+							savePremium(function() {
+								showPayPalSuccessModal();
+							});
+	
+							
+						});
+					},
+					onCancel: function(data) {
+						//showPayPalCanceledModal();
+						savePremium(function() {
+							showPayPalSuccessModal();
+						});
+					}
+			
+				}, '#paypal-button');
+			}
 		});
 
-		function savePremium() {
-			$scope.user.premium = {
-				amount: premiumPaymentAmount
-			}
+		function showPayPalSuccessModal() {
+			var modalInstance = $uibModal.open({
+				templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
+				controller: 'ConfirmController',
+				resolve: {
+					options: {
+						title: 'You have successfully activated Premium. Welcome aboard!',
+						no: 'Let\'s go!',
+						noColor: 'success'
+					}
+				}
+			});
+		}
 
-			$scope.allStudents = UsersService.savePremium($scope.user)
-			.then(function (response) {
-                $scope.user = response;
-            }).catch(function (response) {
+		function showPayPalCanceledModal() {
+			var modalInstance = $uibModal.open({
+				templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
+				controller: 'ConfirmController',
+				resolve: {
+					options: {
+						title: 'The payment was canceled. No funds have been withdrawn from your paypal account. We hope that you will still concider activating Premium.',
+						no: 'Close',
+						noColor: 'primary'
+					}
+				}
+			});
+		}
+
+		function savePremium(showSuccessModal) {
+			$scope.user.premium = {
+				amount: $scope.premiumPaymentAmount
+			}
+			
+			$scope.user = UsersService.savePremium({}, $scope.user, function (response) {
+				$scope.user = response;
+				console.log($scope.user);
+				showSuccessModal();
+            }, function (response) {
             });
 		}
 

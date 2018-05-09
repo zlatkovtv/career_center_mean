@@ -91,6 +91,10 @@ var JobSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    isPremium: {
+        type: Boolean,
+        default: false
     }
 });
 

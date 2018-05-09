@@ -6,15 +6,26 @@
     </div>
 
     <div class="job-create-navigation" ng-show="creatingJobAd">
-        <div class="alert alert-info" style="margin-bottom: 0px;" ng-hide="wizardProgress === 5">
+        <div class="alert alert-info" style="margin-top: 10px;" ng-hide="wizardProgress === 5">
             Fields with
             <span class="glyphicon glyphicon-asterisk text-danger"></span>
             are required in order to continue.
         </div>
-        <button class="btn btn-lg btn-primary" ng-click="postJob()">
-            Post job ad
-            <span class="glyphicon glyphicon-ok"></span>
-        </button>
+        <div>
+            <button class="btn btn-primary" ng-click="postJob()">
+                Post job ad
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            <div class="checkbox">
+                <input id="premium-toggle" 
+                ng-model="job.isPremium"
+                type="checkbox" 
+                data-toggle="toggle"
+                data-onstyle="success"
+                data-on="Premium" 
+                data-off="Normal">
+            </div>
+        </div>
     </div>
     <div class="job-create-navigation" ng-show="!creatingJobAd">
         <button class="btn btn-lg btn-primary" ng-click="createInitialJobObject()">

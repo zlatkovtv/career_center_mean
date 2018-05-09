@@ -41,7 +41,7 @@
         </div>
         <div>
             <div class="premium-text">
-                Your are running a Premium account as of {{user.premium.activatedOn}}.
+                Your are running a Premium account as of <span ng-bind="user.premium.startedOn | date:'dd/MMMM/yyyy'"></span>.
             </div>
             <div class="page-header">
                 <h1>
