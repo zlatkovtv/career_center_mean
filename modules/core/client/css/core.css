@@ -14,7 +14,7 @@ body {
 }
 
 .content {
-    margin-top: 50px;
+    margin-top: 45px;
 }
 
 @media (min-width: 1200px) {
@@ -86,8 +86,19 @@ textarea {
     overflow: hidden;
 }
 
-.home-main-title {
+#home-title {
+    text-align: left;
+    text-transform: uppercase;
     font-size: 38px;
+}
+
+#home-subtitle {
+    text-align: left;
+}
+
+#button-container {
+   float: left;
+   margin-top: 40px;
 }
 
 .white {
@@ -95,19 +106,21 @@ textarea {
 }
 
 .home-div {
-    height: 475px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
 }
 
 #home-div-2 {
     background-color: black;
-    padding: 40px;
-    height: auto;
     overflow: auto;
+    flex: 1;
 }
 
 #home-div-3 {
     background-color: #e54f48;
-    height: 100%;
+    flex: 1;
 }
 
 #home-div-4 {
@@ -116,31 +129,13 @@ textarea {
 }
 
 #student-image {
-    float: left;
     background-image: url(../img/student-icon.ico);
-    width: 100%;
-    height: 100%;
-    background-size: 75%;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 #employer-image {
-    float: left;
     background-image: url(../img/employer-icon.ico);
-    width: 100%;
-    height: 100%;
-    background-size: 75%;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 #teacher-image {
-    float: left;
     background-image: url(../img/teacher-icon.ico);
-    width: 100%;
-    height: 100%;
-    background-size: 75%;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 #student-text {
@@ -159,14 +154,52 @@ textarea {
     border-radius: 50%;
     height: 200px;
     width: 200px;
-    margin: auto;
+    margin: 25px auto;
 }
 
 .person-container {
-    margin-top: 20px;
+    margin: 50px 0 0 0;
     height: 200px;
 }
 
 .full-height {
     height: 100%;
+}
+
+.home-container {
+    padding: 40px;
+}
+
+#author-image {
+    background-image: url(../img/author-image.jpg);
+    background-size: cover;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.circle-image {
+    float: left;
+    width: 100%;
+    height: 100%;
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.heading {
+    text-align: center;
+    font-size: 36px;
+}
+
+#author-text {
+    font-size:20px;
+    margin-top: 20px;
+    text-align: justify;
+}
+
+#header-container {
+    position: absolute;
+    top: 200px;
+    left: 100px;
 }

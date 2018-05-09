@@ -1,24 +1,26 @@
 <section>
 	<div id="home-image-container" class="text-center">
-		<div>
-			<div id="home-image">
-				<h1 class="white home-main-title">
-					The FDIBA Career Center
-				</h1>
-				<h3 class="white">for students, university faculty and employers</h3>
+		<div id="home-image">
+		</div>
+		<div id="header-container">
+			<h1 id="home-title" class="white">
+				FDIBA Career Center
+			</h1>
+			<h4 class="white" id="home-subtitle">For students. For professors. For employers.</h3>
+			<div id="button-container">
 				<a class="btn btn-primary btn-lg" ui-sref="authentication.signin">Sign In</a>
 				<a class="btn btn-primary btn-lg" ui-sref="authentication.signup">Sign Up</a>
 			</div>
 		</div>
 	</div>
-	<div id="home-div-2" class="white">
+	<div id="home-div-2" class="home-container white">
 		<h2>
 			The FDIBA Career center lets you register as either a student, faculty member or employer.
 		</h2>
 		<div class="person-container">
 			<div class="col-xs-12 col-sm-12 col-md-3">
 				<div class="bg-white circle">
-					<div id="student-image"></div>
+					<div id="student-image" class="circle-image"></div>
 				</div>
 			</div>
 			
@@ -31,7 +33,7 @@
 		<div class="person-container">
 			<div class="col-xs-12 col-sm-12 col-md-3">
 				<div class="bg-white circle">
-					<div id="teacher-image"></div>
+					<div id="teacher-image" class="circle-image"></div>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-9 full-height">
@@ -43,7 +45,7 @@
 		<div class="person-container">
 			<div class="col-xs-12 col-sm-12 col-md-3">
 				<div class="bg-white circle">
-					<div id="employer-image"></div>
+					<div id="employer-image" class="circle-image"></div>
 				</div>
 			</div>
 			
@@ -56,8 +58,23 @@
 	</div>
 
 	<div class="home-div">
-		<div id="home-div-3" class="col-xs-12 col-md-6"></div>
-		<div id="home-div-4" class="col-xs-12 col-md-6"></div>
+		<div id="home-div-3" class="home-container col-xs-12 col-md-6">
+			<h2 class="white heading">{{author}}</h2>
+			<div class="circle">
+				<div id="author-image" class="circle-image"></div>
+			</div>
+			<div id="author-text" class="white">
+				{{authorText}}
+			</div>
+		</div>
+		<div id="home-div-4" class="home-container col-xs-12 col-md-6">
+			<h2 class="white heading">{{techText}}</h2>
+			<div class="col-xs-12 col-md-6" ng-repeat="techImage in techImages">
+				<div class="bg-white circle">
+					<div class="circle-image" style="background-image:url({{techImage}})"></div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </section>
