@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    angular
-    .module('jobs')
+angular
+    .module('jobs', ['trNgGrid'])
     .controller('JobsFindController', JobsFindController);
 
     JobsFindController.$inject = ['$scope', 'Authentication', 'JobsService', '$uibModal', 'Notification', '$location'];

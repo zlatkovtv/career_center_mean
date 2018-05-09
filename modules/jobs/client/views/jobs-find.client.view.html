@@ -2,20 +2,20 @@
 
     <div class="page-header alert alert-info" ng-show="jobs.length === 0">There are no ads at this moment. Please check back later.</div>
 
-    <section ng-show="jobs.length > 0">
-        <h1 class="page-header">
-            <small>Featured</small>
-        </h1>
-
-        <div id="featured-job-carousel">
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="job in jobs | limitTo:4">
-                <div class="thumbnail card placeholder-image" ng-click="popJobDetail(job)" ng-style="{'background-image':'url({{setCompanyImage(job.user.profileImageURL)}})'}">
-                    <div class="image-text">
-                        {{job.title}} @ {{job.companyName}}
+    <section ng-show="jobs.length > 0" id="main-container">
+        <uib-accordion close-others="oneAtATime">
+            <div uib-accordion-group class="panel-default panel-white" heading="Featured" is-open="true">
+                <div id="featured-job-carousel">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="job in jobs | limitTo:4">
+                        <div class="thumbnail card placeholder-image" ng-click="popJobDetail(job)" ng-style="{'background-image':'url({{setCompanyImage(job.user.profileImageURL)}})'}">
+                            <div class="image-text">
+                                {{job.title}} @ {{job.companyName}}
+                            </div>
+                        </div>
                     </div>
                 </div>
-              </div>
-        </div>
+            </div>
+        </uib-accordion>
 
         <div id="jobs-find-header" class="page-header">
             <h1 class="inline">
@@ -25,55 +25,26 @@
         </div>
 
         <div class="panel panel-default">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-
-                        </th>
-                        <th>
-                            Position
-                        </th>
-                        <th>
-                            Company
-                        </th>
-                        <th>
-                            Category
-                        </th>
-                        <th>
-                            Type
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="job in jobs">
-                        <th>
-                            <button class="btn btn-primary" ng-click="popJobDetail(job)">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                            <button class="btn btn-primary" ng-click="applyForJob(job)" ng-hide="hasUserAppliedForJob(job)">
-                                Apply
-                            </button>
-                            <button class="btn btn-success" ng-disabled="true" ng-show="hasUserAppliedForJob(job)">
-                                <span class="glyphicon glyphicon-ok"></span>
-                                Applied
-                            </button>
-                        </th>
-                        <th>
-                            {{job.title}}
-                        </th>
-                        <th>
-                            {{job.companyName}}
-                        </th>
-                        <th>
-                            {{job.category}}
-                        </th>
-                        <th>
-                            {{job.type}}
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
+                <table tr-ng-grid="" fields="['title', 'companyName', 'category', 'type']" items="jobs">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-primary" ng-click="popJobDetail(jobs.indexOf(gridItem))">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" ng-click="applyForJob(jobs.indexOf(gridItem))" ng-hide="hasUserAppliedForJob(jobs.indexOf(gridItem))">
+                                        Apply
+                                    </button>
+                                    <button class="btn btn-success" ng-disabled="true" ng-show="hasUserAppliedForJob(jobs.indexOf(gridItem))">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        Applied
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                </table>
         </div>
     </section>
 </div>
