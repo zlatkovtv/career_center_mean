@@ -1,13 +1,6 @@
-(function () {
-    'use strict';
-
-angular
-    .module('jobs', ['trNgGrid'])
-    .controller('JobsFindController', JobsFindController);
-
-    JobsFindController.$inject = ['$scope', 'Authentication', 'JobsService', '$uibModal', 'Notification', '$location'];
-
-    function JobsFindController($scope, Authentication, JobsService, $uibModal, Notification, $location) {
+var myApp = angular.module('jobs');
+(function (app) {
+    app.controller('JobsFindController', function ($scope, Authentication, JobsService, $uibModal, Notification, $location) {
         $scope.jobs = [];
         $scope.applicationsForUser = [];
         $scope.applicationJobIds = [];
@@ -49,6 +42,7 @@ angular
         };
 
         $scope.popJobDetail = (job) => {
+            console.log(job);
             var modalInstance = $uibModal.open({
                 templateUrl: '/modules/jobs/client/views/jobs-detail.client.view.html',
                 controller: 'JobsDetailController',
@@ -103,5 +97,5 @@ angular
             var root = $location.protocol() + "://" + $location.host() + ":" + $location.port();
             return root + replaceAll(imageUrl, "\\", '\/');
         };
-    }
-}());
+    });
+})(myApp);
