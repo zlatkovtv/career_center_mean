@@ -219,6 +219,10 @@ textarea {
     #button-container {
         float: none;
     }
+
+    .required-alert {
+        display: none;
+    }
 }
 
 .inline {

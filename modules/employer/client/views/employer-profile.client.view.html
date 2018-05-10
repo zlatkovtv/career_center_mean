@@ -62,7 +62,7 @@
             </h1>
         </div>
         <div class="student-wizard-navigation">
-            <div class="alert alert-info" style="margin-bottom: 0px;">
+            <div class="alert alert-info required-alert" style="margin-bottom: 0px;">
                 Fields with
                 <span class="glyphicon glyphicon-asterisk text-danger"></span>
                 are required in order to continue.
@@ -74,45 +74,47 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-body justify-center">
-                <div class="col-xs-12 col-sm-6">
-                    <div class="form-group">
-                        <label>Company name</label>
-                        <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="company-name" ng-model="user.employerMetadata.companyName"
-                            required>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label>Company name</label>
+                            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                            <input ng-change="validateCurrentForm()" type="text" class="form-control" name="company-name" ng-model="user.employerMetadata.companyName"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label>Company website</label>
+                            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                            <input ng-change="validateCurrentForm()" type="text" class="form-control" name="company-website" ng-model="user.employerMetadata.companyWebsite"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label>Company email</label>
+                            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                            <input ng-change="validateCurrentForm()" type="text" class="form-control" name="company-email" ng-model="user.email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Company phone</label>
+                            <span class="glyphicon glyphicon-asterisk text-danger"></span>
+                            <input ng-change="validateCurrentForm()" type="text" class="form-control" name="email" ng-model="user.employerMetadata.companyPhone"
+                                required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Company website</label>
-                        <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="company-website" ng-model="user.employerMetadata.companyWebsite"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label>Company email</label>
-                        <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="company-email" ng-model="user.email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Company phone</label>
-                        <span class="glyphicon glyphicon-asterisk text-danger"></span>
-                        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="email" ng-model="user.employerMetadata.companyPhone"
-                            required>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6">
-                    <div class="form-group">
-                        <label for="picture" style="margin-left:25%;">Company picture</label>
-                        <div>
-                            <div class="form-group text-center">
-                                <img ngf-src="fileSelected ? files.picFile : user.profileImageURL" alt="{{user.employerMetadata.displayName}}" class="img-thumbnail user-profile-picture"
-                                    ngf-drop>
-                            </div>
-                            <div ng-show="loading" class="form-group text-center">
-                                <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading image...">
-                            </div>
-                            <div class="text-center form-group">
-                                <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="files.picFile"
-                                    accept="image/*" ngf-before-model-change="loading = true" ngf-resize="{width: 400}" ngf-resize-if="$width > 400 || $height > 400">Select Picture</button>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="picture" style="margin-left:25%;">Company picture</label>
+                            <div>
+                                <div class="form-group text-center">
+                                    <img ngf-src="fileSelected ? files.picFile : user.profileImageURL" alt="{{user.employerMetadata.displayName}}" class="img-thumbnail user-profile-picture"
+                                        ngf-drop>
+                                </div>
+                                <div ng-show="loading" class="form-group text-center">
+                                    <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading image...">
+                                </div>
+                                <div class="text-center form-group">
+                                    <button class="btn btn-default btn-file" ngf-select="(fileSelected = true) && (loading = false)" ng-model="files.picFile"
+                                        accept="image/*" ngf-before-model-change="loading = true" ngf-resize="{width: 400}" ngf-resize-if="$width > 400 || $height > 400">Select Picture</button>
+                                </div>
                             </div>
                         </div>
                     </div>
