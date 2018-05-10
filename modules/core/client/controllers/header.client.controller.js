@@ -12,7 +12,7 @@
 
     vm.accountMenu = menuService.getMenu('account').items[0];
     vm.inboxMenu = menuService.getMenu('inbox');
-    console.log(vm.inboxMenu);
+    console.log(vm.authentication);
     vm.authentication = Authentication;
     vm.isCollapsed = false;
     vm.menu = menuService.getMenu('topbar');

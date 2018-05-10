@@ -79,7 +79,7 @@ a:hover .header-profile-image {
     background-size: cover;
     background-position: center;
     height: 500px;
-    padding: 200px 0;
+    padding: 100px 0;
 }
 
 textarea {
@@ -205,4 +205,12 @@ textarea {
     position: absolute;
     top: 200px;
     left: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+    #header-container {
+        position: unset;
+        margin: 0 auto;
+        display: inline-block
+    }
 }
