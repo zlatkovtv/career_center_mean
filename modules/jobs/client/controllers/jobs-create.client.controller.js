@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-    .module('jobs')
-    .controller('JobsCreateController', JobsCreateController);
+        .module('jobs')
+        .controller('JobsCreateController', JobsCreateController);
 
     JobsCreateController.$inject = ['$scope', 'JobsService', 'Notification', 'Authentication', '$uibModal', '$location'];
 
@@ -12,33 +12,33 @@
 
         $scope.canEditCompanyFields = false;
         $scope.jobTypes =
-        {
-            'fulltime': 'Full-time',
-            'parttime': 'Part-time',
-            'internship': 'Internship'
-        };
+            {
+                'fulltime': 'Full-time',
+                'parttime': 'Part-time',
+                'internship': 'Internship'
+            };
         $scope.jobCategories =
-        {
-            "business": "Business",
-            "it": "IT",
-            "tourism": "Travel and tourism",
-            "hr": "Human resources",
-            "cooking": "Cooking",
-            "delivery": "Delivery",
-            "architecture": "Architecture",
-            "design": "Design/Creative/Animation",
-            "education": "Teacher/professor/educator",
-            "production": "Production",
-            "media": "Media/news",
-            "financial": "Financial",
-            "law": "Law"
-        };
+            {
+                "business": "Business",
+                "it": "IT",
+                "tourism": "Travel and tourism",
+                "hr": "Human resources",
+                "cooking": "Cooking",
+                "delivery": "Delivery",
+                "architecture": "Architecture",
+                "design": "Design/Creative/Animation",
+                "education": "Teacher/professor/educator",
+                "production": "Production",
+                "media": "Media/news",
+                "financial": "Financial",
+                "law": "Law"
+            };
         $scope.jobLevels =
-        {
-            'management': 'Management level',
-            'specialist': 'Specialist level',
-            'worker': 'Worker level'
-        };
+            {
+                'management': 'Management level',
+                'specialist': 'Specialist level',
+                'worker': 'Worker level'
+            };
 
         $scope.verifyEmployerProfileCompleted = () => {
             if (!$scope.employer.employerMetadata.companyName || !$scope.employer.employerMetadata.companyWebsite || !$scope.employer.employerMetadata.companyPhone) {
@@ -70,8 +70,10 @@
         $scope.isObjectValid = (inputObj) => {
             for (var property in inputObj) {
                 if (inputObj.hasOwnProperty(property)) {
-                    if (!inputObj[property]) {
-                        return false;
+                    if(property !== 'isPremium') {
+                        if (!inputObj[property]) {
+                            return false;
+                        }
                     }
                 }
             }
@@ -84,6 +86,8 @@
                 Notification.error({ title: 'Empty fields', message: '<i class="glyphicon glyphicon-remove"></i> Please fill out all fields before proceeding!', delay: 3000 });
                 return;
             }
+
+            console.log($scope.job);
 
             var jobsService = new JobsService($scope.job);
 
@@ -107,16 +111,24 @@
                 companyEmail: $scope.employer.email,
                 companyPhone: $scope.employer.employerMetadata.companyPhone,
                 requirements: null,
-                responsibilities: null,
-                isPremium: ($scope.employer.premium !== null)
+                responsibilities: null
             };
+
+            $('#premium-toggle').change();
         };
 
         $scope.verifyEmployerProfileCompleted();
         $scope.createInitialJobObject();
 
-        if(!$scope.employer.premium) {
+        $('#premium-toggle').change(function () {
+            $scope.job.isPremium = $(this).prop('checked')
+        });
+
+        if (!$scope.employer.premium) {
             $('#premium-toggle').bootstrapToggle('disable');
+            $('#premium-toggle').prop('checked', false).change();
+        } else {
+            $('#premium-toggle').prop('checked', true).change();
         }
     }
 }());

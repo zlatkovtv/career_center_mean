@@ -81,7 +81,6 @@ var myApp = angular.module('jobs');
 
         $scope.$on('$viewContentLoaded', function () {
             $scope.jobs = JobsService.getJobs();
-            console.log($scope.jobs);
             $scope.getApplications();
         });
 
