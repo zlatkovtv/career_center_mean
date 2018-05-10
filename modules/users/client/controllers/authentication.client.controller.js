@@ -19,7 +19,7 @@
                 icon: 'glyphicon-book'
             },
             {
-                title: 'Faculty member',
+                title: 'Professor',
                 value: 'faculty',
                 templateUrl: '/modules/templates/client/views/faculty-signup.client.template.html',
                 icon: 'glyphicon-education'
@@ -121,7 +121,7 @@
         };
 
         vm.print = () => {
-                console.log(vm.facultyForm);
+            console.log(vm.facultyForm);
         };
     }
 }());
