@@ -211,6 +211,16 @@ textarea {
     #header-container {
         position: unset;
         margin: 0 auto;
-        display: inline-block
+        display: inline-block;
+        width: 250px;
+    }
+
+    #button-container {
+        float: none;
     }
 }
+
+.inline {
+    display: inline;
+}
+
