@@ -9,7 +9,8 @@
 
     function FacultyService($resource) {
         var Users = $resource('/api/faculty', {
-            classId: '@classId'
+            classId: '@classId',
+            enrolmentId: '@enrolmentId'
         },
         {
             update: {
@@ -36,6 +37,10 @@
                 method: 'GET',
                 url: '/api/faculty/class/:classId',
                 isArray: true
+            },
+            getTranscript: {
+                method: 'GET',
+                url: '/api/faculty/transcript/:enrolmentId'
             },
             saveStudentTranscript: {
                 method: 'POST',

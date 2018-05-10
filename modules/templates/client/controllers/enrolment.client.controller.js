@@ -35,7 +35,7 @@
         $scope.addToClass = (student) => {
             FacultyService.addUserToClass({ classId: $scope.facultyClass._id }, student, function (response) {
                 $scope.getAllStudents();
-                Notification.success({ title: '<i class="glyphicon glyphicon-remove"></i>Success', message: 'Added ' + student.displayName + ' to the class!' });
+                Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i>Success', message: 'Added ' + student.displayName + ' to the class!' });
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve classes for some reason!' });
             });
@@ -71,27 +71,38 @@
                 return enrolment.student === student._id;
             })[0]._id;
 
-            $scope.transcriptModalInstance = $uibModal.open({
-                templateUrl: '/modules/templates/client/views/transcript-input.client.modal.html',
-                controller: 'TranscriptInputController',
-                resolve: {
-                    grade: null
-                }
+            console.log($scope.selectedStudentTranscript.enrolment);
+            $scope.selectedStudentTranscript.grade = FacultyService.getTranscript({ enrolmentId: $scope.selectedStudentTranscript.enrolment }, {}, function (response) {
+                $scope.selectedStudentTranscript.grade = response.grade;
+
+                popTranscriptModal();
+            }, function (response) {
+                Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve grade for some reason!' });
             });
 
-            $scope.transcriptModalInstance.result.then(function (result) {
-                if (!result) {
-                    return;
-                }
-
-                $scope.selectedStudentTranscript.grade = result;
-                FacultyService.saveStudentTranscript({}, $scope.selectedStudentTranscript, function (response) {
-                    Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i>Success', message: 'Saved grade for ' + student.displayName + '!' });
-                }, function (response) {
-                    Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not save grade for some reason!' });
+            function popTranscriptModal() {
+                $scope.transcriptModalInstance = $uibModal.open({
+                    templateUrl: '/modules/templates/client/views/transcript-input.client.modal.html',
+                    controller: 'TranscriptInputController',
+                    resolve: {
+                        grade: $scope.selectedStudentTranscript.grade
+                    }
                 });
-            }, function () {
-            });
+    
+                $scope.transcriptModalInstance.result.then(function (result) {
+                    if (!result) {
+                        return;
+                    }
+    
+                    $scope.selectedStudentTranscript.grade = result;
+                    FacultyService.saveStudentTranscript({}, $scope.selectedStudentTranscript, function (response) {
+                        Notification.success({ title: '<i class="glyphicon glyphicon-ok"></i>Success', message: 'Saved grade for ' + student.displayName + '!' });
+                    }, function (response) {
+                        Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not save grade for some reason!' });
+                    });
+                }, function () {
+                });
+            }
         };
 
         $scope.getAllStudents();

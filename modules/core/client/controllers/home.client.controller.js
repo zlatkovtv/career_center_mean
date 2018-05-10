@@ -5,9 +5,11 @@
 		.module('core')
 		.controller('HomeController', HomeController);
 
-	HomeController.$inject = ['$scope'];
+	HomeController.$inject = ['$scope', 'Authentication'];
 
-	function HomeController($scope) {
+	function HomeController($scope, Authentication) {
+		$scope.user = Authentication.user;
+		console.log($scope.user);
 		$scope.author = "Konstantin Zlatkov";
 		$scope.authorText = `I am a student of Technical University of Sofia and this the application that serves as my dissertation. It's goal is to more easily connect students, faculty members
 		and employers into one single platform in which every side can exchange information about one another and engage in possible employment.`;

@@ -91,10 +91,24 @@ exports.getEnrolments = function (req, res) {
     });
 };
 
+exports.getStudentTranscript = function (req, res) {
+    var enrolmentId = req.params.enrolmentId;
+
+    Transcript.findOne({ 'enrolment': enrolmentId }).exec(function (err, transcript) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(transcript);
+        }
+    });
+
+};
+
 exports.saveStudentTranscript = function (req, res) {
     var transcript = new Transcript(req.body);
-
-    transcript.save(function (err, tr) {
+    Transcript.update({ enrolment: transcript.enrolment }, req.body, { upsert: true }, function (err, tr) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)

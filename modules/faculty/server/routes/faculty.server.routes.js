@@ -17,8 +17,11 @@ module.exports = function (app) {
     .post(facultyController.addUserToClass)
     .delete(facultyController.deleteClass);
 
-    app.route('/api/faculty/transcript')
+    app.route('/api/faculty/transcript/')
     .post(facultyController.saveStudentTranscript);
+
+    app.route('/api/faculty/transcript/:enrolmentId')
+    .get(facultyController.getStudentTranscript)
 
     app.route('/api/faculty/report')
     .get(facultyController.generatePdfReportForStudent);
