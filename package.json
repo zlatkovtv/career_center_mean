@@ -11,8 +11,8 @@
     "url": "https://github.com/zlatkovtv/career_center_mean"
   },
   "engines": {
-    "node": "9.2.0",
-    "npm": "6.0.0"
+    "node": ">=8.0.0",
+    "npm": ">=5.0.0"
   },
   "scripts": {
     "update": "npm update && npm prune && npm run bower",
