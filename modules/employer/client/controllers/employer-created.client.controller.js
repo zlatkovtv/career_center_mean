@@ -61,7 +61,7 @@
         };
 
         $scope.getJobs = () => {
-            $scope.jobs = JobsService.getJobsByUserId({}, { 'companyName': $scope.user.employerMetadata.companyName }, function (response) {
+            $scope.jobs = JobsService.getJobsByUserId({}, { 'userId': $scope.user._id }, function (response) {
                 $scope.jobs = response;
                 console.log($scope.jobs);
             }, function (response) {

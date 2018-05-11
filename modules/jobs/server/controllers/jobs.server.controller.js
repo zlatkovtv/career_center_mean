@@ -29,8 +29,8 @@ exports.create = function (req, res) {
 };
 
 exports.getJobsByUserId = function (req, res) {
-    var companyName = req.body.companyName;
-    Job.find({ 'companyName': companyName }).populate('user').exec(function (err, jobs) {
+    var userId = req.body.userId;
+    Job.find({ 'user': userId }).populate('user').exec(function (err, jobs) {
         if (err) {
             return res.status(422).send({
                 message: errorHandler.getErrorMessage(err)

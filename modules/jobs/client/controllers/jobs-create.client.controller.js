@@ -9,7 +9,7 @@
 
     function JobsCreateController($scope, JobsService, Notification, Authentication, $uibModal, $location) {
         $scope.employer = Authentication.user;
-
+        $scope.freeLimit = 3;
         $scope.canEditCompanyFields = false;
         $scope.jobTypes =
             {
@@ -70,7 +70,7 @@
         $scope.isObjectValid = (inputObj) => {
             for (var property in inputObj) {
                 if (inputObj.hasOwnProperty(property)) {
-                    if(property !== 'isPremium') {
+                    if (property !== 'isPremium') {
                         if (!inputObj[property]) {
                             return false;
                         }
@@ -81,13 +81,36 @@
             return true;
         };
 
-        $scope.postJob = () => {
+        function handleLimit() {
+            var modalInstance = $uibModal.open({
+                templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
+                controller: 'ConfirmController',
+                resolve: {
+                    options: {
+                        title: 'Please upgrade to Premium if you would like to post more than ' + $scope.freeLimit + ' job advertisements. Otherwise you should delete other ads.',
+                        yes: 'Yes, go there now!',
+                        yesColor: 'success',
+                        no: 'No, continue with free',
+                        noColor: 'primary'
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (data) {
+                if (!data) {
+                    return;
+                }
+
+                $location.url('/employer/profile');
+            }, function () {
+            });
+        }
+
+        function completeJobPost() {
             if (!$scope.isObjectValid($scope.job)) {
                 Notification.error({ title: 'Empty fields', message: '<i class="glyphicon glyphicon-remove"></i> Please fill out all fields before proceeding!', delay: 3000 });
                 return;
             }
-
-            console.log($scope.job);
 
             var jobsService = new JobsService($scope.job);
 
@@ -97,7 +120,26 @@
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Job creation failed for some reason!' });
             });
+        }
 
+        $scope.postJob = () => {
+            if (!$scope.employer.premium) {
+                $scope.jobs = JobsService.getJobsByUserId({}, { 'userId': $scope.employer._id }, function (response) {
+                    $scope.jobs = response;
+                    var isLimitHit = ($scope.jobs.length >= $scope.freeLimit);
+                    if (isLimitHit) {
+                        handleLimit();
+                        return;
+                    }
+
+                    completeJobPost();
+                }, function (response) {
+                    Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Error!' });
+                });
+
+            } else {
+                completeJobPost();
+            }
         };
 
         $scope.createInitialJobObject = () => {

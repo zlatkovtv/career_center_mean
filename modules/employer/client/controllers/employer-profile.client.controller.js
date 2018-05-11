@@ -82,10 +82,7 @@
 						});
 					},
 					onCancel: function(data) {
-						//showPayPalCanceledModal();
-						savePremium(function() {
-							showPayPalSuccessModal();
-						});
+						showPayPalCanceledModal();
 					}
 			
 				}, '#paypal-button');
