@@ -25,26 +25,26 @@
         </div>
 
         <div class="panel panel-default">
-                <table tr-ng-grid="" fields="['title', 'companyName', 'category', 'type']" items="jobs" page-items="10">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <button class="btn btn-primary" ng-click="popJobDetail(jobs[jobs.indexOf(gridItem)])">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </td>
-                            <td>
-                                <button class="btn btn-primary" ng-click="applyForJob(jobs[jobs.indexOf(gridItem)])" ng-hide="hasUserAppliedForJob(jobs[jobs.indexOf(gridItem)])">
-                                    Apply
-                                </button>
-                                <button class="btn btn-success" ng-disabled="true" ng-show="hasUserAppliedForJob(jobs[jobs.indexOf(gridItem)])">
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                    Applied
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <table tr-ng-grid="" fields="['title', 'companyName', 'category', 'type']" items="jobs" page-items="10">
+                <tbody>
+                    <tr>
+                        <td>
+                            <button class="btn btn-primary" ng-click="popJobDetail(jobs[jobs.indexOf(gridItem)])">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="applyForJob(jobs[jobs.indexOf(gridItem)])" ng-hide="hasUserAppliedForJob(jobs[jobs.indexOf(gridItem)])">
+                                Apply
+                            </button>
+                            <button class="btn btn-success" ng-disabled="true" ng-show="hasUserAppliedForJob(jobs[jobs.indexOf(gridItem)])">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                Applied
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 </div>

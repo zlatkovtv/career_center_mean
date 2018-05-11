@@ -4,15 +4,15 @@
 * Module dependencies
 */
 var path = require('path'),
-_ = require('lodash'),
-fs = require('fs'),
-mongoose = require('mongoose'),
-FacultyClass = mongoose.model('FacultyClass'),
-ClassEnrolment = mongoose.model('ClassEnrolment'),
-Transcript = mongoose.model('Transcript'),
-User = mongoose.model('User'),
-PDFDocument = require('pdfkit'),
-errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+    _ = require('lodash'),
+    fs = require('fs'),
+    mongoose = require('mongoose'),
+    FacultyClass = mongoose.model('FacultyClass'),
+    ClassEnrolment = mongoose.model('ClassEnrolment'),
+    Transcript = mongoose.model('Transcript'),
+    User = mongoose.model('User'),
+    PDFDocument = require('pdfkit'),
+    errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
 * Create an article
@@ -95,17 +95,27 @@ exports.getStudentTranscriptsByStudentId = function (req, res) {
     var studentId = req.params.studentId;
 
     Transcript.find({})
-    .populate('enrolment')
-    .populate('enrolment.class')
-    .exec(function (err, transcripts) {
-        if (err) {
-            return res.status(422).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.json(transcripts);
-        }
-    });
+        .populate({
+            path: 'enrolment',
+            model: 'ClassEnrolment',
+            populate: {
+                path: 'class',
+                model: 'FacultyClass',
+            }
+        })
+        .exec(function (err, transcripts) {
+            if (err) {
+                return res.status(422).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                transcripts = transcripts.filter(function (doc) {
+                    return doc.enrolment.student.equals(new mongoose.Types.ObjectId(studentId));
+                });
+
+                res.json(transcripts);
+            }
+        });
 };
 
 exports.getStudentTranscriptByEnrolmentId = function (req, res) {
@@ -154,7 +164,7 @@ exports.generatePdfReportForStudent = function (req, res) {
             return obj.enrolment.student.equals(studentId);
         });
 
-        if(!mongoRes || mongoRes.length === 0) {
+        if (!mongoRes || mongoRes.length === 0) {
             res.status(204);
         }
 

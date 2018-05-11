@@ -3,12 +3,28 @@
         <h1><small>Here you can generate a pdf transcript including all grades of your enrolled classes</small></h1>
     </div>
 
-    <div class="panel panel-default" style="margin:130px;">
-        <div class="panel-body">
-            <button class="btn btn-primary" ng-click="generateTranscriptPdf()">
-                <span class="glyphicon glyphicon-file"></span>
-                Download transcript .pdf
-            </button>
+    <div class="col-xs-12 col-sm-2">
+        <button class="btn btn-primary" ng-click="generateTranscriptPdf()">
+            <span class="glyphicon glyphicon-file"></span>
+            Export to PDF
+        </button>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Select which transcripts to include in the exported document
+            </div>
+            <div class="panel-body">
+                <table tr-ng-grid="" fields="['enrolment.class.department', 'enrolment.class.subjectName', 'grade']" items="transcripts" page-items="10">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="checkbox" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
