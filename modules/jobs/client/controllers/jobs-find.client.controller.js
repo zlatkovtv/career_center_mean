@@ -41,6 +41,16 @@ var myApp = angular.module('jobs');
             });
         };
 
+        $scope.areAnyJobsPremium = function() {
+            $scope.jobs.forEach(job => {
+                if(job.isPremium) {
+                    return true;
+                }
+            });
+
+            return false;
+        };
+
         $scope.popJobDetail = (job) => {
             console.log(job);
             var modalInstance = $uibModal.open({

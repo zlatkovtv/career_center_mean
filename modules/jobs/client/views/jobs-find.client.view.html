@@ -3,7 +3,7 @@
     <div class="page-header alert alert-info" ng-show="jobs.length === 0">There are no ads at this moment. Please check back later.</div>
 
     <section ng-show="jobs.length > 0" id="main-container">
-        <uib-accordion close-others="oneAtATime">
+        <uib-accordion close-others="oneAtATime" ng-show="areAnyJobsPremium();">
             <div uib-accordion-group class="panel-default panel-white" heading="Featured" is-open="true">
                 <div id="featured-job-carousel">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="job in jobs | filter:{isPremium: true} | limitTo:4">
