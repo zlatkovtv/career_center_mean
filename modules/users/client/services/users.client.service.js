@@ -9,13 +9,19 @@
 	UsersService.$inject = ['$resource'];
 
 	function UsersService($resource) {
-		var Users = $resource('/api/users', {}, {
+		var Users = $resource('/api/users', {
+			userId: '@userId'
+		}, {
 			update: {
 				method: 'PUT'
 			},
 			savePremium: {
 				method: 'POST',
-				url: '/api/users/savePremium'
+				url: '/api/users/premium'
+			},
+			cancelPremium: {
+				method: 'DELETE',
+				url: '/api/users/premium/:userId'
 			},
 			updatePassword: {
 				method: 'POST',

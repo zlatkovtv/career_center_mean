@@ -14,7 +14,10 @@ module.exports = function (app) {
   app.route('/api/users/picture').post(users.changeProfilePicture);
   app.route('/api/users').put(users.update);
   app.route('/api/users/students').get(users.getAllStudents);
-  app.route('/api/users/savePremium').post(users.savePremium);
+  app.route('/api/users/premium')
+  .post(users.savePremium)
+  app.route('/api/users/premium/:userId')
+  .delete(users.cancelPremium);
   app.use(multipartyMiddleware).route('/api/users/files').post(users.uploadFilesForUser);
 
   // Finish by binding the user middleware

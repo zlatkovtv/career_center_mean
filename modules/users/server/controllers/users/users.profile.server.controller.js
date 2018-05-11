@@ -110,7 +110,6 @@ exports.savePremium = function (req, res) {
 		} else {
 			User.update({ _id: user._id }, user, function (err, returnedUser) {
 				if (err) {
-					console.log(err);
 					return res.status(422).send({
 						message: errorHandler.getErrorMessage(err)
 					});
@@ -124,7 +123,29 @@ exports.savePremium = function (req, res) {
 			});
 		}
     });
-}
+};
+
+exports.cancelPremium = function(req, res) {
+	var userId = req.params.userId;
+	User.update({ _id: userId }, {$set: {premium: null}}, function (err, returnedUser) {
+		if (err) {
+			console.log(err);
+			return res.status(422).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			Premium.remove({ "userId": userId }, function(err) {
+				if (err) {
+					return res.status(422).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.json(returnedUser);
+				}
+			});
+		}
+	});
+};
 
 function getNow() {
 	var today = new Date();

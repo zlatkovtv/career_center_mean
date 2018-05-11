@@ -5,9 +5,9 @@
 		.module('employer')
 		.controller('EmployerProfileController', EmployerProfileController);
 
-	EmployerProfileController.$inject = ['$scope', 'Notification', 'UsersService', 'Authentication', 'Upload', '$uibModal'];
+	EmployerProfileController.$inject = ['$scope', 'Notification', 'UsersService', 'Authentication', 'Upload', '$uibModal','$window'];
 
-	function EmployerProfileController($scope, Notification, UsersService, Authentication, Upload, $uibModal) {
+	function EmployerProfileController($scope, Notification, UsersService, Authentication, Upload, $uibModal, $window) {
 		$scope.user = Authentication.user;
 		console.log($scope.user);
 		$scope.premiumPaymentAmount = 9.99;
@@ -127,9 +127,56 @@
 			
 			$scope.user = UsersService.savePremium({}, $scope.user, function (response) {
 				$scope.user = response;
-				console.log($scope.user);
 				showSuccessModal();
             }, function (response) {
+            });
+		}
+
+		function showPremiumCanceledModal() {
+			var modalInstance = $uibModal.open({
+				templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
+				controller: 'ConfirmController',
+				resolve: {
+					options: {
+						title: 'Your Premium account has been canceled and you are now running a free account. We hope you will reconsider in the future as we would love to have you back!',
+						no: 'Close',
+						noColor: 'primary'
+					}
+				}
+			});
+
+			modalInstance.result.then(function (data) {
+				$window.location.reload();
+            }, function () {
+            });
+		}
+
+		$scope.cancelPremium = function() {
+			var modalInstance = $uibModal.open({
+				templateUrl: '/modules/templates/client/views/confirm.client.modal.html',
+				controller: 'ConfirmController',
+				resolve: {
+					options: {
+						title: 'Are you sure you want to cancel Premium? We sure are going to miss you.',
+						yes: 'Yes, cancel',
+						yesColor: 'danger',
+						no: 'No, continue with Premium',
+						noColor: 'primary'
+					}
+				}
+			});
+
+			modalInstance.result.then(function (data) {
+				if(!data) {
+					return;
+				}
+
+				UsersService.cancelPremium({ userId: $scope.user._id }, {}, function (response) {
+					$scope.user.premium = null;
+					showPremiumCanceledModal();
+				}, function (response) {
+				});
+            }, function () {
             });
 		}
 
