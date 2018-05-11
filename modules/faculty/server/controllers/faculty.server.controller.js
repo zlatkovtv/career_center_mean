@@ -91,7 +91,24 @@ exports.getEnrolments = function (req, res) {
     });
 };
 
-exports.getStudentTranscript = function (req, res) {
+exports.getStudentTranscriptsByStudentId = function (req, res) {
+    var studentId = req.params.studentId;
+
+    Transcript.find({})
+    .populate('enrolment')
+    .populate('enrolment.class')
+    .exec(function (err, transcripts) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(transcripts);
+        }
+    });
+};
+
+exports.getStudentTranscriptByEnrolmentId = function (req, res) {
     var enrolmentId = req.params.enrolmentId;
 
     Transcript.findOne({ 'enrolment': enrolmentId }).exec(function (err, transcript) {
@@ -136,6 +153,10 @@ exports.generatePdfReportForStudent = function (req, res) {
         mongoRes = mongoRes.filter(function (obj) {
             return obj.enrolment.student.equals(studentId);
         });
+
+        if(!mongoRes || mongoRes.length === 0) {
+            res.status(204);
+        }
 
         generatePdfTranscript(mongoRes, req, res);
     });

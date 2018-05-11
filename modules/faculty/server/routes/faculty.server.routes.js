@@ -21,7 +21,10 @@ module.exports = function (app) {
     .post(facultyController.saveStudentTranscript);
 
     app.route('/api/faculty/transcript/:enrolmentId')
-    .get(facultyController.getStudentTranscript)
+    .get(facultyController.getStudentTranscriptByEnrolmentId)
+
+    app.route('/api/faculty/transcript/:studentId')
+    .post(facultyController.getStudentTranscriptsByStudentId)
 
     app.route('/api/faculty/report')
     .get(facultyController.generatePdfReportForStudent);

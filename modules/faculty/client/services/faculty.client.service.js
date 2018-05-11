@@ -10,7 +10,8 @@
     function FacultyService($resource) {
         var Users = $resource('/api/faculty', {
             classId: '@classId',
-            enrolmentId: '@enrolmentId'
+            enrolmentId: '@enrolmentId',
+            studentId: '@studentId'
         },
         {
             update: {
@@ -38,9 +39,14 @@
                 url: '/api/faculty/class/:classId',
                 isArray: true
             },
-            getTranscript: {
+            getTranscriptByEnrolmentId: {
                 method: 'GET',
                 url: '/api/faculty/transcript/:enrolmentId'
+            },
+            getTranscriptsByStudentId: {
+                method: 'POST',
+                url: '/api/faculty/transcript/:studentId',
+                isArray: true
             },
             saveStudentTranscript: {
                 method: 'POST',
@@ -50,9 +56,10 @@
                 method: 'GET',
                 url: '/api/faculty/report',
                 responseType: 'arraybuffer',
-                transformResponse: function (data, headersGetter) {
+                transformResponse: function (data, headersGetter, statusCode) {
                     return {
-                        data: data
+                        data: data,
+                        statusCode: statusCode
                     };
                 }
             }

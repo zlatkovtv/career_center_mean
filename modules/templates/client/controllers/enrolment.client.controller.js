@@ -71,8 +71,7 @@
                 return enrolment.student === student._id;
             })[0]._id;
 
-            console.log($scope.selectedStudentTranscript.enrolment);
-            $scope.selectedStudentTranscript.grade = FacultyService.getTranscript({ enrolmentId: $scope.selectedStudentTranscript.enrolment }, {}, function (response) {
+            $scope.selectedStudentTranscript.grade = FacultyService.getTranscriptByEnrolmentId({ enrolmentId: $scope.selectedStudentTranscript.enrolment }, {}, function (response) {
                 $scope.selectedStudentTranscript.grade = response.grade;
 
                 popTranscriptModal();
