@@ -95,15 +95,15 @@ exports.update = function (req, res) {
 exports.getUserById = function (req, res) {
 	var userId = req.params.userId;
 	User.findOne({ _id: userId }).select('-salt -password').deepPopulate('studentMetadata.cv studentMetadata.motivation studentMetadata.recommendation studentMetadata.additionalDocument facultyMetadata employerMetadata premium')
-	.exec(function (err, user) {
-		if (err) {
-			return res.status(422).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.json(user);
-		}
-	});
+		.exec(function (err, user) {
+			if (err) {
+				return res.status(422).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.json(user);
+			}
+		});
 }
 
 exports.savePremium = function (req, res) {
@@ -117,7 +117,7 @@ exports.savePremium = function (req, res) {
 	user.premium = premium._id;
 
 	premium.save(function (err, returnedPremium) {
-        if (err) {
+		if (err) {
 			return res.status(422).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -136,19 +136,19 @@ exports.savePremium = function (req, res) {
 				}
 			});
 		}
-    });
+	});
 };
 
-exports.cancelPremium = function(req, res) {
+exports.cancelPremium = function (req, res) {
 	var userId = req.params.userId;
-	User.update({ _id: userId }, {$set: {premium: null}}, function (err, returnedUser) {
+	User.update({ _id: userId }, { $set: { premium: null } }, function (err, returnedUser) {
 		if (err) {
 			console.log(err);
 			return res.status(422).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			Premium.remove({ "userId": userId }, function(err) {
+			Premium.remove({ "userId": userId }, function (err) {
 				if (err) {
 					return res.status(422).send({
 						message: errorHandler.getErrorMessage(err)
@@ -204,6 +204,31 @@ exports.uploadFilesForUser = function (req, res) {
 
 exports.downloadFileById = function (req, res) {
 	var fileId = req.params.fileId;
+
+	gfs.findOne({ _id: fileId }, function (err, file) {
+		if (err) {
+			return res.status(422).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			if (!file) {
+				return;
+			}
+
+			res.set('Content-Type', file.contentType);
+			res.set('Content-Disposition', 'attachment; filename="' + file.filename + '"');
+
+			var readstream = gfs.createReadStream({
+				_id: fileId
+			});
+
+			readstream.on("error", function (err) {
+				res.end();
+			});
+
+			readstream.pipe(res);
+		}
+	});
 };
 
 /**

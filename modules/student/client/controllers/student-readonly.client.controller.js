@@ -5,9 +5,9 @@
     .module('student')
     .controller('StudentReadonlyController', StudentReadonlyController);
 
-    StudentReadonlyController.$inject = ['$scope', '$timeout', 'Authentication', 'Upload', '$location', 'Notification', 'UsersService', '$stateParams'];
+    StudentReadonlyController.$inject = ['$scope', '$timeout', 'Authentication', 'Upload', '$location', 'Notification', 'UsersService', '$stateParams', '$sce'];
 
-    function StudentReadonlyController($scope, $timeout, Authentication, Upload, $location, Notification, UsersService, $stateParams) {
+    function StudentReadonlyController($scope, $timeout, Authentication, Upload, $location, Notification, UsersService, $stateParams, $sce) {
         $scope.progressLabel = "Profile information";
         $scope.user = UsersService.getUser({ userId: $stateParams.userId }, {}, function(response) {
             $scope.user = response;
@@ -19,6 +19,7 @@
             }
 
             $scope.report = UsersService.downloadFileById({ fileId: file._id}, {}, function (response) {
+                console.log(response);
                 var file = new Blob([response.data], { type: 'application/pdf' });
                 var fileUrl = window.URL.createObjectURL(file);
                 $scope.report = $sce.trustAsResourceUrl(fileUrl);
