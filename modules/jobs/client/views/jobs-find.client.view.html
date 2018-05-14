@@ -25,7 +25,17 @@
         </div>
 
         <div class="panel panel-default">
-            <table tr-ng-grid="" fields="['title', 'companyName', 'category', 'type']" items="jobs" page-items="10">
+            <table tr-ng-grid="" items="jobs" page-items="10">
+                <thead>
+                    <tr>
+                        <th enable-filtering="false" enable-sorting="false" cell-width="5em"></th>
+                        <th enable-filtering="false" enable-sorting="false" cell-width="5em"></th>
+                        <th field-name="title"></th>
+                        <th field-name="companyName"></th>
+                        <th field-name="category"></th>
+                        <th field-name="type"></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td>
@@ -42,6 +52,18 @@
                                 Applied
                             </button>
                         </td>
+                    </tr>
+                    <tr>
+                        <td field-name="title"></td>
+                    </tr>
+                    <tr>
+                        <td field-name="companyName"></td>
+                    </tr>
+                    <tr>
+                        <td field-name="category"></td>
+                    </tr>
+                    <tr>
+                        <td field-name="type"></td>
                     </tr>
                 </tbody>
             </table>

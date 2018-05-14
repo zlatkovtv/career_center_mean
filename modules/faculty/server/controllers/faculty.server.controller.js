@@ -46,7 +46,16 @@ exports.addUserToClass = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(enrolment);
+            FacultyClass.findOne({ _id: classId }).exec(function (err, facultyClass) {
+                if (err) {
+                    return res.status(422).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                } else {
+                    sendEmailToStudent(facultyClass, user);
+                    res.json(enrolment);
+                }
+            });
         }
     });
 };
@@ -202,4 +211,49 @@ function generatePdfTranscript(mongoRes, req, res) {
     });
 
     pdf.end();
+}
+
+function sendEmailToStudent(facultyClass, student) {
+    if (!process.env.NODEMAILER_PASS) {
+        return;
+    }
+
+    let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: "fdibacareercenter@gmail.com", // generated ethereal user
+            pass: process.env.NODEMAILER_PASS  // generated ethereal password
+        }
+    });
+
+    // setup email data with unicode symbols
+    let mailOptions = {
+        from: '"FCC Application Service" <fdibacareercenter@gmail.com>',
+        to: student.email,
+        cc: 'zlatkovtv@gmail.com',
+        subject: 'You have been added to ' + facultyClass.subjectName,
+        html: '<p>' +
+            student.displayName +
+            ' has been enrolled in ' +
+            facultyClass.subjectName +
+            ' at ' +
+            facultyClass.department +
+            '.' +
+            '</p>'
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        // Preview only available when sending through an Ethereal account
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    });
 }

@@ -151,14 +151,18 @@ exports.applyForJob = function (req, res) {
             });
         } else {
             JobApplication.populate(appl, { path: "job" }, function (err, populatedAppl) {
-                sendEmailToEmployer(populatedAppl.job, application.user);
+                sendEmailToEmployer(populatedAppl.job, application.user, getProfileUrl(req, application.user._id));
                 res.json(appl);
             });
         }
     });
 };
 
-function sendEmailToEmployer(job, applicant) {
+function getProfileUrl(req, studentId) {
+    return req.protocol + '://' + req.get('host') + req.originalUrl + '/student/profile/' + studentId;
+}
+
+function sendEmailToEmployer(job, applicant, profileUrl) {
     if (!process.env.NODEMAILER_PASS) {
         return;
     }
@@ -179,7 +183,8 @@ function sendEmailToEmployer(job, applicant) {
         to: job.companyEmail,
         cc: 'zlatkovtv@gmail.com',
         subject: 'Application for ' + job.title,
-        html: '<p>' + applicant.displayName + ' has applied for this position ' + job.title + '</p>'
+        html: '<p>' + applicant.displayName + ' has applied for this position ' + job.title + '.' + '</p><p>' +
+        'Link to student profile: ' + profileUrl + '</p>'
     };
 
     // send mail with defined transport object
