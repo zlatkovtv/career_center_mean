@@ -215,9 +215,6 @@ exports.downloadFileById = function (req, res) {
 				return;
 			}
 
-			res.set('Content-Type', file.contentType);
-			res.set('Content-Disposition', 'attachment; filename="' + file.filename + '"');
-
 			var readstream = gfs.createReadStream({
 				_id: fileId
 			});

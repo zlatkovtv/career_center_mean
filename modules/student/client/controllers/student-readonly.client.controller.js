@@ -13,13 +13,12 @@
             $scope.user = response;
         });
 
-        $scope.downloadFile = function(file) {
-            if(!file) {
+        $scope.downloadFile = function(inputFile) {
+            if(!inputFile) {
                 return;
             }
 
-            $scope.report = UsersService.downloadFileById({ fileId: file._id}, {}, function (response) {
-                console.log(response);
+            $scope.report = UsersService.downloadFileById({ fileId: inputFile._id}, {}, function (response) {
                 var file = new Blob([response.data], { type: 'application/pdf' });
                 var fileUrl = window.URL.createObjectURL(file);
                 $scope.report = $sce.trustAsResourceUrl(fileUrl);
@@ -27,7 +26,7 @@
                 document.body.appendChild(a);
                 a.style = "display: none";
                 a.href = fileUrl;
-                a.download = file.filename;
+                a.download = inputFile.filename;
                 a.click();
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not download file!' });
