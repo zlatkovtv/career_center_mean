@@ -53,7 +53,7 @@
                 url: '/api/faculty/transcript'
             },
             generateTranscriptPdf: {
-                method: 'GET',
+                method: 'POST',
                 url: '/api/faculty/report',
                 responseType: 'arraybuffer',
                 transformResponse: function (data, headersGetter, statusCode) {

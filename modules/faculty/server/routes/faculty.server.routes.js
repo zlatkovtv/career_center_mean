@@ -27,7 +27,7 @@ module.exports = function (app) {
     .post(facultyController.getStudentTranscriptsByStudentId)
 
     app.route('/api/faculty/report')
-    .get(facultyController.generatePdfReportForStudent);
+    .post(facultyController.generatePdfReportForStudent);
 
     // app.param('jobId', facultyController.jobByID);
 };

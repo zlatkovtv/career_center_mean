@@ -147,6 +147,7 @@ exports.saveStudentTranscript = function (req, res) {
 };
 
 exports.generatePdfReportForStudent = function (req, res) {
+    var selectedTranscriptIds = req.body.map(a => a._id);
     var studentId = req.user._id;
     Transcript.find().populate({
         path: 'enrolment',
@@ -161,7 +162,7 @@ exports.generatePdfReportForStudent = function (req, res) {
         }
 
         mongoRes = mongoRes.filter(function (obj) {
-            return obj.enrolment.student.equals(studentId);
+            return obj.enrolment.student.equals(studentId) && selectedTranscriptIds.indexOf(obj._id.toString()) > -1;
         });
 
         if (!mongoRes || mongoRes.length === 0) {

@@ -9,6 +9,8 @@
 
     function StudentReportsController($scope, Authentication, FacultyService, Notification, $sce, $uibModal) {
         $scope.user = Authentication.user;
+        $scope.selectedGrades = [];
+
         $scope.getTranscriptsForStudent = function() {
             $scope.transcripts = FacultyService.getTranscriptsByStudentId({ studentId: $scope.user._id }, {}, function (response) {
                 $scope.transcripts = response;
@@ -17,10 +19,19 @@
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve grade for some reason!' });
             });
         }
+        
+        $scope.onGradeSelect = function(grade) {
+            var index =  $scope.selectedGrades.indexOf(grade);
+            if (index > -1) {
+                $scope.selectedGrades.splice(index, 1);
+            } else {
+                $scope.selectedGrades.push(grade);
+            }
+        }
 
         $scope.generateTranscriptPdf = () => {
             $scope.report = {};
-            $scope.report = FacultyService.generateTranscriptPdf(function (response) {
+            $scope.report = FacultyService.generateTranscriptPdf({}, $scope.selectedGrades, function (response) {
                 if(response.statusCode === 204) {
                     var modalInstance = $uibModal.open({
                         templateUrl: '/modules/templates/client/views/confirm.client.modal.html',

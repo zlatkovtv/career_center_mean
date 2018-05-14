@@ -1,10 +1,12 @@
 <section class="container">
     <div class="page-header">
-        <h1><small>Here you can generate a pdf transcript including all grades of your enrolled classes</small></h1>
+        <h1>
+            <small>Here you can generate a pdf transcript including all grades of your enrolled classes</small>
+        </h1>
     </div>
 
     <div class="col-xs-12 col-sm-2">
-        <button class="btn btn-primary" ng-click="generateTranscriptPdf()">
+        <button class="btn btn-primary" ng-click="generateTranscriptPdf()" ng-disabled="selectedGrades.length <= 0">
             <span class="glyphicon glyphicon-file"></span>
             Export to PDF
         </button>
@@ -15,12 +17,29 @@
                 Select which transcripts to include in the exported document
             </div>
             <div class="panel-body">
-                <table tr-ng-grid="" fields="['enrolment.class.department', 'enrolment.class.subjectName', 'grade']" items="transcripts" page-items="10">
+                <table tr-ng-grid="" items="transcripts" page-items="10">
+                    <thead>
+                        <tr>
+                            <th enable-filtering="false" enable-sorting="false" cell-width="2em"></th>
+                            <th field-name="enrolment.class.department"></th>
+                            <th field-name="enrolment.class.subjectName"></th>
+                            <th field-name="grade"></th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <input type="checkbox" />
+                                <input type="checkbox" ng-click="onGradeSelect(transcripts[transcripts.indexOf(gridItem)])" />
                             </td>
+                        </tr>
+                        <tr>
+                            <td field-name="enrolment.class.department"></td>
+                        </tr>
+                        <tr>
+                            <td field-name="enrolment.class.subjectName"></td>
+                        </tr>
+                        <tr>
+                            <td field-name="grade"></td>
                         </tr>
                     </tbody>
                 </table>
