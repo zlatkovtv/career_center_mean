@@ -150,7 +150,7 @@ exports.applyForJob = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            JobApplication.populate(appl, { path: "job" }, function (err, populatedAppl) {
+            JobApplication.populate(appl, [{ path: "job" }, {path: "user"}], function (err, populatedAppl) {
                 sendEmailToEmployer(populatedAppl.job, application.user, getProfileUrl(req, application.user._id));
                 res.json(appl);
             });
@@ -159,7 +159,7 @@ exports.applyForJob = function (req, res) {
 };
 
 function getProfileUrl(req, studentId) {
-    return req.protocol + '://' + req.get('host') + req.originalUrl + '/student/profile/' + studentId;
+    return req.protocol + '://' + req.get('host') + '/student/profile/' + studentId;
 }
 
 function sendEmailToEmployer(job, applicant, profileUrl) {

@@ -1,4 +1,4 @@
-<section class="container">
+<section class="container" ng-show="transcripts && transcripts.length > 0">
     <div class="page-header">
         <h1>
             <small>Here you can generate a pdf transcript including all grades of your enrolled classes</small>
@@ -45,5 +45,12 @@
                 </table>
             </div>
         </div>
+    </div>
+</section>
+<section class="container" ng-show="!transcripts || transcripts.length === 0">
+    <div class="page-header">
+        <h1>
+            <small>You have not been enrolled in any classes yet. Contact your professors and check back later.</small>
+        </h1>
     </div>
 </section>

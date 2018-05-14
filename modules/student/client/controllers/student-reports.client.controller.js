@@ -14,7 +14,6 @@
         $scope.getTranscriptsForStudent = function() {
             $scope.transcripts = FacultyService.getTranscriptsByStudentId({ studentId: $scope.user._id }, {}, function (response) {
                 $scope.transcripts = response;
-                console.log($scope.transcripts);
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve grade for some reason!' });
             });

@@ -6,6 +6,7 @@ var myApp = angular.module('jobs');
         $scope.applicationJobIds = [];
         $scope.user = Authentication.user;
         $scope.oneAtATime = true;
+        $scope.areAnyJobsPremium = false;
 
         if ($scope.user.roles.indexOf('student') !== -1 && !$scope.user.studentMetadata.isPersonalProfileCompleted) {
             var modalInstance = $uibModal.open({
@@ -39,16 +40,6 @@ var myApp = angular.module('jobs');
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve classes for some reason!' });
             });
-        };
-
-        $scope.areAnyJobsPremium = function() {
-            $scope.jobs.forEach(job => {
-                if(job.isPremium) {
-                    return true;
-                }
-            });
-
-            return false;
         };
 
         $scope.popJobDetail = (job) => {
@@ -90,7 +81,16 @@ var myApp = angular.module('jobs');
         };
 
         $scope.$on('$viewContentLoaded', function () {
-            $scope.jobs = JobsService.getJobs();
+            $scope.jobs = JobsService.getJobs(function(response) {
+                $scope.jobs.forEach(job => {
+                    if(job.isPremium) {
+                        $scope.areAnyJobsPremium = true;
+                        return;
+                    }
+                });
+            }, function(response) {
+
+            });
             $scope.getApplications();
         });
 
