@@ -23,6 +23,15 @@
                 roles: ['student', 'admin']
             }
         })
+        .state('student.profile-readonly', {
+            url: '/profile/:userId',
+            templateUrl: '/modules/student/client/views/student-readonly.client.view.html',
+            controller: 'StudentReadonlyController',
+            controllerAs: 'vm',
+            data: {
+                roles: ['employer', 'admin']
+            }
+        })
         .state('student.reports', {
             url: '/reports',
             templateUrl: '/modules/student/client/views/student-reports.client.view.html',

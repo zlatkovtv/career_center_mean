@@ -10,8 +10,13 @@
 
 	function UsersService($resource) {
 		var Users = $resource('/api/users', {
-			userId: '@userId'
+			userId: '@userId',
+			fileId: '@fileId'
 		}, {
+			getUser: {
+				method: 'GET',
+				url: '/api/users/:userId'
+			},
 			update: {
 				method: 'PUT'
 			},
@@ -59,6 +64,17 @@
 				method: 'POST',
 				url: '/api/users/files',
 				isArray: true
+			},
+			downloadFileById: {
+				method: 'GET',
+				url: '/api/users/files/:fileId',
+				responseType: 'arraybuffer',
+                transformResponse: function (data, headersGetter, statusCode) {
+                    return {
+                        data: data,
+                        statusCode: statusCode
+                    };
+                }
 			}
 		});
 

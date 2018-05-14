@@ -92,6 +92,20 @@ exports.update = function (req, res) {
 	});
 };
 
+exports.getUserById = function (req, res) {
+	var userId = req.params.userId;
+	User.findOne({ _id: userId }).select('-salt -password').deepPopulate('studentMetadata.cv studentMetadata.motivation studentMetadata.recommendation studentMetadata.additionalDocument facultyMetadata employerMetadata premium')
+	.exec(function (err, user) {
+		if (err) {
+			return res.status(422).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(user);
+		}
+	});
+}
+
 exports.savePremium = function (req, res) {
 	var user = new User(req.body);
 	var premium = new Premium({
@@ -186,6 +200,10 @@ exports.uploadFilesForUser = function (req, res) {
 			console.log('success!');
 		});
 	});
+};
+
+exports.downloadFileById = function (req, res) {
+	var fileId = req.params.fileId;
 };
 
 /**
