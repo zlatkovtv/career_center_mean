@@ -25,6 +25,10 @@ body {
     }
 }
 
+.content .container {
+    padding-top: 20px;
+}
+
 .navbar {
     padding: 0px 30px;
 }
@@ -79,8 +83,12 @@ a:hover .header-profile-image {
     background: url(https://cdn2.hubspot.net/hubfs/330046/2017_Images/Backgrounds/pool-desk-bg-1.jpg?t=1511213327691);
     background-size: cover;
     background-position: center;
-    height: 500px;
+    height: 100%;
     padding: 100px 0;
+}
+
+#home-image-container {
+    height: calc(100vh - 45px);
 }
 
 textarea {

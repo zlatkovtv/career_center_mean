@@ -22,6 +22,6 @@ select[multiple] {
   display: inline-block;
 }
 
-h4 {
+#student-profile-accordion h4 {
   display: inline-block;
 }

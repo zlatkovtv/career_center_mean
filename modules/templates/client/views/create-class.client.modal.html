@@ -12,6 +12,10 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="createClass()" style="float:left;">Create</button>
+    <button class="btn btn-primary" 
+    type="button" 
+    ng-click="createClass()" 
+    style="float:left;" 
+    ng-disabled="!class.department || !class.subjectName">Create</button>
     <button class="btn btn-primary" type="button" ng-click="close()">Cancel</button>
 </div>

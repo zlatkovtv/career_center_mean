@@ -28,7 +28,7 @@
                 $scope.enrolments = response;
                 $scope.enroledStudentIds = $scope.enrolments.map(entry => entry.student);
             }, function (response) {
-                Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve classes for some reason!' });
+                Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve enrollments for some reason!' });
             });
         };
 
