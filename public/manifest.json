@@ -2,7 +2,7 @@
   "name": "FDIBA Career Center",
   "short_name": "FDIBA Career Center",
   "start_url": ".",
-  "display": "standalone",
+  "display": "browser",
   "background_color": "#fff",
   "theme_color": "#008cba",
   "description": "Fullstack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
