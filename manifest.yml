@@ -4,7 +4,7 @@ declared-services:
     label: mongodb
     plan: 100
 applications:
-- name: mean
+- name: FDIBA Career Center
   host: mean-${random-word}
   memory: 128M
   services:
