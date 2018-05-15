@@ -1,0 +1,8 @@
+{
+    "name": "FDIBA Career Center",
+    "short_name": "FCC",
+    "start_url": ".",
+    "display": "fullscreen",
+    "background_color": "#fff",
+    "description": "A simply readable Hacker News app."
+  }
