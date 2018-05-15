@@ -15,5 +15,4 @@ This is a coursework developed with the MEAN stack, SMTP and other technologies.
 
 # TODOS
 
-1. Passwords are lost after profile update
-2. progress directive on login
+1. progress directive on login

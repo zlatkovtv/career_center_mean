@@ -44,51 +44,56 @@ var gfs = new Gridfs(db, mongoDriver);
 */
 exports.update = function (req, res) {
 	var user = new User(req.body);
-	var metadata = null;
-	var metadataModel = null;
-	switch (user.roles[0]) {
-		case 'student':
-			metadata = new StudentMetadata(req.body.studentMetadata);
-			metadataModel = StudentMetadata;
-			user.displayName = metadata.firstName + ' ' + metadata.lastName;
-			user.studentMetadata = metadata._id;
-			break;
-		case 'faculty':
-			metadata = new FacultyMetadata(req.body.facultyMetadata);
-			metadataModel = FacultyMetadata;
-			user.displayName = metadata.firstName + ' ' + metadata.lastName;
-			user.facultyMetadata = metadata._id;
-			break;
-		case 'employer':
-			metadata = new EmployerMetadata(req.body.employerMetadata);
-			metadataModel = EmployerMetadata;
-			user.displayName = metadata.companyName;
-			user.employerMetadata = metadata._id;
-			break;
-		default:
-	}
+	User.findOne({ _id: req.body._id }, function (err, item) {
+		//retain user hashed password
+		user.password = item.password;
 
-	metadataModel.update({ _id: metadata._id }, metadata, function (err, returnedMetadata) {
-		if (err) {
-			return res.status(422).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			User.update({ _id: user._id }, user, function (err, returnedUser) {
-				if (err) {
-					console.log(err);
-					return res.status(422).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				} else {
-					user.password = undefined;
-					user.salt = undefined;
-
-					user[user.roles[0] + 'Metadata'] = metadata;
-					res.json(user);
-				}
-			});
+		var metadata = null;
+		var metadataModel = null;
+		switch (user.roles[0]) {
+			case 'student':
+				metadata = new StudentMetadata(req.body.studentMetadata);
+				metadataModel = StudentMetadata;
+				user.displayName = metadata.firstName + ' ' + metadata.lastName;
+				user.studentMetadata = metadata._id;
+				break;
+			case 'faculty':
+				metadata = new FacultyMetadata(req.body.facultyMetadata);
+				metadataModel = FacultyMetadata;
+				user.displayName = metadata.firstName + ' ' + metadata.lastName;
+				user.facultyMetadata = metadata._id;
+				break;
+			case 'employer':
+				metadata = new EmployerMetadata(req.body.employerMetadata);
+				metadataModel = EmployerMetadata;
+				user.displayName = metadata.companyName;
+				user.employerMetadata = metadata._id;
+				break;
+			default:
 		}
+
+		metadataModel.update({ _id: metadata._id }, metadata, function (err, returnedMetadata) {
+			if (err) {
+				return res.status(422).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				User.update({ _id: user._id }, user, function (err, returnedUser) {
+					if (err) {
+						console.log(err);
+						return res.status(422).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						user.password = undefined;
+						user.salt = undefined;
+
+						user[user.roles[0] + 'Metadata'] = metadata;
+						res.json(user);
+					}
+				});
+			}
+		});
 	});
 };
 
