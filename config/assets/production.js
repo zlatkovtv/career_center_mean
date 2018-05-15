@@ -27,6 +27,12 @@ module.exports = {
         // endbower
       ]
     },
+    img: [
+      'modules/**/*/img/**/*.jpg',
+      'modules/**/*/img/**/*.png',
+      'modules/**/*/img/**/*.gif',
+      'modules/**/*/img/**/*.svg'
+    ],
     css: 'public/dist/application*.min.css',
     js: 'public/dist/application*.min.js'
   }
