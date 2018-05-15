@@ -24,6 +24,9 @@ var _ = require('lodash'),
   del = require('del'),
   semver = require('semver');
 
+  let babel = require('gulp-babel');
+  let uglify = require('gulp-uglify');
+
 // Local settings
 var changedTestFiles = [];
 
@@ -145,9 +148,11 @@ gulp.task('uglify', function () {
 
   return gulp.src(assets)
     .pipe(plugins.ngAnnotate())
-    .pipe(plugins.uglify({
-      mangle: true
-    }).on('error', function (err) {
+    .pipe(babel({
+      presets: ['env']
+    }))
+    .pipe(plugins.uglify()
+    .on('error', function (err) {
       console.log('Uglify error : ', err.toString());
     }))
     .pipe(plugins.concat('application.min.js'))
@@ -480,7 +485,7 @@ gulp.task('test:coverage', function (done) {
 
 // Run the project in development mode with node debugger enabled
 gulp.task('default', function (done) {
-  runSequence('env:dev', ['copyLocalEnvConfig', 'makeUploadsDir'], 'lint', ['nodemon', 'watch'], done);
+  runSequence('env:dev', ['copyLocalEnvConfig', 'makeUploadsDir'], 'lint', 'build', ['nodemon', 'watch'], done);
 });
 
 // Run the project in production mode

@@ -7,7 +7,7 @@ module.exports = {
     lib: {
       css: [
         // bower:css
-        'public/lib/bootstrap/dist/css/bootstrap.css',
+        'public/lib/bootstrap/dist/css/bootstrap.min.css',
         'public/lib/angular-ui-notification/dist/angular-ui-notification.css',
         'public/lib/tr-ng-grid/trNgGrid.min.css',
         'public/lib/bootstrap-toggle/css/bootstrap-toggle.min.css'
@@ -15,7 +15,7 @@ module.exports = {
       ],
       js: [
         // bower:js
-        'public/lib/angular/angular.js',
+        'public/lib/angular/angular.min.js',
         'public/lib/angular-animate/angular-animate.js',
         'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
         'public/lib/jquery/dist/jquery.min.js',
