@@ -17,3 +17,11 @@ select[multiple] {
 .full-width {
   width: 100% !important;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
+h4 {
+  display: inline-block;
+}
