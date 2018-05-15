@@ -1,10 +1,10 @@
 {
-  "name": "meanjs",
-  "short_name": "meanjs",
+  "name": "FDIBA Career Center",
+  "short_name": "FDIBA Career Center",
   "start_url": ".",
-  "display": "browser",
+  "display": "fullscreen",
   "background_color": "#fff",
-  "theme_color": "#000",
+  "theme_color": "#008cba",
   "description": "Fullstack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
   "icons": [{
     "src": "/modules/core/client/img/brand/icon.png",
