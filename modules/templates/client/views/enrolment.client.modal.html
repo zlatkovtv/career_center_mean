@@ -5,7 +5,7 @@
     <ul class="list-group">
       <li class="list-group-item" ng-repeat="student in allStudents | filter:enrolled">
           <button class="btn btn-success btn-sm" ng-click="showTranscriptContainer(student)">
-              <span class="glyphicon glyphicon-paste"></span>
+              <span class="glyphicon glyphicon-paste"></span> Grade
           </button>
           {{student.displayName}}
       </li>
@@ -17,7 +17,7 @@
     <ul class="list-group">
       <li class="list-group-item" ng-repeat="student in allStudents | filter:nonEnrolled">
           <button class="btn btn-primary btn-sm" ng-click="addToClass(student)">
-              <span class="glyphicon glyphicon-plus"></span>
+              <span class="glyphicon glyphicon-plus"></span> Add
           </button>
           {{student.displayName}}
       </li>

@@ -14,7 +14,7 @@ module.exports = function (app) {
   app.route('/api/users/password').post(users.changePassword);
   app.route('/api/users/picture').post(users.changeProfilePicture);
   app.route('/api/users').put(users.update);
-  app.route('/api/users/students').get(users.getAllStudents);
+  app.route('/api/users/students').post(users.getAllStudents);
   app.route('/api/users/premium')
   .post(users.savePremium)
   app.route('/api/users/premium/:userId')

@@ -56,7 +56,7 @@
 				url: '/api/auth/signin'
 			},
 			getAllStudents: {
-				method: 'GET',
+				method: 'POST',
 				url: '/api/users/students',
 				isArray: true
 			},
