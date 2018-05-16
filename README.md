@@ -16,4 +16,3 @@ This is a coursework developed with the MEAN stack, SMTP and other technologies.
 # TODOS
 
 1. progress directive on login
-2. sign in doesnt return metadatas like sign up

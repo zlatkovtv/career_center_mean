@@ -92,12 +92,36 @@ exports.signin = function (req, res, next) {
                 if (err) {
                     res.status(400).send(err);
                 } else {
-                    res.json(user);
+                    var metadata = getMetadataType(user.roles[0]);
+                    metadata.findOne({ _id: user[user.roles[0] + 'Metadata'] }).exec(function (err, returnedMetadata) {
+                        if (err) {
+                            return res.status(422).send({
+                                message: errorHandler.getErrorMessage(err)
+                            });
+                        } else {
+                            user[user.roles[0] + 'Metadata'] = returnedMetadata;
+                            res.json(user);
+                        }
+                    });
                 }
             });
         }
     })(req, res, next);
 };
+
+function getMetadataType(userType) {
+    if(userType === 'student') {
+        return StudentMetadata;
+    }
+
+    if(userType === 'faculty') {
+        return FacultyMetadata;
+    }
+
+    if(userType === 'employer') {
+        return EmployerMetadata;
+    }
+}
 
 exports.signout = function (req, res) {
     req.logout();

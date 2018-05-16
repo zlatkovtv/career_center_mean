@@ -124,7 +124,6 @@
                         text: 'Top skills of students'
                     },
                     scales: {
-                       
                         xAxes: [{
                           ticks: {
                             beginAtZero: true
