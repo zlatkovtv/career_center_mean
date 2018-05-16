@@ -87,6 +87,20 @@ exports.deleteClass = function (req, res) {
 };
 
 exports.getEnrolments = function (req, res) {
+    ClassEnrolment.find()
+    .populate('class')
+    .exec(function (err, enrolments) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(enrolments);
+        }
+    });
+};
+
+exports.getEnrolmentsByClassId = function (req, res) {
     var classId = req.params.classId;
 
     ClassEnrolment.find({ 'class': classId }).exec(function (err, enrolments) {

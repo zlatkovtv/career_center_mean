@@ -10,10 +10,11 @@ module.exports = function (app) {
     .get(facultyController.getClassesForUser);
 
     app.route('/api/faculty/class')
+    .get(facultyController.getEnrolments)
     .post(facultyController.createClass);
 
     app.route('/api/faculty/class/:classId')
-    .get(facultyController.getEnrolments)
+    .get(facultyController.getEnrolmentsByClassId)
     .post(facultyController.addUserToClass)
     .delete(facultyController.deleteClass);
 

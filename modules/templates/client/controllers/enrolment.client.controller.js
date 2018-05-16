@@ -24,7 +24,7 @@
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve classes for some reason!' });
             });
 
-            $scope.enrolments = FacultyService.getEnrolments({ classId: $scope.facultyClass._id }, {}, function (response) {
+            $scope.enrolments = FacultyService.getEnrolmentsByClassId({ classId: $scope.facultyClass._id }, {}, function (response) {
                 $scope.enrolments = response;
                 $scope.enroledStudentIds = $scope.enrolments.map(entry => entry.student);
             }, function (response) {

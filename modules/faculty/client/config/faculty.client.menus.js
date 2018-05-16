@@ -10,10 +10,17 @@
   function menuConfig(menuService) {
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
-      title: 'Manage classes',
-      state: 'faculty',
-      roles: ['faculty'],
+      title: 'Statistics',
+      state: 'faculty.statistics',
+      roles: ['faculty', 'admin'],
       position: 1
+    });
+
+    menuService.addMenuItem('topbar', {
+      title: 'Manage classes',
+      state: 'faculty.manage',
+      roles: ['faculty', 'admin'],
+      position: 2
     });
   }
 }());

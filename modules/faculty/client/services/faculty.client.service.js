@@ -36,6 +36,11 @@
             },
             getEnrolments: {
                 method: 'GET',
+                url: '/api/faculty/class/',
+                isArray: true
+            },
+            getEnrolmentsByClassId: {
+                method: 'GET',
                 url: '/api/faculty/class/:classId',
                 isArray: true
             },
