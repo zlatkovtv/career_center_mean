@@ -7,7 +7,7 @@
 
     FacultyStatisticsController.$inject = ['$scope', '$state', 'Authentication', '$uibModal', 'UsersService', 'FacultyService', 'Notification'];
 
-    function FacultyStatisticsController($scope, $state, Authentication, $uibModal, UsersService, FacultyService,  Notification) {
+    function FacultyStatisticsController($scope, $state, Authentication, $uibModal, UsersService, FacultyService, Notification) {
         $scope.getAllStudents = () => {
             $scope.allStudents = UsersService.getAllStudents(function (response) {
                 $scope.allStudents = response;
@@ -30,7 +30,7 @@
             var count = 1;
             $scope.enrolments.forEach(enr => {
                 var subjectName = enr.class.subjectName;
-                if(!enrollmentData[subjectName]) {
+                if (!enrollmentData[subjectName]) {
                     count = 1;
                 } else {
                     count++;
@@ -38,6 +38,19 @@
 
                 enrollmentData[subjectName] = count;
             });
+
+            var bgColors = [];
+
+            var dynamicColors = function () {
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgba(" + r + "," + g + "," + b + ", 0.3)";
+            };
+
+            for (var i in enrollmentData) {
+                bgColors.push(dynamicColors());
+            }
 
             var ctx = document.getElementById("enrollment-chart").getContext('2d');
             var myChart = new Chart(ctx, {
@@ -47,14 +60,7 @@
                     datasets: [{
                         label: 'Students enrolled',
                         data: Object.values(enrollmentData),
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
+                        backgroundColor: bgColors,
                         borderColor: [
                             'rgba(255,99,132,1)',
                             'rgba(54, 162, 235, 1)',
@@ -85,15 +91,28 @@
                 var allSkills = techSkills.concat(softSkills);
 
                 allSkills.forEach(skill => {
-                    if(!skillData[skill]) {
+                    if (!skillData[skill]) {
                         count = 1;
                     } else {
                         count++;
                     }
-    
+
                     skillData[skill] = count;
                 });
             });
+
+            var bgColors = [];
+
+            var dynamicColors = function () {
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgba(" + r + "," + g + "," + b + ", 0.3)";
+            };
+
+            for (var i in skillData) {
+                bgColors.push(dynamicColors());
+            }
 
             var ctx = document.getElementById("student-chart").getContext('2d');
             var myChart = new Chart(ctx, {
@@ -103,18 +122,7 @@
                     datasets: [{
                         label: 'Number of students',
                         data: Object.values(skillData),
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)'
-                        ]
+                        backgroundColor: bgColors
                     }]
                 },
                 options: {
@@ -125,9 +133,9 @@
                     },
                     scales: {
                         xAxes: [{
-                          ticks: {
-                            beginAtZero: true
-                          }
+                            ticks: {
+                                beginAtZero: true
+                            }
                         }]
                     }
                 }
