@@ -89,11 +89,9 @@
         // Authentication Callbacks
 
         function onUserSignupSuccess(response) {
-            // If successful we assign the response to the global user model
             vm.authentication.user = response;
             Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Signup successful!' });
-            // And redirect to the previous or home page
-            $state.go($state.previous.state.name || 'home', $state.previous.params);
+            redirectAfterSignin(vm.authentication.user.roles[0]);
         }
 
         function onUserSignupError(response) {
@@ -101,12 +99,26 @@
         }
 
         function onUserSigninSuccess(response) {
-            // If successful we assign the response to the global user model
-            console.log(response);
             vm.authentication.user = response;
             Notification.info({ message: 'Welcome ' + response.displayName + '!' });
-            // And redirect to the previous or home page
-            $state.go($state.previous.state.name || 'home', $state.previous.params);
+            redirectAfterSignin(vm.authentication.user.roles[0]);
+        }
+
+        function redirectAfterSignin(userType) {
+            if(userType === 'student') {
+                $state.go('jobs.find', $state.previous.params);
+                return;
+            }
+
+            if(userType === 'faculty') {
+                $state.go('faculty.statistics', $state.previous.params);
+                return;
+            }
+
+            if(userType === 'employer') {
+                $state.go('jobs.create', $state.previous.params);
+                return;
+            }
         }
 
         function onUserSigninError(response) {
