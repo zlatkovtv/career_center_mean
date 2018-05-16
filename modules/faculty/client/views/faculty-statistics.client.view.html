@@ -1,13 +1,13 @@
 <!-- The chat view -->
-<section id="main-chart-container" class="container" ng-show="allStudents || enrolments">
+<section id="main-chart-container" class="container" ng-show="allStudents.length !== 0 || enrolments.length !== 0">
     <div id="enrollment-chart-container" class="chart-container col-xs-12 col-sm-6">
-        <canvas id="enrollment-chart" width="200" height="200" ng-show="enrolments"></canvas>
+        <canvas id="enrollment-chart" width="200" height="200" ng-show="enrolments.length !== 0"></canvas>
     </div>
 
     <div id="student-chart-container" class="chart-container col-xs-12 col-sm-6">
-        <canvas id="student-chart" width="200" height="200" ng-show="allStudents"></canvas>
+        <canvas id="student-chart" width="200" height="200" ng-show="allStudents.length !== 0"></canvas>
     </div>
 </section>
-<section class="container" ng-show="!allStudents && !enrolments">
+<section class="container" ng-show="allStudents.length === 0 && enrolments.length === 0">
     <div class="page-header alert alert-info">There is currently no data to show. Please check back later.</div>
 </section>
