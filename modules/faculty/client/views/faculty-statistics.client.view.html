@@ -1,5 +1,5 @@
 <!-- The chat view -->
-<section id="main-chart-container" class="container">
+<section id="main-chart-container" class="container" ng-show="allStudents || enrolments">
     <div id="enrollment-chart-container" class="chart-container col-xs-12 col-sm-6">
         <canvas id="enrollment-chart" width="200" height="200"></canvas>
     </div>
@@ -7,4 +7,7 @@
     <div id="student-chart-container" class="chart-container col-xs-12 col-sm-6">
         <canvas id="student-chart" width="200" height="200"></canvas>
     </div>
+</section>
+<section class="container" ng-show="!allStudents && !enrolments">
+    <div class="page-header alert alert-info">There is currently no data to show. Please check back later.</div>
 </section>

@@ -78,8 +78,8 @@
         $scope.initiateStudentChart = function () {
             var skillData = {};
 
-            var count = 1;
             $scope.allStudents.forEach(student => {
+                var count = 1;
                 var techSkills = student.studentMetadata.techSkills;
                 var softSkills = student.studentMetadata.softSkills;
                 var allSkills = techSkills.concat(softSkills);
