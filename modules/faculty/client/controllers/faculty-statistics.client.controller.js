@@ -22,6 +22,13 @@
             }, function (response) {
                 Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve enrollments for some reason!' });
             });
+
+            $scope.grades = FacultyService.getStudentTranscripts(function (response) {
+                $scope.grades = response;
+                $scope.initiateGradeChart();
+            }, function (response) {
+                Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Could not retrieve enrollments for some reason!' });
+            });
         };
 
         $scope.initiateEnrollmentChart = function () {
@@ -130,6 +137,71 @@
                     title: {
                         display: true,
                         text: 'Top skills of students'
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        $scope.initiateGradeChart = function () {
+            var gradesData = {};
+
+            var count = 1;
+            $scope.grades.forEach(grade => {
+                var grade = grade.grade;
+                if (!gradesData[grade]) {
+                    count = 1;
+                } else {
+                    count++;
+                }
+
+                gradesData[grade] = count;
+            });
+
+            var bgColors = [];
+
+            var dynamicColors = function () {
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgba(" + r + "," + g + "," + b + ", 0.3)";
+            };
+
+            for (var i in gradesData) {
+                bgColors.push(dynamicColors());
+            }
+
+            var ctx = document.getElementById("grade-chart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'horizontalBar',
+                data: {
+                    labels: Object.keys(gradesData),
+                    datasets: [{
+                        label: 'Students with this grade',
+                        data: Object.values(gradesData),
+                        backgroundColor: bgColors,
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Grades of students'
                     },
                     scales: {
                         xAxes: [{

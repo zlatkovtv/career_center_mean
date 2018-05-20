@@ -44,6 +44,11 @@
                 url: '/api/faculty/class/:classId',
                 isArray: true
             },
+            getStudentTranscripts: {
+                method: 'GET',
+                url: '/api/faculty/transcript',
+                isArray: true
+            },
             getTranscriptByEnrolmentId: {
                 method: 'GET',
                 url: '/api/faculty/transcript/:enrolmentId'

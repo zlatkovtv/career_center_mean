@@ -156,6 +156,18 @@ exports.getStudentTranscriptByEnrolmentId = function (req, res) {
 
 };
 
+exports.getStudentTranscripts = function (req, res) {
+    Transcript.find().exec(function (err, transcripts) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(transcripts);
+        }
+    });
+};
+
 exports.saveStudentTranscript = function (req, res) {
     var transcript = new Transcript(req.body);
     Transcript.update({ enrolment: transcript.enrolment }, req.body, { upsert: true }, function (err, tr) {

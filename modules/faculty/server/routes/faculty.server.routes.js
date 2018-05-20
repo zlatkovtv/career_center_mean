@@ -19,6 +19,7 @@ module.exports = function (app) {
     .delete(facultyController.deleteClass);
 
     app.route('/api/faculty/transcript/')
+    .get(facultyController.getStudentTranscripts)
     .post(facultyController.saveStudentTranscript);
 
     app.route('/api/faculty/transcript/:enrolmentId')
