@@ -3,14 +3,14 @@
     <fieldset>
         <div class="form-group" show-errors>
             <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" class="form-control" ng-model="vm.credentials.firstName" placeholder="First Name" required autofocus>
+            <input type="text" id="facultyFirstName" name="firstName" class="form-control" ng-model="vm.credentials.firstName" placeholder="First Name" required autofocus>
             <div ng-messages="vm.facultyForm.firstName.$error" role="alert">
                 <p class="help-block error-text" ng-message="required">First name is required.</p>
             </div>
         </div>
         <div class="form-group" show-errors>
             <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" class="form-control" ng-model="vm.credentials.lastName" placeholder="Last Name" required>
+            <input type="text" id="facultyLastName" name="lastName" class="form-control" ng-model="vm.credentials.lastName" placeholder="Last Name" required>
             <div ng-messages="vm.facultyForm.lastName.$error" role="alert">
                 <p class="help-block error-text" ng-message="required">Last name is required.</p>
             </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="form-group" show-errors>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" ng-model="vm.credentials.email" placeholder="Email" required>
+            <input type="email" id="facultyEmail" name="email" class="form-control" ng-model="vm.credentials.email" placeholder="Email" required>
             <div ng-messages="vm.facultyForm.email.$error" role="alert">
                 <p class="help-block error-text" ng-message="required">Email address is required.</p>
                 <p class="help-block error-text" ng-message="email">Email address is invalid.</p>
@@ -32,7 +32,7 @@
         </div>
         <div class="form-group" show-errors>
             <label for="password">Password</label>
-            <input type="password" id="password" ng-change="vm.print()" name="password" class="form-control" ng-model="vm.credentials.password" placeholder="Password" uib-popover="{{vm.getPopoverMsg()}}" popover-trigger="outsideClick" password-validator required>
+            <input type="password" id="facultyPassword" ng-change="vm.print()" name="password" class="form-control" ng-model="vm.credentials.password" placeholder="Password" uib-popover="{{vm.getPopoverMsg()}}" popover-trigger="focus" password-validator required>
             <div ng-messages="vm.facultyForm.password.$error" role="alert">
                 <p class="help-block error-text" ng-message="required">Password is required.</p>
                 <div ng-repeat="passwordError in passwordErrors">
