@@ -72,6 +72,17 @@
                         statusCode: statusCode
                     };
                 }
+            },
+            generateAllTranscriptPdf: {
+                method: 'PUT',
+                url: '/api/faculty/report',
+                responseType: 'arraybuffer',
+                transformResponse: function (data, headersGetter, statusCode) {
+                    return {
+                        data: data,
+                        statusCode: statusCode
+                    };
+                }
             }
         });
 

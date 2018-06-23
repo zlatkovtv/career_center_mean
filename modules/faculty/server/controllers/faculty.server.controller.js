@@ -208,6 +208,32 @@ exports.generatePdfReportForStudent = function (req, res) {
     });
 };
 
+exports.generateAllPdfReportForStudent = function (req, res) {
+    var studentId = req.user._id;
+    Transcript.find().populate({
+        path: 'enrolment',
+        populate: {
+            path: 'class'
+        }
+    }).exec(function (err, mongoRes) {
+        if (err) {
+            return res.status(422).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+
+        mongoRes = mongoRes.filter(function (obj) {
+            return obj.enrolment.student.equals(studentId);
+        });
+
+        if (!mongoRes || mongoRes.length === 0) {
+            res.status(204);
+        }
+
+        generatePdfTranscript(mongoRes, req, res);
+    });
+};
+
 function generatePdfTranscript(mongoRes, req, res) {
     var pdf = new PDFDocument({
         size: 'A4',
@@ -222,7 +248,7 @@ function generatePdfTranscript(mongoRes, req, res) {
         align: 'center'
     });
 
-    pdf.fontSize(22).text('FDIBA Official Transcript ' + new Date().getFullYear(), {
+    pdf.fontSize(22).text('FDIBA Official Transcript ' + new Date().getFullYear() + " for " + req.user.displayName, {
         align: 'center'
     }).moveDown(5);
 

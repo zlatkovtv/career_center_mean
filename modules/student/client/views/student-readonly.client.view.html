@@ -117,19 +117,26 @@
             </div>
         </div>
         <div uib-accordion-group class="panel-default panel-white" heading="Job preferences" is-open="true" is-disabled="true">
-            <div class="col-xs-12 col-md-4" ng-show="user.studentMetadata.finalYear">
+            <div class="col-xs-12 col-md-4">
                 <div class="form-group">
-                    <h4><span class="label label-primary inline-block">I am in my final year of study</span></h4>
+                    <h4>University transcript</h4>
+                    <div>
+                        <div class="text-center form-group">
+                            <button class="btn btn-default btn-primary" ng-click="downloadTranscript()">Download</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-4" ng-show="user.studentMetadata.enrolled">
+            <div class="col-xs-12 col-md-4">
                 <div class="form-group">
-                    <h4><span class="label label-primary inline-block">I am currently enrolled in TU-Sofia fulltime</span></h4>
+                    <h4>Student is in final year of study</h4>
+                    <input type="checkbox" ng-disabled="true" ng-model="user.studentMetadata.finalYear">
                 </div>
             </div>
-            <div class="col-xs-12 col-md-4" ng-show="user.studentMetadata.subscribe">
+            <div class="col-xs-12 col-md-4">
                 <div class="form-group">
-                    <h4><span class="label label-primary inline-block">I want emails with job ads</span></h4>
+                    <h4>Student is currently enrolled in TU-Sofia fulltime</h4>
+                    <input type="checkbox" ng-disabled="true" ng-model="user.studentMetadata.enrolled">
                 </div>
             </div>
         </div>
