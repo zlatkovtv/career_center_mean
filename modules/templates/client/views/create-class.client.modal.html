@@ -3,8 +3,12 @@
 </div>
 <div class="modal-body">
     <div class="form-group">
-        <label>What is the department?</label>
-        <input ng-change="validateCurrentForm()" type="text" class="form-control" name="department" ng-model="class.department" paceholder="FDIBA" required>
+        <label>What department will the class be in?</label>
+        <select ng-change="validateCurrentForm()" class="form-control" name="department" ng-model="class.department" required>
+            <option ng-repeat="department in activeDepartments" value="{{department}}">
+                {{department}}
+            </option>
+        </select>
     </div>
     <div class="form-group">
         <label>What is the name of the subject?</label>
