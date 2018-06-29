@@ -8,7 +8,10 @@
     CreateClassController.$inject = ['$scope', '$uibModalInstance', 'FacultyService', 'Notification'];
 
     function CreateClassController($scope, $uibModalInstance, FacultyService, Notification) {
-        $scope.class = {};
+        $scope.class = {
+            department: "FDIBA"
+        };
+        $scope.activeDepartments = ["FDIBA"];
         $scope.createClass = () => {
             $scope.jobs = FacultyService.createClass({}, $scope.class, function (response) {
                 $uibModalInstance.close(response);
