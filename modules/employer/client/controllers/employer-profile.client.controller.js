@@ -24,7 +24,10 @@
 		$scope.save = () => {
 			var usersService = new UsersService($scope.user);
 			usersService.$update(function (response) {
-				if ($scope.picFile) {
+				console.log(response);
+				console.log($scope.picFile);
+				if ($scope.files.picFile) {
+					console.log("asds");
 					Upload.upload({
 						url: '/api/users/picture',
 						data: {

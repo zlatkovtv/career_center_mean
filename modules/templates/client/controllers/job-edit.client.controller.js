@@ -19,18 +19,17 @@
         $scope.jobCategories =
         {
             "business": "Business",
-            "it": "IT",
-            "tourism": "Travel and tourism",
-            "hr": "Human resources",
-            "cooking": "Cooking",
-            "delivery": "Delivery",
-            "architecture": "Architecture",
-            "design": "Design/Creative/Animation",
-            "education": "Teacher/professor/educator",
+            "design": "Design/Creative",
+            "education": "Educator/Training",
             "production": "Production",
-            "media": "Media/news",
-            "financial": "Financial",
-            "law": "Law"
+            "media": "Media",
+            "software": "Software",
+            "supplyChain": "Supply chain",
+            "management": "Management",
+            "quality": "Quality Assurance",
+            "support": "Support",
+            "admin": "System administrator",
+            "networking": "Networking"
         };
         $scope.jobLevels =
         {

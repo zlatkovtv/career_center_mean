@@ -12,33 +12,32 @@
         $scope.freeLimit = 3;
         $scope.canEditCompanyFields = false;
         $scope.jobTypes =
-            {
-                'fulltime': 'Full-time',
-                'parttime': 'Part-time',
-                'internship': 'Internship'
-            };
+        {
+            'fulltime': 'Full-time',
+            'parttime': 'Part-time',
+            'internship': 'Internship'
+        };
         $scope.jobCategories =
-            {
-                "business": "Business",
-                "it": "IT",
-                "tourism": "Travel and tourism",
-                "hr": "Human resources",
-                "cooking": "Cooking",
-                "delivery": "Delivery",
-                "architecture": "Architecture",
-                "design": "Design/Creative/Animation",
-                "education": "Teacher/professor/educator",
-                "production": "Production",
-                "media": "Media/news",
-                "financial": "Financial",
-                "law": "Law"
-            };
+        {
+            "business": "Business",
+            "design": "Design/Creative",
+            "education": "Educator/Training",
+            "production": "Production",
+            "media": "Media",
+            "software": "Software",
+            "supplyChain": "Supply chain",
+            "management": "Management",
+            "quality": "Quality Assurance",
+            "support": "Support",
+            "admin": "System administrator",
+            "networking": "Networking"
+        };
         $scope.jobLevels =
-            {
-                'management': 'Management level',
-                'specialist': 'Specialist level',
-                'worker': 'Worker level'
-            };
+        {
+            'management': 'Management level',
+            'specialist': 'Specialist level',
+            'worker': 'Worker level'
+        };
 
         $scope.verifyEmployerProfileCompleted = () => {
             if (!$scope.employer.employerMetadata.companyName || !$scope.employer.employerMetadata.companyWebsite || !$scope.employer.employerMetadata.companyPhone) {
@@ -146,7 +145,7 @@
             $scope.creatingJobAd = true;
             $scope.job = {
                 type: "Full-time",
-                category: "IT",
+                category: "Software",
                 level: "Specialist level",
                 companyName: $scope.employer.employerMetadata.companyName,
                 companyWebsite: $scope.employer.employerMetadata.companyWebsite,
